@@ -15,5 +15,7 @@ namespace Repository.Interfaces
         Task SaveProjectionsForWeek(int weekID, ImportedProjections importedProjections);
 
         Task<ImportedProjections> LoadProjectionsForWeek(int weekID);
+
+        event EventHandler ProjectionsUpdated;
     }
 }

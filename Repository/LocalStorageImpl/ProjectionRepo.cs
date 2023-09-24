@@ -33,6 +33,8 @@ namespace Repository.LocalStorageImpl
 
         private const string _localStorageKeyFormat = "ImportedProj_Week{0}";
 
+        public event EventHandler ProjectionsUpdated;
+
         #endregion
 
         public async Task<ImportedProjections> LoadProjectionsForWeek(int weekID)
@@ -45,6 +47,7 @@ namespace Repository.LocalStorageImpl
         {
             await _localStorageService.SetItemAsync
                 (string.Format(_localStorageKeyFormat, weekID), importedProjections);
+            ProjectionsUpdated?.Invoke(this, EventArgs.Empty);
         }
     }
 }
