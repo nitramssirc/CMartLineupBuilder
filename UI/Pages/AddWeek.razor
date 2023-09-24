@@ -1,0 +1,15 @@
+﻿@page "/AddWeek"
+
+<h3>AddWeek</h3>
+<div>
+    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Week Number</RadzenText>
+    <RadzenNumeric @bind-Value=@WeekNumber />
+</div>
+<div>
+    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Date</RadzenText>
+    <RadzenDatePicker @bind-Value=@WeekDate />
+</div>
+<div>
+<RadzenButton Click=@(args => OnAddWeekClick()) Icon="add_circle_outline" ButtonStyle="Radzen.ButtonStyle.Primary" />
+</div>
+

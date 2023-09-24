@@ -1,0 +1,48 @@
+﻿@using Domain.Projections;
+
+<RadzenPanel AllowCollapse="true" Collapsed="true" Class="rz-my-10 rz-mx-auto">
+    <HeaderTemplate>
+        <RadzenRow Gap="1rem">
+            <RadzenColumn>
+                <RadzenText TextStyle="TextStyle.H6" Class="rz-display-flex rz-align-items-center rz-m-0">
+                    <RadzenIcon Icon="list" class="rz-mr-1" /><b>Projections</b>
+                </RadzenText>
+            </RadzenColumn>
+            <RadzenColumn>
+                <input @key=@(inputFileId) type="file" @ref="_projectionFileUpload" @onchange="@ImportProjections" accept=".csv" />
+            </RadzenColumn>
+        </RadzenRow>
+    </HeaderTemplate>
+    <ChildContent>
+        <RadzenCard class="rz-mt-4">
+            <div>@LastUploadTime</div>
+            <RadzenDataGrid @ref="_projectionGrid"  
+                            Data="@RotoGrindersProjections" IsLoading="@IsLoading"
+                            TItem="RotoGrindersProjection" AllowVirtualization="true" Style="max-height:800px"
+                            AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="true" FilterMode="FilterMode.Advanced"
+                            AllowSorting="true" LogicalFilterOperator="LogicalFilterOperator.Or">
+                <Columns>
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="name" Title="Name" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="salary" Title="Salary" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="pos" Title="Position" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="team" Title="Team" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="opp" Title="Opp" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="fpts" Title="Fpts" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="floor" Title="Floor" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="ceil" Title="Ceil" />
+                    <RadzenDataGridColumn TItem="RotoGrindersProjection" Property="proj_own" Title="Own%" />
+                </Columns>
+            </RadzenDataGrid>
+
+        </RadzenCard>
+    </ChildContent>
+    <SummaryTemplate>
+        <RadzenCard class="rz-mt-4">
+            @LastUploadTime
+        </RadzenCard>
+    </SummaryTemplate>
+</RadzenPanel>
+
+
+
+
