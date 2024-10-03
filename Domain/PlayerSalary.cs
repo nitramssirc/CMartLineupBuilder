@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Player
+    public class PlayerSalary
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public int PlayerID { get; set; }
 
-        public Team Team { get; set; }
+        public int WeekID { get; set; }
 
-        public PlayerPosition Position { get; set; }
+        public Site Site { get; set; }
+
+        public int Salary { get; set; }
     }
 }
