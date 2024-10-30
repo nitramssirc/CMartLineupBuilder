@@ -6,48 +6,21 @@
 
 <div>
     <div class="rz-p-5">
-        <WeekSelector OnWeekChanged="@OnWeekChanged"/>
-    </div>
-    <div class="rz-p-5">
-        <ProjectionImports Week="@SelectedWeek"/> 
-    </div>
-    <div class="rz-p-5">
-        <ExpertPicks Week="@SelectedWeek"/>
-    </div>
-    <div class="rz-p-5">
-        <RadzenText TextStyle="TextStyle.DisplayH5">Vegas Lines</RadzenText>
-    </div>
-    <div class="rz-p-5">
-        <RadzenText TextStyle="TextStyle.DisplayH5">Roster Rules</RadzenText>
-    </div>
-    <div class="rz-p-5">
-        <RadzenText TextStyle="TextStyle.DisplayH5">Projection Rules</RadzenText>
-    </div>
-    <div class="rz-p-5">
-        <RadzenText TextStyle="TextStyle.DisplayH5">Stack Rules</RadzenText>
-    </div>
-    <div class="rz-p-5">
-        <RadzenText TextStyle="TextStyle.DisplayH5">Generated Projections</RadzenText>
-    </div>
-    <div class="rz-p-5">
-        <RadzenText TextStyle="TextStyle.DisplayH5">Generated Lineups</RadzenText>
-    </div>
-    <div class="rz-p-5">
-        <RadzenText TextStyle="TextStyle.DisplayH5">Lineup Pool</RadzenText>
-    </div>
+        @*<SlateSelector OnWeekChanged="@OnWeekChanged"/>*@
+    </div>    
 </div>
 
 @code {
 
-    private Week SelectedWeek { get; set; }
+    //private Week SelectedWeek { get; set; }
 
 
-    #region Event Handlers
+    //#region Event Handlers
 
-    private void OnWeekChanged(Week newWeek)
-    {
-        SelectedWeek = newWeek;
-    }
+    //private void OnWeekChanged(Week newWeek)
+    //{
+    //    SelectedWeek = newWeek;
+    //}
 
-    #endregion
+    //#endregion
 }
