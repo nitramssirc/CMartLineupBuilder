@@ -4,6 +4,8 @@ using Blazored.LocalStorage;
 
 using UI;
 using Tewr.Blazor.FileReader;
+using Application.Queries.GetSlates;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,6 +19,7 @@ builder.Services.AddBlazoredLocalStorageAsSingleton(options =>
 });
 builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetSlateQueryHandler).Assembly));
 
 //Commands
 //builder.Services.AddScoped(typeof(IAddWeekCommand), typeof(AddWeekCommand));

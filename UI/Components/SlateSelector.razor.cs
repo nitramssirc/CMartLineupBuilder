@@ -1,63 +1,87 @@
+using Application.Queries.GetSlates;
+
+using Common.Enums;
+
+using MediatR;
+
+using Microsoft.AspNetCore.Components;
+
 namespace UI.Components
 {
     public partial class SlateSelector
     {
-        //#region Dependencies
-        ////[Inject] IAddWeekCommand AddWeekCommand { get; set; }
+        #region Dependencies
 
-        ////[Inject] IGetWeeksQuery GetWeeksQuery { get; set; }
+        [Inject] IMediator Mediator { get; set; }
 
-        //[Inject] NavigationManager NavManager { get; set; }
+        [Inject] NavigationManager NavManager { get; set; }
 
-        //#endregion
+        #endregion
 
-        //#region Parameters
+        #region Parameters
 
-        //[Parameter]
-        //public Week SelectedWeek
-        //{
-        //    get
-        //    {
-        //        return Weeks.FirstOrDefault(w => w.ID == SelectedWeekID);
-        //    }
-        //    set
-        //    {
-        //        SelectedWeekID = value.ID;
-        //    }
-        //}
+        [Parameter]
+        public Guid SelectedSlateID { get; set; }
 
-        //[Parameter]
-        //public EventCallback<Week> OnWeekChanged { get; set; }
+        #endregion
 
-        //#endregion
+        #region Internal Properties
 
-        //#region Internal Properties
-        //private Week[] Weeks { get; set; }
-        //private int SelectedWeekID { get; set; }
+        private List<GetSlateResponse> Slates { get; set; } = new List<GetSlateResponse>();
+        private List<Sport> Sports { get; } = Enum.GetValues(typeof(Sport)).Cast<Sport>().ToList();
 
-        //#endregion
-        //#region Component Overrides
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    Weeks = await GetWeeksQuery.Execute();
-        //    if (Weeks.Length > 0)
-        //    {
-        //        SelectedWeekID = Weeks.Last().ID;
-        //    }
-        //    OnSelectedWeekChanged();
-        //}
+        private List<DFSSite> Sites { get; } = Enum.GetValues(typeof(DFSSite)).Cast<DFSSite>().ToList();
 
-        //#endregion
-        //#region Event Handlers
-        //private async void OnAddWeekClick()
-        //{
-        //    NavManager.NavigateTo("/addweek");
-        //}
+        private Sport SelectedSport { get; set; }
 
-        //private void OnSelectedWeekChanged()
-        //{
-        //    OnWeekChanged.InvokeAsync(SelectedWeek);
-        //}
-        //#endregion
+        private DFSSite SelectedSite { get; set; }
+
+
+        #endregion
+
+        #region Component Overrides
+
+        protected override async Task OnInitializedAsync()
+        {
+            SelectedSport = Sport.NFL;
+            SelectedSite = DFSSite.DraftKings;
+            await LoadSlates();
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private async Task OnSportChanged()
+        {
+            await LoadSlates();
+        }
+
+        private async Task OnSiteChanged()
+        {
+            await LoadSlates();
+        }
+
+        private async Task OnSlateChanged()
+        {
+            //Invoke slate changed event
+        }
+
+        private async Task OnAddSlateClick()
+        {
+            NavManager.NavigateTo("/addSlate");
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private async Task LoadSlates()
+        {
+            var request = new GetSlateRequest(SelectedSite.ToString(), SelectedSport.ToString());
+            Slates = await Mediator.Send(request);
+        }
+
+        #endregion
     }
 }

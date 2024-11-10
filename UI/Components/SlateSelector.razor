@@ -1,13 +1,20 @@
-﻿@*@using Application.Commands.AddWeek;
-@using Application.Queries.GetWeeks;*@
-@*
-<RadzenDropDown @bind-Value="SelectedSlateID" Data="Slates" ValueProperty="ID"
-                Placeholder="Select Slate" Change="OnSelectedSlateChanged" >
-    <Template>
-        @((context as Slate)?.ToString())
-    </Template>
+﻿@using Application.Queries.GetSlates;
+@using Common.Enums;
+
+<RadzenDropDown @bind-Value="SelectedSport" Data="Sports" 
+                Placeholder="Select Sport" Change="OnSportChanged">
 </RadzenDropDown>
+
+<RadzenDropDown @bind-Value="SelectedSite" Data="Sites"
+                Placeholder="Select Site" Change="OnSiteChanged">
+</RadzenDropDown>
+
+<RadzenDropDown @bind-Value="SelectedSlateID" ValueProperty="Id" 
+                TextProperty="Name" Data="Slates"
+                Placeholder="Select Slate" Change="OnSlateChanged">
+</RadzenDropDown>
+
 <RadzenButton Click=@(args => OnAddSlateClick()) Text="New Slate"
-              ButtonStyle="Radzen.ButtonStyle.Primary" />*@
+              ButtonStyle="Radzen.ButtonStyle.Primary" />
 
 
