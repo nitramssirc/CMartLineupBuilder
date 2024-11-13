@@ -12,9 +12,9 @@ namespace Domain.Common.Models
     {
         public TID Id { get; }
 
-        protected Entity(TID id)
+        protected Entity()
         {
-            Id = id;
+            Id = Activator.CreateInstance<TID>();
         }
     }
 }

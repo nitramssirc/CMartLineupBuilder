@@ -1,10 +1,11 @@
 ﻿using Common.Enums;
 
 using Domain.Common.Models;
+using Domain.Slate.ValueTypes;
 
 namespace Domain.Slate.Models
 {
-    public class Slate : AggregateRoot
+    public class Slate : AggregateRoot<SlateID>
     {
         #region Properties
 
