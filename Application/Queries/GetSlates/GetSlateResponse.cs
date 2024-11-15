@@ -1,13 +1,15 @@
-﻿namespace Application.Queries.GetSlates
+﻿using Domain.SlateAggregate.ValueTypes;
+
+namespace Application.Queries.GetSlates
 {
     public class GetSlateResponse
     {
-        public Guid Id { get; }
+        public SlateID Id { get; }
 
 
         public string Name { get; }
 
-        public GetSlateResponse(Guid id, string name)
+        public GetSlateResponse(SlateID id, string name)
         {
             Id = id;
             Name = name;

@@ -1,4 +1,9 @@
-﻿using MediatR;
+﻿using Application.Common.Repositories;
+
+using Domain.SlateAggregate.Models;
+using Domain.SlateAggregate.ValueTypes;
+
+using MediatR;
 
 namespace Application.Queries.GetSlates
 {
@@ -6,27 +11,26 @@ namespace Application.Queries.GetSlates
     {
         #region Dependencies
 
-        //private readonly ISlateDBContext _dbContext;
+        private readonly IQueryRepository<Slate, SlateID> _dbContext;
 
         #endregion
 
         #region Constructor
 
-        //public GetSlateQueryHandler(ISlateDBContext dbContext)
-        //{
-        //    _dbContext = dbContext;
-        //}
+        public GetSlateQueryHandler(IQueryRepository<Slate, SlateID> dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         #endregion
 
-        public Task<List<GetSlateResponse>> Handle(GetSlateRequest request, CancellationToken cancellationToken)
+        public async Task<List<GetSlateResponse>> Handle(GetSlateRequest request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(
-                new List<GetSlateResponse> {
-                    new GetSlateResponse(Guid.NewGuid(), "Slate 1"),
-                    new GetSlateResponse(Guid.NewGuid(), "Slate 2")
-                }
-            );
+            var slates = await _dbContext.FindAsync(s => 
+                s.DFSSite.ToString() == request.Site && 
+                s.Sport.ToString() == request.Sport);
+
+            return slates.Select(s => new GetSlateResponse(s.Id, $"{s.Sport} - {s.DFSSite} - {s.GameType} - {s.Name}")).ToList();
         }
     }
 }

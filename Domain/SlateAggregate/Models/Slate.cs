@@ -1,9 +1,9 @@
 ﻿using Common.Enums;
 
 using Domain.Common.Models;
-using Domain.Slate.ValueTypes;
+using Domain.SlateAggregate.ValueTypes;
 
-namespace Domain.Slate.Models
+namespace Domain.SlateAggregate.Models
 {
     public class Slate : Entity<SlateID>, IAggregateRoot
     {
@@ -45,9 +45,9 @@ namespace Domain.Slate.Models
         #region Factory Methods
 
         public static Slate Create(
-            DateTime date, 
-            Sport sport, 
-            GameType gameType, 
+            DateTime date,
+            Sport sport,
+            GameType gameType,
             DFSSite dfsSite,
             string name)
         {

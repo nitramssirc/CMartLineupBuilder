@@ -6,6 +6,8 @@ using UI;
 using Tewr.Blazor.FileReader;
 using Application.Queries.GetSlates;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Repository.DbContexts;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -20,6 +22,10 @@ builder.Services.AddBlazoredLocalStorageAsSingleton(options =>
 builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetSlateQueryHandler).Assembly));
+
+//DB Contexts
+builder.Services.AddDbContext<SlateDbContext>(options =>
+    options.UseSqlite("Data Source=slate.db"));
 
 //Commands
 //builder.Services.AddScoped(typeof(IAddWeekCommand), typeof(AddWeekCommand));
