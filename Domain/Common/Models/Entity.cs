@@ -1,20 +1,14 @@
 ﻿using Domain.Common.ValueTypes;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Domain.Common.Models
 {
     public abstract class Entity<TID> where TID : EntityID
     {
-        public TID Id { get; }
+        public TID Id { get; private set; }
 
-        protected Entity()
+        public Entity(TID id)
         {
-            Id = Activator.CreateInstance<TID>();
+            Id = id;
         }
     }
 }

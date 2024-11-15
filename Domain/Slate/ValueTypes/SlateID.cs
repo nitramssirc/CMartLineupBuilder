@@ -1,15 +1,17 @@
 ﻿using Domain.Common.ValueTypes;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Domain.Slate.ValueTypes
 {
     public class SlateID : EntityID
     {
+        public SlateID(Guid id) : base(id)
+        {
+        }
+
+        public SlateID() : base(Guid.NewGuid())
+        {
+        }
+
         protected override IEnumerable<object> GetAdditionalIDComponents()
         {
             yield break;

@@ -12,9 +12,9 @@ namespace UI.Components
     {
         #region Dependencies
 
-        [Inject] IMediator Mediator { get; set; }
+        [Inject] IMediator Mediator { get; set; } = null!;
 
-        [Inject] NavigationManager NavManager { get; set; }
+        [Inject] NavigationManager NavManager { get; set; } = null!;
 
         #endregion
 
@@ -62,14 +62,15 @@ namespace UI.Components
             await LoadSlates();
         }
 
-        private async Task OnSlateChanged()
+        private Task OnSlateChanged()
         {
-            //Invoke slate changed event
+            return Task.CompletedTask;
         }
 
-        private async Task OnAddSlateClick()
+        private Task OnAddSlateClick()
         {
             NavManager.NavigateTo("/addSlate");
+            return Task.CompletedTask;
         }
 
         #endregion

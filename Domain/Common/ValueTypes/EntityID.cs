@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Common.ValueTypes
+﻿namespace Domain.Common.ValueTypes
 {
     public abstract class EntityID : ValueObject
     {
         Guid Id { get; }
 
-        public EntityID()
+        public EntityID(Guid id)
         {
-            Id = Guid.NewGuid();
+            Id = id;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

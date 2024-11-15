@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Common.ValueTypes
+﻿namespace Domain.Common.ValueTypes
 {
     public abstract class ValueObject
     {
@@ -14,7 +8,7 @@ namespace Domain.Common.ValueTypes
             {
                 return false;
             }
-            return ReferenceEquals(left, right) || left.Equals(right);
+            return ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
         }
 
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)
@@ -24,7 +18,7 @@ namespace Domain.Common.ValueTypes
 
         protected abstract IEnumerable<object> GetEqualityComponents();
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj == null || obj.GetType() != GetType())
             {
