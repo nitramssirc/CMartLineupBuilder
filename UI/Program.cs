@@ -5,9 +5,9 @@ using Blazored.LocalStorage;
 using UI;
 using Tewr.Blazor.FileReader;
 using Application.Queries.GetSlates;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Repository.DbContexts;
+using Radzen;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -21,26 +21,20 @@ builder.Services.AddBlazoredLocalStorageAsSingleton(options =>
 });
 builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetSlateQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetSlateQuery).Assembly));
+
+//Radzen Components
+builder.Services.AddRadzenComponents();
 
 //DB Contexts
 builder.Services.AddDbContext<SlateDbContext>(options =>
-    options.UseSqlite("Data Source=slate.db"));
+    options.UseSqlite("Data Source=cmartLineUpBuilder.db"));
 
-//Commands
-//builder.Services.AddScoped(typeof(IAddWeekCommand), typeof(AddWeekCommand));
-//builder.Services.AddScoped(typeof(IImportProjectionCommand), typeof(ImportProjectionCommand));
-
-//Queries
-//builder.Services.AddScoped(typeof(IGetWeeksQuery), typeof(GetWeeksQuery));
-//builder.Services.AddScoped(typeof(IGetProjectionsQuery), typeof(GetProjectionsQuery));
-//builder.Services.AddScoped(typeof(IGetExpertPicksQuery), typeof(GetExpertPicksQuery));
-
-//Repos
-//builder.Services.AddSingleton(typeof(IWeekRepo), typeof(WeekRepo));
-//builder.Services.AddSingleton(typeof(IProjectionRepo), typeof(ProjectionRepo));
-
-//Monitors
-//builder.Services.AddSingleton(typeof(IProjectionsMonitor), typeof(ProjectionsMonitor));
+//Repositories
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<SlateDbContext>()
+    .AddClasses(classes => classes.AssignableTo<SlateDbContext>())
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
 
 await builder.Build().RunAsync();

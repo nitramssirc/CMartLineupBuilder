@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Queries.GetSlates
 {
-    public class GetSlateQueryHandler : IRequestHandler<GetSlateRequest, List<GetSlateResponse>>
+    public class GetSlateQuery : IRequestHandler<GetSlateRequest, List<GetSlateResponse>>
     {
         #region Dependencies
 
@@ -17,7 +17,7 @@ namespace Application.Queries.GetSlates
 
         #region Constructor
 
-        public GetSlateQueryHandler(IQueryRepository<Slate, SlateID> dbContext)
+        public GetSlateQuery(IQueryRepository<Slate, SlateID> dbContext)
         {
             _dbContext = dbContext;
         }

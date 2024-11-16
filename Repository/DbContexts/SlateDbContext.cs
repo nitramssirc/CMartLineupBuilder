@@ -10,29 +10,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repository.DbContexts
 {
-    public class SlateDbContext : DbContext,
-        ICommandRepository<Slate, SlateID>,
-        IQueryRepository<Slate, SlateID>
+    public class SlateDbContext(DbContextOptions<SlateDbContext> options) : DbContext(options),
+            ICommandRepository<Slate, SlateID>,
+            IQueryRepository<Slate, SlateID>
     {
-        public Task AddAsync(Slate model)
+        public DbSet<Slate> Slates { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SlateDbContext).Assembly);
         }
 
-        public Task<IEnumerable<Slate>> FindAsync(Func<Slate, bool> predicate)
-        {
-            return Task.FromResult<IEnumerable<Slate>>([
-                    Slate.Create(DateTime.Now.AddDays(-7), Sport.NFL, GameType.Cash, DFSSite.DraftKings, "Week 1"),
-                    Slate.Create(DateTime.Now, Sport.NFL, GameType.Cash, DFSSite.DraftKings, "Week 2")
-                ]);
-        }
-
-        public Task<IEnumerable<Slate>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }         
-
-        public Task SaveAsync()
+        Task ICommandRepository<Slate, SlateID>.AddAsync(Slate model)
         {
             throw new NotImplementedException();
         }
@@ -42,9 +31,27 @@ namespace Repository.DbContexts
             throw new NotImplementedException();
         }
 
-        Task<Slate?> IQueryRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
+        Task ICommandRepository<Slate, SlateID>.SaveAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public Task<Slate?> GetByIdAsync(SlateID id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Slate>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Slate>> FindAsync(Func<Slate, bool> predicate)
+        {
+            return Task.FromResult<IEnumerable<Slate>>([
+                Slate.Create(DateTime.Now.AddDays(-7), Sport.NFL, GameType.Cash, DFSSite.DraftKings, "Week 1"),
+                    Slate.Create(DateTime.Now, Sport.NFL, GameType.Cash, DFSSite.DraftKings, "Week 2")
+            ]);
         }
     }
 }

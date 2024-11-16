@@ -2,7 +2,7 @@
 {
     public abstract class EntityID : ValueObject
     {
-        Guid Id { get; }
+        public Guid Id { get; }
 
         public EntityID(Guid id)
         {
