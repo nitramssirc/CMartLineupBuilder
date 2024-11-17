@@ -1,7 +1,5 @@
 ﻿@using Application.Queries.GetSlates;
-@using Common.Enums;
-@using Domain.SlateAggregate.ValueTypes
-@using MediatR
+
 
 <RadzenDropDown @bind-Value="SelectedSport" Data="Sports" 
                 Placeholder="Select Sport" Change="OnSportChanged">
@@ -32,7 +30,7 @@
     #region Parameters
 
     [Parameter]
-    public Guid SelectedSlateID { get; set; }
+    public SlateID? SelectedSlateID { get; set; }
 
     #endregion
 
@@ -92,6 +90,7 @@
         // Handle the new slate ID if needed
         await LoadSlates();
         DialogService.Close();
+        SelectedSlateID = newSlateId;
     }
 
     #endregion

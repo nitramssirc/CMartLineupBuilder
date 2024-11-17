@@ -18,13 +18,13 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetSl
 builder.Services.AddRadzenComponents();
 
 //DB Contexts
-builder.Services.AddDbContext<SlateDbContext>(options =>
+builder.Services.AddDbContext<CMartDbContext>(options =>
     options.UseSqlite("Data Source=cmartLineUpBuilder.db"));
 
 //Repositories
 builder.Services.Scan(scan => scan
-    .FromAssemblyOf<SlateDbContext>()
-    .AddClasses(classes => classes.AssignableTo<SlateDbContext>())
+    .FromAssemblyOf<CMartDbContext>()
+    .AddClasses(classes => classes.InNamespaces("Repository.Repositories"))
     .AsImplementedInterfaces()
     .WithScopedLifetime());
 

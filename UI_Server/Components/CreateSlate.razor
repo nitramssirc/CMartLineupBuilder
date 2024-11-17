@@ -1,7 +1,5 @@
 ﻿@using Application.Commands
-@using Common.Enums
-@using Domain.SlateAggregate.ValueTypes
-@using MediatR
+
 <RadzenAlert AlertStyle="AlertStyle.Danger" @bind-Visible="ShowError" RadzenAlert Text=@Error AllowClose="false" />
 <RadzenTemplateForm TItem="AddSlateData" Data=@FormModel Submit=@OnAddSlateClick>
     <RadzenStack Orientation="Orientation.Vertical" class="rz-p-4">
