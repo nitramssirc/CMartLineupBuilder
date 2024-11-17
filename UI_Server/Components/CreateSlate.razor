@@ -1,0 +1,88 @@
+﻿@using Application.Commands
+@using Common.Enums
+@using Domain.SlateAggregate.ValueTypes
+@using MediatR
+<RadzenAlert AlertStyle="AlertStyle.Danger" @bind-Visible="ShowError" RadzenAlert Text=@Error AllowClose="false" />
+<RadzenTemplateForm TItem="AddSlateData" Data=@FormModel Submit=@OnAddSlateClick>
+    <RadzenStack Orientation="Orientation.Vertical" class="rz-p-4">
+        <RadzenRow>
+            <RadzenColumn Size="4">
+                <RadzenLabel Text="Sport" Component="Sport" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenDropDown Name="Sport" @bind-Value=@FormModel.Sport Data="Sports" />
+                <RadzenRequiredValidator Component="Sport" Text="Sport is required"
+                Style="position:absolute" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn Size="4">
+                <RadzenLabel Text="DFS Site" Component="Site" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenDropDown Name="Site" @bind-Value=@FormModel.Site Data="Sites" />
+                <RadzenRequiredValidator Component="Site" Text="Site is required"
+                Style="position:absolute" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn Size="4">
+                <RadzenLabel Text="Game Type" Component="GameType" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenDropDown Name="GameType" @bind-Value=@FormModel.GameType Data="GameTypes" />
+                <RadzenRequiredValidator Component="GameType" Text="Game Type is required"
+                Style="position:absolute" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn Size="4">
+                <RadzenLabel Text="Name" Component="Name" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenTextBox Name="Name" @bind-Value=@FormModel.Name MaxLength="100" />
+                <RadzenRequiredValidator Component="Name" Text="Name is required"
+                Style="position:absolute" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn Size="4">
+                <RadzenButton Text="Add Slate" ButtonStyle="Radzen.ButtonStyle.Primary"
+                ButtonType="ButtonType.Submit" />
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenStack>
+</RadzenTemplateForm>
+
+@code {
+    [Inject] IMediator Mediator { get; set; } = null!;
+
+    [Parameter] public EventCallback<SlateID> OnSlateAdded { get; set; }
+
+    class AddSlateData
+    {
+        public Sport Sport { get; set; } = Sport.NFL;
+        public DFSSite Site { get; set; } = DFSSite.DraftKings;
+        public GameType GameType { get; set; } = GameType.Cash;
+        public string Name { get; set; } = string.Empty;
+    }
+
+    private AddSlateData FormModel { get; set; } = new AddSlateData();
+
+    private List<Sport> Sports { get; } = Enum.GetValues(typeof(Sport)).Cast<Sport>().ToList();
+    private List<DFSSite> Sites { get; } = Enum.GetValues(typeof(DFSSite)).Cast<DFSSite>().ToList();
+    private List<GameType> GameTypes { get; } = Enum.GetValues(typeof(GameType)).Cast<GameType>().ToList();
+
+    private bool ShowError { get { return !string.IsNullOrEmpty(Error); } set { } }
+    private string Error { get; set; } = string.Empty;
+
+    private async Task OnAddSlateClick(AddSlateData formModel)
+    {
+        var request = new CreateSlateRequest(formModel.Sport, formModel.Site, formModel.GameType, formModel.Name);
+        var response = await Mediator.Send(request);
+
+        Error = response.Error;
+        if (response.Success)
+            await OnSlateAdded.InvokeAsync(response.NewId);
+    }
+}

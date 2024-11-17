@@ -32,9 +32,9 @@ namespace Repository.DbContexts
             throw new NotImplementedException();
         }
 
-        Task ICommandRepository<Slate, SlateID>.SaveAsync()
+        async Task ICommandRepository<Slate, SlateID>.SaveAsync()
         {
-            throw new NotImplementedException();
+            await SaveChangesAsync();
         }
 
         public Task<Slate?> GetByIdAsync(SlateID id)

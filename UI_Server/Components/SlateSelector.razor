@@ -1,0 +1,109 @@
+﻿@using Application.Queries.GetSlates;
+@using Common.Enums;
+@using Domain.SlateAggregate.ValueTypes
+@using MediatR
+
+<RadzenDropDown @bind-Value="SelectedSport" Data="Sports" 
+                Placeholder="Select Sport" Change="OnSportChanged">
+</RadzenDropDown>
+
+<RadzenDropDown @bind-Value="SelectedSite" Data="Sites"
+                Placeholder="Select Site" Change="OnSiteChanged">
+</RadzenDropDown>
+
+<RadzenDropDown @bind-Value="SelectedSlateID" ValueProperty="Id" 
+                TextProperty="Name" Data="Slates"
+                Placeholder="Select Slate" Change="OnSlateChanged">
+</RadzenDropDown>
+
+<RadzenButton Click=@(args => OnAddSlateClick()) Text="New Slate"
+              ButtonStyle="Radzen.ButtonStyle.Primary" />
+@code {
+    #region Dependencies
+
+    [Inject] IMediator Mediator { get; set; } = null!;
+
+    [Inject] NavigationManager NavManager { get; set; } = null!;
+
+    [Inject] DialogService DialogService { get; set; } = null!;
+
+    #endregion
+
+    #region Parameters
+
+    [Parameter]
+    public Guid SelectedSlateID { get; set; }
+
+    #endregion
+
+    #region Internal Properties
+
+    private List<GetSlateResponse> Slates { get; set; } = new List<GetSlateResponse>();
+    private List<Sport> Sports { get; } = Enum.GetValues(typeof(Sport)).Cast<Sport>().ToList();
+
+    private List<DFSSite> Sites { get; } = Enum.GetValues(typeof(DFSSite)).Cast<DFSSite>().ToList();
+
+    private Sport SelectedSport { get; set; }
+
+    private DFSSite SelectedSite { get; set; }
+
+    #endregion
+
+    #region Component Overrides
+
+    protected override async Task OnInitializedAsync()
+    {
+        SelectedSport = Sport.NFL;
+        SelectedSite = DFSSite.DraftKings;
+        await LoadSlates();
+    }
+
+    #endregion
+
+    #region Event Handlers
+
+    private async Task OnSportChanged()
+    {
+        await LoadSlates();
+    }
+
+    private async Task OnSiteChanged()
+    {
+        await LoadSlates();
+    }
+
+    private Task OnSlateChanged()
+    {
+        return Task.CompletedTask;
+    }
+
+    private async Task OnAddSlateClick()
+    {
+        Console.WriteLine("Add Slate Clicked");
+        var result = await DialogService.OpenAsync<CreateSlate>("Add Slate", new Dictionary<string, object>
+        {
+            { "OnSlateAdded", EventCallback.Factory.Create<SlateID>(this, HandleSlateAdded) }
+        });
+        Console.WriteLine("Add Slate Clicked2");
+    }
+
+    private async Task HandleSlateAdded(SlateID newSlateId)
+    {
+        // Handle the new slate ID if needed
+        await LoadSlates();
+        DialogService.Close();
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private async Task LoadSlates()
+    {
+        var request = new GetSlateRequest(SelectedSite.ToString(), SelectedSport.ToString());
+        Slates = await Mediator.Send(request);
+    }
+
+    #endregion
+}
+
