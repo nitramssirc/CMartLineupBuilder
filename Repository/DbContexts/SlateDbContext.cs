@@ -23,7 +23,8 @@ namespace Repository.DbContexts
 
         Task ICommandRepository<Slate, SlateID>.AddAsync(Slate model)
         {
-            throw new NotImplementedException();
+            Slates.Add(model);
+            return Task.CompletedTask;
         }
 
         Task<Slate?> ICommandRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
