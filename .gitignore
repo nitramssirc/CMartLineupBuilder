@@ -7,3 +7,4 @@ artifacts/
 .dotnet/
 *.binlog
 /CollinCountyCovidDashboard/Client/wwwroot/debug.log
+/UI_Server/cmartLineUpBuilder.db
