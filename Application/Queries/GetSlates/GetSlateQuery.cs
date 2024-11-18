@@ -1,4 +1,6 @@
-﻿using Application.Common.Repositories;
+﻿using System.Linq;
+
+using Application.Common.Repositories;
 
 using Domain.SlateAggregate.Models;
 using Domain.SlateAggregate.ValueTypes;
@@ -26,9 +28,9 @@ namespace Application.Queries.GetSlates
 
         public async Task<List<GetSlateResponse>> Handle(GetSlateRequest request, CancellationToken cancellationToken)
         {
-            var slates = await _dbContext.FindAsync(s => 
+            var slates = (await _dbContext.FindAsync(s => 
                 s.DFSSite.ToString() == request.Site && 
-                s.Sport.ToString() == request.Sport);
+                s.Sport.ToString() == request.Sport)).OrderByDescending(s => s.Date);
 
             return slates.Select(s => new GetSlateResponse(s.Id, $"{s.Sport} - {s.DFSSite} - {s.GameType} - {s.Name}")).ToList();
         }

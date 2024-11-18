@@ -12,7 +12,12 @@
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Id;
-            yield return GetAdditionalIDComponents();
+
+            var additionalComponents = GetAdditionalIDComponents();
+            foreach (var component in additionalComponents)
+            {
+                yield return component;
+            }
         }
 
         protected abstract IEnumerable<object> GetAdditionalIDComponents();

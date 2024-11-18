@@ -9,9 +9,11 @@
                 Placeholder="Select Site" Change="OnSiteChanged">
 </RadzenDropDown>
 
-<RadzenDropDown @bind-Value="SelectedSlateID" ValueProperty="Id" 
-                TextProperty="Name" Data="Slates"
-                Placeholder="Select Slate" Change="OnSlateChanged">
+<RadzenDropDown @bind-Value="SelectedSlateID" 
+                TextProperty="Name" ValueProperty="Id"
+                Data="Slates" 
+                Placeholder="Select Slate" Change="OnSlateChanged"
+                Style="width: 400px;">
 </RadzenDropDown>
 
 <RadzenButton Click=@(args => OnAddSlateClick()) Text="New Slate"
@@ -30,7 +32,7 @@
     #region Parameters
 
     [Parameter]
-    public SlateID? SelectedSlateID { get; set; }
+    public SlateID SelectedSlateID { get; set; } = new SlateID();
 
     #endregion
 

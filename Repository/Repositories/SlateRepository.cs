@@ -5,6 +5,8 @@ using Common.Enums;
 using Domain.SlateAggregate.Models;
 using Domain.SlateAggregate.ValueTypes;
 
+using Microsoft.EntityFrameworkCore;
+
 using Repository.DbContexts;
 
 using System;
@@ -52,16 +54,10 @@ namespace Repository.Repositories
             await _context.SaveChangesAsync();
         }
 
-        #endregion
-
-        #region IQueryRepository Implementation
-
         public Task<IEnumerable<Slate>> FindAsync(Func<Slate, bool> predicate)
         {
-            return Task.FromResult<IEnumerable<Slate>>([
-                Slate.Create(DateTime.Now.AddDays(-7), Sport.NFL, GameType.Cash, DFSSite.DraftKings, "Week 1"),
-                    Slate.Create(DateTime.Now, Sport.NFL, GameType.Cash, DFSSite.DraftKings, "Week 2")
-            ]);
+            var result = _context.Slates.AsNoTracking().Where(predicate).AsEnumerable();
+            return Task.FromResult(result);
         }
 
         public Task<IEnumerable<Slate>> GetAllAsync()

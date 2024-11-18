@@ -14,7 +14,7 @@ namespace Domain.SlateAggregate.ValueTypes
 
         protected override IEnumerable<object> GetAdditionalIDComponents()
         {
-            yield break;
+            return new List<object>();
         }
     }
 }
