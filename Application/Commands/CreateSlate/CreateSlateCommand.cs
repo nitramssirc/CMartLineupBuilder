@@ -5,9 +5,9 @@ using Domain.SlateAggregate.ValueTypes;
 
 using MediatR;
 
-namespace Application.Commands
+namespace Application.Commands.CreateSlate
 {
-    public class CreateSlateCommand:IRequestHandler<CreateSlateRequest, CreateSlateResponse>
+    public class CreateSlateCommand : IRequestHandler<CreateSlateRequest, CreateSlateResponse>
     {
         private readonly ICommandRepository<Slate, SlateID> _repository;
 

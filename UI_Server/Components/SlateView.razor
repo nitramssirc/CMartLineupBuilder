@@ -1,0 +1,19 @@
+﻿@if (SlateID != null)
+{
+    <RadzenTabs RenderMode="TabRenderMode.Client">
+        <Tabs>
+            <RadzenTabsItem Text="Players">
+                @SlateID.Id
+            </RadzenTabsItem>
+        </Tabs>
+    </RadzenTabs>
+}
+else
+{
+    <RadzenAlert AlertStyle="AlertStyle.Warning" RadzenAlert Text="Select a Slate"
+                 AllowClose="false" Shade="Shade.Lighter" />
+}
+
+@code {
+    [Parameter] public SlateID? SlateID { get; set; }
+}

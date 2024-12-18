@@ -2,7 +2,7 @@
 
 using Domain.SlateAggregate.ValueTypes;
 
-namespace Application.Commands
+namespace Application.Commands.CreateSlate
 {
     public class CreateSlateResponse : CommandResultResponse
     {

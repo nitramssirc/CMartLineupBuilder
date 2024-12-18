@@ -2,9 +2,9 @@
 
 using MediatR;
 
-namespace Application.Commands
+namespace Application.Commands.CreateSlate
 {
-    public class CreateSlateRequest:IRequest<CreateSlateResponse>
+    public class CreateSlateRequest : IRequest<CreateSlateResponse>
     {
         public Sport Sport { get; }
         public DFSSite Site { get; }
@@ -12,9 +12,9 @@ namespace Application.Commands
         public string Name { get; }
 
         public CreateSlateRequest(
-            Sport sport, 
-            DFSSite site, 
-            GameType gameType, 
+            Sport sport,
+            DFSSite site,
+            GameType gameType,
             string name)
         {
             Sport = sport;

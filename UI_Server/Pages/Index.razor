@@ -6,6 +6,18 @@
 
 <div>
     <div class="rz-p-5">
-        <SlateSelector/>
+        <SlateSelector OnSlateSelected="OnSlateSelected"/>
+        <SlateView SlateID="SlateID"/>
     </div>    
 </div>
+
+@code
+{
+    private SlateID? SlateID { get; set; }
+
+    private Task OnSlateSelected(SlateID slateID)
+    {
+        SlateID = slateID;
+        return Task.CompletedTask;
+    }
+}
