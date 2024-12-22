@@ -11,13 +11,21 @@ namespace Domain.SlateAggregate.Models
         public string LastName { get; private set; } = string.Empty;
         public Sport Sport { get; private set; }
 
+        private List<Projection> _projections;
+        public IReadOnlyCollection<Projection> Projections => _projections;
+
+        private List<Salary> _salaries;
+        public IReadOnlyCollection<Salary> Salaries => _salaries;
+
         #region Constructors
 
         private Player():base(new PlayerID())
         {
+            _projections = new List<Projection>();
+            _salaries = new List<Salary>();
         }
 
-        public Player(
+        private Player(
             PlayerID id,
             string firstName,
             string lastName,
@@ -26,6 +34,45 @@ namespace Domain.SlateAggregate.Models
             FirstName = firstName;
             LastName = lastName;
             Sport = sport;
+            _projections = new List<Projection>();
+            _salaries = new List<Salary>();
+        }
+
+        #endregion
+
+        #region Factory Methods
+
+        public static Player Create(
+            string firstName,
+            string lastName,
+            Sport sport)
+        {
+            return new Player(new PlayerID(), firstName, lastName, sport);
+        }
+
+        public static Player Create(
+            string name,
+            Sport sport)
+        {
+            var splitName = name.Split(' ');
+            var firstName = splitName[0];
+            var lastName = string.Join(' ', splitName.Skip(1)) ;
+            return new Player(new PlayerID(), firstName, lastName, sport);
+        }
+
+
+        #endregion
+
+        #region Methods
+
+        public void AddProjection(Projection projection)
+        {
+            _projections.Add(projection);
+        }
+
+        public void AddSalary(Salary salary)
+        {
+            _salaries.Add(salary);
         }
 
         #endregion

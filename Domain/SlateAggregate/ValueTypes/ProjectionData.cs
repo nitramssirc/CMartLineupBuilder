@@ -1,4 +1,6 @@
-﻿using Domain.Common.ValueTypes;
+﻿using Common.Enums;
+
+using Domain.Common.ValueTypes;
 
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,11 @@ namespace Domain.SlateAggregate.ValueTypes
 
         private ProjectionData()
         {
-            Name = string.Empty;
-            Value = 0;
         }
 
-        public ProjectionData(string name, decimal value)
+        public ProjectionData(StatCategories statCategory, decimal value)
         {
-            Name = name;
+            StatCategory = statCategory;
             Value = value;
         }
 
@@ -28,7 +28,7 @@ namespace Domain.SlateAggregate.ValueTypes
 
         #region Properties
 
-        public string Name { get; private set; }
+        public StatCategories StatCategory { get; private set; }
         public decimal Value { get; private set; }
 
         #endregion
@@ -37,7 +37,7 @@ namespace Domain.SlateAggregate.ValueTypes
 
         override protected IEnumerable<object> GetEqualityComponents()
         {
-            yield return Name;
+            yield return StatCategory;
             yield return Value;
         }
 

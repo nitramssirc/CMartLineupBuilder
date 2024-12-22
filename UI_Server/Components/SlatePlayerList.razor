@@ -1,0 +1,31 @@
+﻿@using Application.Queries.GetPlayersForSlate
+
+<RadzenDataGrid TItem="GetPlayerForSlateResponse" Data="@Players">
+    <Columns>
+        <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Name)" Title="Player Name" />
+        <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Positions)" Title="Position">
+            <Template Context="player">
+                @string.Join("/", player.Positions)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Team)" Title="Team" />
+        <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Salary)" Title="Salary" FormatString="{0:C0}"/>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    [Parameter] public SlateID? SlateID { get; set; }
+    [Inject] IMediator Mediator { get; set; } = null!;
+
+    List<GetPlayerForSlateResponse> Players = new List<GetPlayerForSlateResponse>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (SlateID == null) return;
+
+        var getPlayersRequest = new GetPlayerForSlateRequest(SlateID);
+        Players = await Mediator.Send(getPlayersRequest);
+    }
+
+
+}
