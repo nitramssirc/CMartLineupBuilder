@@ -38,36 +38,38 @@ namespace Repository.Repositories
 
         #region ICommandRespository Implementation
 
-        public Task AddAsync(Slate model)
+        async Task ICommandRepository<Slate, SlateID>.AddAsync(Slate model)
         {
-            _context.Slates.Add(model);
-            return Task.CompletedTask;
+            await _context.Slates.AddAsync(model);
         }
 
-        Task<Slate?> ICommandRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
+        async Task<Slate?> ICommandRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
         {
-            throw new NotImplementedException();
+            return await _context.Slates.FindAsync(id);
         }
 
-        public async Task SaveAsync()
+        async Task ICommandRepository<Slate, SlateID>.SaveAsync()
         {
             await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Slate>> FindAsync(Func<Slate, bool> predicate)
+        #endregion
+
+        #region IQueryRepository Implementation
+
+        async Task<IEnumerable<Slate>> IQueryRepository<Slate, SlateID>.FindAsync(Func<Slate, bool> predicate)
         {
-            var result = _context.Slates.AsNoTracking().Where(predicate).AsEnumerable();
-            return Task.FromResult(result);
+            return await Task.Run(() => _context.Slates.AsNoTracking().Where(predicate).AsEnumerable());
         }
 
-        public Task<IEnumerable<Slate>> GetAllAsync()
+        async Task<IEnumerable<Slate>> IQueryRepository<Slate, SlateID>.GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => _context.Slates.AsNoTracking().AsEnumerable());
         }
 
-        Task<Slate?> IQueryRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
+        async Task<Slate?> IQueryRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
         {
-            throw new NotImplementedException();
+            return await _context.Slates.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
         }
 
         #endregion

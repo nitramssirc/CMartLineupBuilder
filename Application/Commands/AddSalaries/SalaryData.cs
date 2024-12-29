@@ -22,5 +22,14 @@ namespace Application.Commands.AddSalaries
             Team = team;
             SiteID = siteID;
         }
+
+        private SalaryData()
+        {
+            PlayerName = string.Empty;
+            Position = string.Empty;
+            Salary = 0;
+            Team = string.Empty;
+            SiteID = string.Empty;
+        }
     }
 }

@@ -1,0 +1,77 @@
+﻿@using Application.Commands.AddSalaries
+@using CsvHelper
+@using CsvHelper.Configuration
+@using Newtonsoft.Json
+<RadzenFileInput TValue="string"
+ChooseText="Upload Salaries"
+Change=@OnSalariesUploaded
+Error=@OnSalariesUploadError
+Accept=".csv" />
+
+
+@code {
+    [Inject] IMediator Mediator { get; set; } = null!;
+    [Inject] NotificationService? NotificationService { get; set; } = null;
+    [Parameter] public SlateID? SlateID { get; set; }
+    [Parameter] public EventCallback SalariesUploaded { get; set; }
+
+    async void OnSalariesUploaded(string fileData)
+    {
+        try
+        {
+            if (SlateID == null) return;
+            if (fileData == null) return;
+
+            var salaries = DeserializeSalaries(fileData);
+
+            var addSalariesCommand = new AddSalariesRequest(SlateID, salaries);
+            var result = await Mediator.Send(addSalariesCommand);
+
+            if (!result.Success)
+            {
+                throw new Exception(result.Error);
+            }
+
+            await SalariesUploaded.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex.Message);
+        }
+    }
+
+    void OnSalariesUploadError(UploadErrorEventArgs args)
+    {
+        throw new Exception(args.Message);
+    }
+
+    private List<SalaryData> DeserializeSalaries(string fileData)
+    {
+        var fileBytes = Convert.FromBase64String(
+                fileData.Split(',')[1]);
+        var fileString = System.Text.Encoding.UTF8.GetString(fileBytes);
+
+        using (var csvReader = new CsvReader(new StringReader(fileString), System.Globalization.CultureInfo.InvariantCulture))            
+        {
+            csvReader.Context.RegisterClassMap<SalaryDataCsvClassMap>();
+            return csvReader.GetRecords<SalaryData>().ToList();            
+        }
+    }
+
+    private void ShowError(string message)
+    {
+        NotificationService?.Notify(NotificationSeverity.Error, message);
+    }
+
+    private class SalaryDataCsvClassMap : ClassMap<SalaryData>
+    {
+        public SalaryDataCsvClassMap()
+        {
+            Map(m => m.PlayerName).Name("Name");
+            Map(m => m.Position).Name("Position");
+            Map(m => m.Team).Name("TeamAbbrev");
+            Map(m => m.Salary).Name("Salary");
+            Map(m => m.SiteID).Name("ID");
+        }
+    }
+}
