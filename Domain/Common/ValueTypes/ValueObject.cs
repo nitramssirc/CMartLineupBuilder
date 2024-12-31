@@ -23,7 +23,7 @@
                 .Aggregate((x, y) => x ^ y);
         }
 
-        public static bool operator ==(ValueObject left, ValueObject right)
+        public static bool operator ==(ValueObject? left, ValueObject? right)
         {
             if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
             {
@@ -32,7 +32,7 @@
             return ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
         }
 
-        public static bool operator !=(ValueObject left, ValueObject right)
+        public static bool operator !=(ValueObject? left, ValueObject? right)
         {
             return !(left == right);
         }

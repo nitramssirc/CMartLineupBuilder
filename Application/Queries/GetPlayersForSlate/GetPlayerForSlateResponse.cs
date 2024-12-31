@@ -15,6 +15,7 @@ namespace Application.Queries.GetPlayersForSlate
         public PlayerID PlayerID { get; private set; }
         public string Name { get; private set; }
         public Team Team { get; private set; }
+        public string TeamName { get; private set; }
         public PlayerPosition[] Positions { get; private set; }
         public int Salary { get; private set; }
         public ProjectionData[] ProjectionData { get; private set; }
@@ -23,6 +24,7 @@ namespace Application.Queries.GetPlayersForSlate
             PlayerID playerID,
             string name,
             Team team,
+            string teamName,
             PlayerPosition[] positions,
             int salary,
             ProjectionData[] projections)
@@ -30,6 +32,7 @@ namespace Application.Queries.GetPlayersForSlate
             PlayerID = playerID;
             Name = name;
             Team = team;
+            TeamName = teamName;
             Positions = positions;
             Salary = salary;
             ProjectionData = projections;

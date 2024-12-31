@@ -9,20 +9,24 @@ using MediatR;
 
 namespace Application.Queries.GetPlayersForSlate
 {
-    public class GetPlayerForSlateQuery : 
+    public class GetPlayerForSlateQuery :
         IRequestHandler<GetPlayerForSlateRequest, List<GetPlayerForSlateResponse>>
     {
         #region Dependencies
 
-        private readonly IQueryRepository<Player, PlayerID> _queryRepository;
+        private readonly IQueryRepository<Player, PlayerID> _playerRepository;
+        private readonly IQueryRepository<Slate, SlateID> _slateRepository;
 
         #endregion
 
         #region Constructor
 
-        public GetPlayerForSlateQuery(IQueryRepository<Player, PlayerID> queryRepository)
+        public GetPlayerForSlateQuery(
+            IQueryRepository<Player, PlayerID> playerRepository,
+            IQueryRepository<Slate, SlateID> slateRepository)
         {
-            _queryRepository = queryRepository;
+            _playerRepository = playerRepository;
+            _slateRepository = slateRepository;
         }
 
         #endregion
@@ -32,22 +36,29 @@ namespace Application.Queries.GetPlayersForSlate
         public async Task<List<GetPlayerForSlateResponse>> Handle(
             GetPlayerForSlateRequest request, CancellationToken cancellationToken)
         {
-            var players = await _queryRepository.FindAsync(p => 
-                p.Salaries.Any(s=>s.SlateID == request.SlateID) ||
-                p.Projections.Any(s=>s.SlateID == request.SlateID));
+            var slate = await _slateRepository.GetByIdAsync(request.SlateID);
+            if (slate == null)
+            {
+                throw new Exception("Slate not found");
+            }
+            var players = await _playerRepository.FindAsync(p =>
+                p.Salaries.Any(s => s.SlateID == request.SlateID) ||
+                p.Projections.Any(s => s.SlateID == request.SlateID));
 
-            return players.Select(p => ConstructResponse(p, request.SlateID)).ToList();
+            return players.Select(p => ConstructResponse(p, slate)).ToList();
         }
 
-        private GetPlayerForSlateResponse ConstructResponse(Player p, SlateID slateID)
+        private GetPlayerForSlateResponse ConstructResponse(Player p, Slate slate)
         {
             var name = $"{p.FirstName} {p.LastName}";
-            var salary = p.Salaries.FirstOrDefault(s=>s.SlateID == slateID);
-            var projection = p.Projections.FirstOrDefault(p=>p.SlateID == slateID);
+            var slateID = slate.Id;
+            var salary = p.Salaries.FirstOrDefault(s => s.SlateID == slateID);
+            var projection = p.Projections.FirstOrDefault(p => p.SlateID == slateID);
             return new GetPlayerForSlateResponse(
                 p.Id,
                 name,
                 salary?.Team ?? Team.UNKNOWN,
+                salary?.Team.GetName(slate.Sport) ?? string.Empty,
                 salary?.Positions.ToArray() ?? Array.Empty<PlayerPosition>(),
                 salary?.SalaryAmount ?? 0,
                 projection?.Data.ToArray() ?? Array.Empty<ProjectionData>()

@@ -9,101 +9,140 @@ namespace Common.Enums
     public enum Team
     {
         UNKNOWN,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Arizona Cardinals")]
         ARI,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Atlanta Falcons")]
+        [TeamName(Sport.NBA, "Atlanta Hawks")]
         ATL,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Baltimore Ravens")]
         BAL,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Buffalo Bills")]
         BUF,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Carolina Panthers")]
         CAR,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Chicago Bears")]
+        [TeamName(Sport.NBA, "Chicago Bulls")]
         CHI,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Cincinnati Bengals")]
         CIN,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Cleveland Browns")]
+        [TeamName(Sport.NBA, "Cleveland Cavaliers")]
         CLE,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Dallas Cowboys")]
+        [TeamName(Sport.NBA, "Dallas Mavericks")]
         DAL,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Denver Broncos")]
+        [TeamName(Sport.NBA, "Denver Nuggets")]
         DEN,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Detroit Lions")]
+        [TeamName(Sport.NBA, "Detroit Pistons")]
         DET,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Green Bay Packers")]
         GB,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Houston Texans")]
+        [TeamName(Sport.NBA, "Houston Rockets")]
         HOU,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Indianapolis Colts")]
+        [TeamName(Sport.NBA, "Indiana Pacers")]
         IND,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Jacksonville Jaguars")]
         JAX,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Kansas City Chiefs")]
         KC,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Las Angeles Chargers")]
+        [TeamName(Sport.NBA, "Los Angeles Clippers")]
         LAC,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Las Angeles Rams")]
         LAR,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Las Vegas Raiders")]
         LV,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Miami Dolphins")]
+        [TeamName(Sport.NBA, "Miami Heat")]
         MIA,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Minnesota Vikings")]
+        [TeamName(Sport.NBA, "Minnesota Timberwolves")]
         MIN,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "New England Patriots")]
         NE,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "New Orleans Saints")]
+        [TeamName(Sport.NBA, "New Orleans Pelicans")]
         NO,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "New York Giants")]
         NYG,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "New York Jets")]
         NYJ,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Philadelphia Eagles")]
+        [TeamName(Sport.NBA, "Philadelphia 76ers")]
         PHI,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Pittsburgh Steelers")]
         PIT,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Seattle Seahawks")]
         SEA,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "San Francisco 49ers")]
         SF,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Tampa Bay Buccaneers")]
         TB,
-        [WhichSport([Sport.NFL])]
+        [TeamName(Sport.NFL, "Tennessee Titans")]
         TEN,
-        [WhichSport([Sport.NFL, Sport.NBA])]
+        [TeamName(Sport.NFL, "Washington Commanders")]
+        [TeamName(Sport.NBA, "Washington Wizards")]
         WAS,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Boston Celtics")]
         BOS,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Brooklyn Nets")]
         BKN,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Charlotte Hornets")]
         CHA,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Golden State Warriors")]
         GS,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Los Angeles Lakers")]
         LAL,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Memphis Grizzlies")]
         MEM,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Milwaukee Bucks")]
         MIL,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "New York Knicks")]
         NY,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Oklahoma City Thunder")]
         OKC,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Orlando Magic")]
         ORL,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Phoenix Suns")]
         PHX,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Portland Trail Blazers")]
         POR,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Sacramento Kings")]
         SAC,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "San Antonio Spurs")]
         SA,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Toronto Raptors")]
         TOR,
-        [WhichSport([Sport.NBA])]
+        [TeamName(Sport.NBA, "Utah Jazz")]
         UTA,
+    }
+
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    public class TeamNameAttribute : Attribute
+    {
+        public Sport Sport { get; }
+        public string Name { get; }
+
+
+        public TeamNameAttribute(Sport sport, string name)
+        {
+            Sport = sport;
+            Name = name;
+        }
+    }
+
+    public static class TeamExtensions
+    {
+        public static string GetName(this Team team, Sport sport)
+        {
+            var field = team.GetType().GetField(team.ToString());
+            var attributes = field?.GetCustomAttributes(typeof(TeamNameAttribute), false) as TeamNameAttribute[];
+            var attribute = attributes?.FirstOrDefault(a => a.Sport == sport);
+            return attribute?.Name ?? team.ToString();
+        }
     }
 }

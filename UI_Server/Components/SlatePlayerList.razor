@@ -13,7 +13,14 @@
                     @string.Join("/", player.Positions)
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Team)" Title="Team" />
+            <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.TeamName)" Title="Team">
+                <Template Context="player">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                        <RadzenImage Path=@GetTeamLogoPath(player.TeamName) Style="width:30px;height:30px"/>
+                        @player.Team
+                    </RadzenStack>                       
+                </Template>
+            </RadzenDataGridColumn>
             <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Salary)" Title="Salary" FormatString="{0:C0}" />
         </Columns>
     </RadzenDataGrid>
@@ -43,5 +50,8 @@
         Players = await Mediator.Send(getPlayersRequest);
     }
 
-
+    private string GetTeamLogoPath(string teamName)
+    {
+        return $"logos/{teamName.Replace(" ", string.Empty)}.png";
+    }
 }
