@@ -17,7 +17,7 @@ namespace Repository.Repositories
         ICommandRepository<Player, PlayerID>,
         IQueryRepository<Player, PlayerID>
     {
-        private readonly List<Player> _players = new List<Player>();
+        private static readonly List<Player> _players = new List<Player>();
 
         Task ICommandRepository<Player, PlayerID>.AddAsync(Player model)
         {
