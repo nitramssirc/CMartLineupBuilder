@@ -8,11 +8,27 @@ namespace Common.Enums
 {
     public enum PlayerPosition
     {
+        [WhichSport([Sport.NFL])]
         QB,
+        [WhichSport([Sport.NFL])]
         RB,
+        [WhichSport([Sport.NFL])]
         WR,
+        [WhichSport([Sport.NFL])]
         TE,
+        [WhichSport([Sport.NFL])]
         K,
-        DST
+        [WhichSport([Sport.NFL])]
+        DST,
+        [WhichSport([Sport.NBA])]
+        PG,
+        [WhichSport([Sport.NBA])]
+        SG,
+        [WhichSport([Sport.NBA])]
+        SF,
+        [WhichSport([Sport.NBA])]
+        PF,
+        [WhichSport([Sport.NBA])]
+        C
     }
 }

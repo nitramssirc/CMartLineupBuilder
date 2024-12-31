@@ -9,112 +9,101 @@ namespace Common.Enums
     public enum Team
     {
         UNKNOWN,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         ARI,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         ATL,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         BAL,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         BUF,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         CAR,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         CHI,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         CIN,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         CLE,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         DAL,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         DEN,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         DET,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         GB,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         HOU,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         IND,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         JAX,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         KC,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         LAC,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         LAR,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         LV,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         MIA,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         MIN,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         NE,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         NO,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         NYG,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         NYJ,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         PHI,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         PIT,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         SEA,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         SF,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         TB,
-        [TeamSport([Sport.NFL])]
+        [WhichSport([Sport.NFL])]
         TEN,
-        [TeamSport([Sport.NFL, Sport.NBA])]
+        [WhichSport([Sport.NFL, Sport.NBA])]
         WAS,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         BOS,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         BKN,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         CHA,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         GS,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         LAL,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         MEM,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         MIL,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         NY,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         OKC,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         ORL,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         PHX,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         POR,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         SAC,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         SA,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         TOR,
-        [TeamSport([Sport.NBA])]
+        [WhichSport([Sport.NBA])]
         UTA,
-    }
-
-    //Attribute to assign a team to a sport
-    public class TeamSportAttribute : Attribute
-    {
-        public TeamSportAttribute(Sport[] sports)
-        {
-            Sports = sports;
-        }
-
-        public Sport[] Sports { get; }
     }
 }
