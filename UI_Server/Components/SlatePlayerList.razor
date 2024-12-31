@@ -25,7 +25,7 @@
 
     List<GetPlayerForSlateResponse> Players = new List<GetPlayerForSlateResponse>();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         await LoadPlayers();
     }

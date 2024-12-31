@@ -72,7 +72,21 @@ namespace Domain.SlateAggregate.Models
 
         public void AddSalary(Salary salary)
         {
+            var existingSalary = GetExistingSalaryForSlate(salary.SlateID);
+            if (existingSalary != null)
+            {
+                _salaries.Remove(existingSalary);
+            }
             _salaries.Add(salary);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private Salary? GetExistingSalaryForSlate(SlateID slateID)
+        {
+            return _salaries.FirstOrDefault(s => s.SlateID == slateID);
         }
 
         #endregion

@@ -36,14 +36,14 @@ namespace Application.Queries.GetPlayersForSlate
                 p.Salaries.Any(s=>s.SlateID == request.SlateID) ||
                 p.Projections.Any(s=>s.SlateID == request.SlateID));
 
-            return players.Select(p => ConstructResponse(p)).ToList();
+            return players.Select(p => ConstructResponse(p, request.SlateID)).ToList();
         }
 
-        private GetPlayerForSlateResponse ConstructResponse(Player p)
+        private GetPlayerForSlateResponse ConstructResponse(Player p, SlateID slateID)
         {
             var name = $"{p.FirstName} {p.LastName}";
-            var salary = p.Salaries.FirstOrDefault();
-            var projection = p.Projections.FirstOrDefault();
+            var salary = p.Salaries.FirstOrDefault(s=>s.SlateID == slateID);
+            var projection = p.Projections.FirstOrDefault(p=>p.SlateID == slateID);
             return new GetPlayerForSlateResponse(
                 p.Id,
                 name,
