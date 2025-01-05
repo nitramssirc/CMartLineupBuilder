@@ -49,7 +49,7 @@ namespace Domain.Entities
 
         #endregion
 
-        #region Factory Methods
+        #region Public Methods
 
         public static Slate Create(
             DateTime date,
@@ -61,6 +61,12 @@ namespace Domain.Entities
             var newSlate = new Slate(new SlateID(), date, sport, gameType, dfsSite, name);
             newSlate.AddDomainEvent(new SlateCreatedEvent(newSlate));
             return newSlate;
+        }
+
+        public void AddSalary(Salary salary)
+        {
+            _salaries.Add(salary);
+            AddDomainEvent(new SalaryAddedToSlateEvent(this, salary));
         }
 
         #endregion

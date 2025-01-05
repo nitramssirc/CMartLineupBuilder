@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 
 using Domain.Common.Entities;
+using Domain.Events;
 using Domain.ValueTypes;
 
 using System;
@@ -15,8 +16,8 @@ namespace Domain.Entities
     {
         #region Properties
 
-        public SlateID SlateID { get; private set; }
-        public PlayerID PlayerID { get; private set; }
+        public SlateID SlateID { get; internal set; }
+        public string PlayerName { get; internal set; }
         public PlayerPosition[] Positions { get; private set; }
         public Team Team { get; private set; }
         public int SalaryAmount { get; private set; }
@@ -29,7 +30,7 @@ namespace Domain.Entities
         private Salary() : base(new SalaryID())
         {
             SlateID = new SlateID();
-            PlayerID = new PlayerID();
+            PlayerName = string.Empty;
             Positions = Array.Empty<PlayerPosition>();
             DFSSiteID = string.Empty;
         }
@@ -37,14 +38,14 @@ namespace Domain.Entities
         private Salary(
             SalaryID id,
             SlateID slateID,
-            PlayerID playerID,
+            string playerName,
             PlayerPosition[] positions,
             Team team,
             int salaryAmount,
             string dfsSiteID) : base(id)
         {
             SlateID = slateID;
-            PlayerID = playerID;
+            PlayerName = playerName;
             Positions = positions;
             Team = team;
             SalaryAmount = salaryAmount;
@@ -57,18 +58,20 @@ namespace Domain.Entities
 
         public static Salary Create(
             SlateID slateID,
-            PlayerID playerID,
+            string playerName,
             PlayerPosition[] positions,
             Team team,
             int salaryAmount,
             string dfsSiteID)
         {
-            return new Salary(new SalaryID(), slateID, playerID, positions, team, salaryAmount, dfsSiteID);
+            var newSalary = new Salary(new SalaryID(), slateID, playerName, positions, team, salaryAmount, dfsSiteID);
+            newSalary.AddDomainEvent(new SalaryCreatedEvent(newSalary.Id, slateID, playerName, positions, team, salaryAmount, dfsSiteID));
+            return newSalary;
         }
 
         public static Salary Create(
             SlateID slateID,
-            PlayerID playerID,
+            string playerName,
             string positions,
             string team,
             int salaryAmount,
@@ -76,7 +79,7 @@ namespace Domain.Entities
         {
             var salaryPositions = ParsePositions(positions);
             var salaryTeam = ParseTeam(team);
-            return Create(slateID, playerID, salaryPositions, salaryTeam, salaryAmount, dfsSiteID);
+            return Create(slateID, playerName, salaryPositions, salaryTeam, salaryAmount, dfsSiteID);
         }
 
         #endregion

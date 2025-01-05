@@ -4,7 +4,7 @@
     {
         public Guid Id { get; }
 
-        public EntityID(Guid id)
+        internal EntityID(Guid id)
         {
             Id = id;
         }

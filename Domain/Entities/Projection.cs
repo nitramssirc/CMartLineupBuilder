@@ -11,7 +11,6 @@ namespace Domain.Entities
         {
             Source = string.Empty;
             SlateID = new SlateID();
-            PlayerID = new PlayerID();
             _data = new List<ProjectionData>();
         }
 
@@ -31,8 +30,6 @@ namespace Domain.Entities
         public string Source { get; private set; }
 
         public SlateID? SlateID { get; internal set; }
-
-        public PlayerID? PlayerID { get; internal set; }
 
         private List<ProjectionData> _data;
         public IReadOnlyCollection<ProjectionData> Data { get { return _data; } }

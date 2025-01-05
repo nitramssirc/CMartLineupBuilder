@@ -15,7 +15,7 @@ namespace Domain.Events
     /// <summary>
     /// Event that is raised when a slate is created
     /// </summary>
-    public class SlateCreatedEvent:IDomainEvent
+    public class SlateCreatedEvent : IDomainEvent
     {
         public SlateID SlateID { get; private set; }
         public string Name { get; private set; }
@@ -27,8 +27,8 @@ namespace Domain.Events
         public GameType GameType { get; private set; }
 
         public DFSSite DFSSite { get; private set; }
-        
-        public SlateCreatedEvent(Slate slate)
+
+        internal SlateCreatedEvent(Slate slate)
         {
             SlateID = slate.Id;
             Name = slate.Name;
@@ -36,6 +36,11 @@ namespace Domain.Events
             Sport = slate.Sport;
             GameType = slate.GameType;
             DFSSite = slate.DFSSite;
+        }
+
+        public override string ToString()
+        {
+            return $"SlateCreatedEvent: {Name} - {Date} - {Sport} - {GameType} - {DFSSite}";
         }
     }
 }
