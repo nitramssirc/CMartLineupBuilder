@@ -1,4 +1,4 @@
-﻿using Domain.Common.Models;
+﻿using Domain.Common.Entities;
 
 namespace Application.Common.Repositories
 {

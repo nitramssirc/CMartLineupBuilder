@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.SlateAggregate.ValueTypes
+namespace Domain.ValueTypes
 {
-    public class ProjectionData: ValueObject
+    public class ProjectionData : ValueObject
     {
         #region Constructors
 

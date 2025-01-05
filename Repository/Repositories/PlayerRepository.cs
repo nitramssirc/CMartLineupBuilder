@@ -1,15 +1,7 @@
 ﻿using Application.Common.Repositories;
 
-using Common.Enums;
-
-using Domain.SlateAggregate.Models;
-using Domain.SlateAggregate.ValueTypes;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities;
+using Domain.ValueTypes;
 
 namespace Repository.Repositories
 {

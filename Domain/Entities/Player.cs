@@ -1,9 +1,9 @@
 ﻿using Common.Enums;
 
-using Domain.Common.Models;
-using Domain.SlateAggregate.ValueTypes;
+using Domain.Common.Entities;
+using Domain.ValueTypes;
 
-namespace Domain.SlateAggregate.Models
+namespace Domain.Entities
 {
     public class Player : Entity<PlayerID>, IAggregateRoot
     {
@@ -19,7 +19,7 @@ namespace Domain.SlateAggregate.Models
 
         #region Constructors
 
-        private Player():base(new PlayerID())
+        private Player() : base(new PlayerID())
         {
             _projections = new List<Projection>();
             _salaries = new List<Salary>();
@@ -56,7 +56,7 @@ namespace Domain.SlateAggregate.Models
         {
             var splitName = name.Split(' ');
             var firstName = splitName[0];
-            var lastName = string.Join(' ', splitName.Skip(1)) ;
+            var lastName = string.Join(' ', splitName.Skip(1));
             return new Player(new PlayerID(), firstName, lastName, sport);
         }
 

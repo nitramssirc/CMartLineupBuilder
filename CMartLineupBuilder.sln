@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI_Server", "UI_Server\UI_Server.csproj", "{3AA5283D-86FB-43D7-81EB-9A5100BF6A54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainTests", "DomainTests\DomainTests.csproj", "{4E05D15D-2ECA-485F-B563-E3D05EAA3253}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{4380366B-EFFB-4004-8B6F-B606858F68E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,16 @@ Global
 		{3AA5283D-86FB-43D7-81EB-9A5100BF6A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AA5283D-86FB-43D7-81EB-9A5100BF6A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AA5283D-86FB-43D7-81EB-9A5100BF6A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E05D15D-2ECA-485F-B563-E3D05EAA3253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E05D15D-2ECA-485F-B563-E3D05EAA3253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E05D15D-2ECA-485F-B563-E3D05EAA3253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E05D15D-2ECA-485F-B563-E3D05EAA3253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E05D15D-2ECA-485F-B563-E3D05EAA3253} = {4380366B-EFFB-4004-8B6F-B606858F68E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3EBDC57-E7F4-424F-AB9D-D07A57731201}

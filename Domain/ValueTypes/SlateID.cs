@@ -1,6 +1,6 @@
 ﻿using Domain.Common.ValueTypes;
 
-namespace Domain.SlateAggregate.ValueTypes
+namespace Domain.ValueTypes
 {
     public class SlateID : EntityID
     {

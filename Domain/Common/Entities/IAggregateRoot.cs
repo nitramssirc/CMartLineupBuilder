@@ -1,4 +1,4 @@
-﻿namespace Domain.Common.Models
+﻿namespace Domain.Common.Entities
 {
     public interface IAggregateRoot
     {

@@ -1,10 +1,4 @@
-﻿using Application.Common.Repositories;
-using Application.Queries.GetSlates;
-
-using Common.Enums;
-
-using Domain.SlateAggregate.Models;
-using Domain.SlateAggregate.ValueTypes;
+﻿using Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
 

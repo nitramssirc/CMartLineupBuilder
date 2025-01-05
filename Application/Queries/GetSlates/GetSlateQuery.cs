@@ -2,8 +2,8 @@
 
 using Application.Common.Repositories;
 
-using Domain.SlateAggregate.Models;
-using Domain.SlateAggregate.ValueTypes;
+using Domain.Entities;
+using Domain.ValueTypes;
 
 using MediatR;
 

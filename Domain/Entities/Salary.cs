@@ -1,7 +1,7 @@
 ﻿using Common.Enums;
 
-using Domain.Common.Models;
-using Domain.SlateAggregate.ValueTypes;
+using Domain.Common.Entities;
+using Domain.ValueTypes;
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.SlateAggregate.Models
+namespace Domain.Entities
 {
     public class Salary : Entity<SalaryID>
     {

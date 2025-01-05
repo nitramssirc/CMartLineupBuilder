@@ -1,13 +1,14 @@
-﻿using Domain.Common.Models;
-using Domain.SlateAggregate.ValueTypes;
+﻿using Domain.Common.Entities;
+using Domain.ValueTypes;
 
-namespace Domain.SlateAggregate.Models
+namespace Domain.Entities
 {
-    public class Projection:Entity<ProjectionID>
-    {              
+    public class Projection : Entity<ProjectionID>
+    {
         #region Constructors
 
-        private Projection() : base(new ProjectionID()) {
+        private Projection() : base(new ProjectionID())
+        {
             Source = string.Empty;
             SlateID = new SlateID();
             PlayerID = new PlayerID();
@@ -16,15 +17,11 @@ namespace Domain.SlateAggregate.Models
 
         public Projection(
             ProjectionID id,
-            string source,
-            SlateID slateID,
-            PlayerID playerID,
+            string source,            
             List<ProjectionData> data) : base(id)
         {
-            Source = source;
-            SlateID = slateID;
-            PlayerID = playerID;
-            _data = data;
+            Source = source;            
+            _data = data;           
         }
 
         #endregion
@@ -33,9 +30,9 @@ namespace Domain.SlateAggregate.Models
 
         public string Source { get; private set; }
 
-        public SlateID SlateID { get; private set; }
+        public SlateID? SlateID { get; internal set; }
 
-        public PlayerID PlayerID { get; private set; }
+        public PlayerID? PlayerID { get; internal set; }
 
         private List<ProjectionData> _data;
         public IReadOnlyCollection<ProjectionData> Data { get { return _data; } }

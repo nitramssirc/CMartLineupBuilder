@@ -1,4 +1,4 @@
-﻿using Domain.Common.Models;
+﻿using Domain.Common.Entities;
 using Domain.Common.ValueTypes;
 
 using System;

@@ -1,6 +1,6 @@
 ﻿using Application.Common.Responses;
 
-using Domain.SlateAggregate.ValueTypes;
+using Domain.ValueTypes;
 
 namespace Application.Commands.CreateSlate
 {

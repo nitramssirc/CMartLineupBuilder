@@ -1,6 +1,6 @@
 ﻿using Common.Enums;
 
-using Domain.SlateAggregate.ValueTypes;
+using Domain.ValueTypes;
 
 using System;
 using System.Collections.Generic;
