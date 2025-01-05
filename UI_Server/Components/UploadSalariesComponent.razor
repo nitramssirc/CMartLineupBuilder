@@ -3,10 +3,11 @@
 @using CsvHelper.Configuration
 @using Newtonsoft.Json
 <RadzenFileInput TValue="string"
-ChooseText="Upload Salaries"
-Change=@OnSalariesUploaded
-Error=@OnSalariesUploadError
-Accept=".csv" />
+                 @bind-Value="FileInputBindValue"
+                 ChooseText="Upload Salaries"
+                 Change=@OnSalariesUploaded
+                 Error=@OnSalariesUploadError
+                 Accept=".csv" />
 
 
 @code {
@@ -15,12 +16,15 @@ Accept=".csv" />
     [Parameter] public SlateID? SlateID { get; set; }
     [Parameter] public EventCallback SalariesUploaded { get; set; }
 
+    string? FileInputBindValue;
+
     async void OnSalariesUploaded(string fileData)
     {
         try
         {
             if (SlateID == null) return;
             if (fileData == null) return;
+            FileInputBindValue = null;
 
             var salaries = DeserializeSalaries(fileData);
 
@@ -51,10 +55,10 @@ Accept=".csv" />
                 fileData.Split(',')[1]);
         var fileString = System.Text.Encoding.UTF8.GetString(fileBytes);
 
-        using (var csvReader = new CsvReader(new StringReader(fileString), System.Globalization.CultureInfo.InvariantCulture))            
+        using (var csvReader = new CsvReader(new StringReader(fileString), System.Globalization.CultureInfo.InvariantCulture))
         {
             csvReader.Context.RegisterClassMap<SalaryDataCsvClassMap>();
-            return csvReader.GetRecords<SalaryData>().ToList();            
+            return csvReader.GetRecords<SalaryData>().ToList();
         }
     }
 
