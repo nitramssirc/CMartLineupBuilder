@@ -69,7 +69,10 @@ namespace Repository.Repositories
 
         async Task<Slate?> IQueryRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
         {
-            return await _context.Slates.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
+            return await _context.Slates
+                .Include(s=>s.Salaries)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         #endregion

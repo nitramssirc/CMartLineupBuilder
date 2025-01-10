@@ -21,7 +21,7 @@ namespace Domain.Entities
         public string Name { get; private set; } = string.Empty;
 
         private readonly List<Projection> _projections = [];
-        public IReadOnlyCollection<Projection> Projections => _projections;
+        //public IReadOnlyCollection<Projection> Projections => _projections;
 
         private readonly List<Salary> _salaries = [];
         public IReadOnlyCollection<Salary> Salaries => _salaries;
@@ -65,8 +65,17 @@ namespace Domain.Entities
 
         public void AddSalary(Salary salary)
         {
-            _salaries.Add(salary);
-            AddDomainEvent(new SalaryAddedToSlateEvent(this, salary));
+            //Remove existing salary for player
+            var existingSalaries = _salaries.Where(s => s.DFSSiteID == salary.DFSSiteID ).ToList();
+            if(existingSalaries.Count == 0) 
+            {
+                _salaries.Add(salary);
+                AddDomainEvent(new SalaryAddedToSlateEvent(this, salary));
+            }
+            foreach (var existingSalary in existingSalaries) {
+                existingSalary.SalaryAmount = salary.SalaryAmount;
+            }
+            
         }
 
         #endregion

@@ -20,7 +20,7 @@ namespace Domain.Entities
         public string PlayerName { get; internal set; }
         public PlayerPosition[] Positions { get; private set; }
         public Team Team { get; private set; }
-        public int SalaryAmount { get; private set; }
+        public int SalaryAmount { get; internal set; }
         public string DFSSiteID { get; private set; }
 
         #endregion
