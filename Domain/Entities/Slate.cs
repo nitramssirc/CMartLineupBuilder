@@ -32,7 +32,7 @@ namespace Domain.Entities
 
         private Slate() : base(new SlateID()) { }
 
-        private Slate(
+        internal Slate(
             SlateID id,
             DateTime date,
             Sport sport,

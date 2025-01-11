@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications
 {
-    internal interface ISpecification<T>
+    public interface ISpecification; 
+    public interface ISpecification<T>:ISpecification
     {
         Expression<Func<T, bool>> Expression { get; }
         List<Expression<Func<T, object>>> Includes { get; }

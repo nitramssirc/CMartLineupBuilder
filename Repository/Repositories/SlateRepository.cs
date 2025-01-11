@@ -1,7 +1,9 @@
 ﻿using Application.Repositories;
+using Application.Specifications;
 
 using Common.Enums;
 
+using Domain.Common.Entities;
 using Domain.Entities;
 using Domain.ValueTypes;
 
@@ -17,22 +19,14 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public class SlateRepository :
+    public class SlateRepository(CMartDbContext context) : 
+        BaseRepository<Slate, SlateID>(context),
         ICommandRepository<Slate, SlateID>,
         IQueryRepository<Slate, SlateID>
     {
         #region Dependencies
 
-        private readonly CMartDbContext _context;
-
-        #endregion
-
-        #region Constructor
-
-        public SlateRepository(CMartDbContext context)
-        {
-            _context = context;
-        }
+        private readonly CMartDbContext _context = context;
 
         #endregion
 
@@ -43,39 +37,32 @@ namespace Repository.Repositories
             await _context.Slates.AddAsync(model);
         }
 
-        async Task<Slate?> ICommandRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
-        {
-            return await _context.Slates.FindAsync(id);
-        }
-
         async Task ICommandRepository<Slate, SlateID>.SaveAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        async Task<Slate?> ICommandRepository<Slate, SlateID>.GetEntity(ISpecification<Slate> specification)
+        {
+            return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
 
         #endregion
 
         #region IQueryRepository Implementation
 
-        async Task<IEnumerable<Slate>> IQueryRepository<Slate, SlateID>.FindAsync(Func<Slate, bool> predicate)
+        public async Task<Slate?> GetEntity(ISpecification<Slate> specification)
         {
-            return await Task.Run(() => _context.Slates.AsNoTracking().Where(predicate).AsEnumerable());
+            return await ApplySpecification(specification).AsNoTracking().FirstOrDefaultAsync();
         }
 
-        async Task<IEnumerable<Slate>> IQueryRepository<Slate, SlateID>.GetAllAsync()
+        public async Task<IEnumerable<Slate>> GetEntities(ISpecification<Slate> specification)
         {
-            return await Task.Run(() => _context.Slates.AsNoTracking().AsEnumerable());
-        }
-
-        async Task<Slate?> IQueryRepository<Slate, SlateID>.GetByIdAsync(SlateID id)
-        {
-            return await _context.Slates
-                .Include(s=>s.Salaries)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(s => s.Id == id);
+            return await ApplySpecification(specification).AsNoTracking().ToListAsync();
         }
 
         #endregion
 
+        
     }
 }

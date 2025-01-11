@@ -1,4 +1,6 @@
 ﻿using Application.Repositories;
+using Application.Specifications.Factory;
+using Application.Specifications.SlateSpecs;
 
 using Common.Enums;
 
@@ -15,15 +17,18 @@ namespace Application.Queries.GetPlayersForSlate
         #region Dependencies
 
         private readonly IQueryRepository<Slate, SlateID> _slateRepository;
+        private readonly ISpecificationFactory specificationFactory;
 
         #endregion
 
         #region Constructor
 
         public GetPlayerForSlateQuery(
-            IQueryRepository<Slate, SlateID> slateRepository)
+            IQueryRepository<Slate, SlateID> slateRepository,
+            ISpecificationFactory specificationFactory)
         {
             _slateRepository = slateRepository;
+            this.specificationFactory = specificationFactory;
         }
 
         #endregion
@@ -33,14 +38,12 @@ namespace Application.Queries.GetPlayersForSlate
         public async Task<List<GetPlayerForSlateResponse>> Handle(
             GetPlayerForSlateRequest request, CancellationToken cancellationToken)
         {
-            var slate = await _slateRepository.GetByIdAsync(request.SlateID);
-            if (slate == null)
-            {
-                throw new Exception("Slate not found");
-            }
+            var specification = specificationFactory.Create<GetSlateByIDWithSalaries>(request.SlateID);
 
-
-            return slate.Salaries.OrderByDescending(s=>s.SalaryAmount).Select(salary => ConstructResponse(salary, slate)).ToList();            
+            var slate = await _slateRepository.GetEntity(specification);
+            return slate == null
+                ? throw new Exception("Slate not found")
+                : slate.Salaries.OrderByDescending(s=>s.SalaryAmount).Select(salary => ConstructResponse(salary, slate)).ToList();
         }
 
         private GetPlayerForSlateResponse ConstructResponse(Salary salary, Slate slate)

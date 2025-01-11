@@ -1,4 +1,6 @@
 ﻿using Application.Repositories;
+using Application.Specifications.Factory;
+using Application.Specifications.SlateSpecs;
 
 using Common.Enums;
 
@@ -13,16 +15,19 @@ namespace Application.Commands.AddSalaries
     {
         #region Dependencies
 
-        private readonly ICommandRepository<Slate, SlateID> _slateQueryRepository;
+        private readonly ICommandRepository<Slate, SlateID> _slateCommandRepository;
+        private readonly ISpecificationFactory specificationFactory;
 
         #endregion
 
         #region Constructor
 
         public AddSalariesCommand(
-            ICommandRepository<Slate, SlateID> slateQueryRepository)
+            ICommandRepository<Slate, SlateID> slateCommandRepository,
+            ISpecificationFactory specificationFactory)
         {
-            _slateQueryRepository = slateQueryRepository;
+            _slateCommandRepository = slateCommandRepository;
+            this.specificationFactory = specificationFactory;
         }
 
         #endregion
@@ -43,7 +48,7 @@ namespace Application.Commands.AddSalaries
                 }
 
                 //Save the changes
-                await _slateQueryRepository.SaveAsync();
+                await _slateCommandRepository.SaveAsync();
 
                 return new AddSalariesResponse();
 
@@ -60,8 +65,9 @@ namespace Application.Commands.AddSalaries
 
         private async Task<Slate> LookupSlate(SlateID id)
         {
-            var slate = await _slateQueryRepository.GetByIdAsync(id);
-            return slate == null ? throw new Exception("Slate not found") : slate;
+            var specification = specificationFactory.Create<GetSlatesByDFSSiteAndSport>(id);
+            var slate = await _slateCommandRepository.GetEntity(specification);
+            return slate ?? throw new Exception("Slate not found");
         }
 
         private void AddSalary(Slate slate, SalaryData salary)

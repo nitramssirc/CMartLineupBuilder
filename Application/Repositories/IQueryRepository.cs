@@ -1,4 +1,6 @@
-﻿using Domain.Common.Entities;
+﻿using Application.Specifications;
+
+using Domain.Common.Entities;
 using Domain.Common.ValueTypes;
 
 using System;
@@ -10,31 +12,21 @@ using System.Threading.Tasks;
 namespace Application.Repositories
 {
     /// <summary>
-    /// Defines a repository for looking up entities 
+    /// Defines a repository for looking up entities without tracking
     /// </summary>
     /// <typeparam name="TEntity">Type of entity</typeparam>
     /// <typeparam name="TId">Type of ID used by the entity</typeparam>
     public interface IQueryRepository<TEntity, TId> where TEntity : Entity<TId> where TId : EntityID
     {
         /// <summary>
-        /// Looks up an entity by ID
+        /// Gets an entity that matches the given specification
         /// </summary>
-        /// <param name="id">id to look up</param>
-        /// <returns>Entity with the given id</returns>
-        Task<TEntity?> GetByIdAsync(TId id);
+        Task<TEntity?> GetEntity(ISpecification<TEntity> specification);
 
         /// <summary>
-        /// Gets all entities in the repository
+        /// Gets all entities that match the given specification
         /// </summary>
-        /// <returns>Enumerable list of enitities</returns>
-        Task<IEnumerable<TEntity>> GetAllAsync();
-
-        /// <summary>
-        /// Finds entities that match a given predicate
-        /// </summary>
-        /// <param name="predicate">look up filter</param>
-        /// <returns>Enumerable list of entitites that match the predicate</returns>
-        Task<IEnumerable<TEntity>> FindAsync(Func<TEntity, bool> predicate);
+        Task<IEnumerable<TEntity>> GetEntities(ISpecification<TEntity> specification);
 
     }
 }
