@@ -1,4 +1,4 @@
-﻿using Application.Common.Repositories;
+﻿using Application.Repositories;
 
 using Common.Enums;
 
@@ -44,13 +44,14 @@ namespace Application.Commands.AddSalaries
 
                 //Save the changes
                 await _slateQueryRepository.SaveAsync();
+
+                return new AddSalariesResponse();
+
             }
             catch (Exception ex)
             {
                 return new AddSalariesResponse(ex.Message);
             }
-
-            return new AddSalariesResponse();
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using Domain.Common.Entities;
 
-namespace Application.Common.Repositories
+namespace Application.Repositories
 {
     /// <summary>
     /// Repository for command operations

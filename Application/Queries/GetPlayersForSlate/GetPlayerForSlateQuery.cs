@@ -1,4 +1,4 @@
-﻿using Application.Common.Repositories;
+﻿using Application.Repositories;
 
 using Common.Enums;
 

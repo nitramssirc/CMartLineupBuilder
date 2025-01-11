@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Common.Repositories
+namespace Application.Repositories
 {
     /// <summary>
     /// Defines a repository for looking up entities 
