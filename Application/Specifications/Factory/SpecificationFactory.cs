@@ -1,6 +1,6 @@
 ﻿namespace Application.Specifications.Factory;
 
-internal class SpecificationFactory : ISpecificationFactory
+public class SpecificationFactory : ISpecificationFactory
 {
     public T Create<T>(params object[] args) where T : class, ISpecification
     {

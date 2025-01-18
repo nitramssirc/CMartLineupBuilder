@@ -4,6 +4,8 @@ using Application.Repositories;
 using Application.Specifications.Factory;
 using Application.Specifications.SlateSpecs;
 
+using Common.Enums;
+
 using Domain.Entities;
 using Domain.ValueTypes;
 
@@ -33,10 +35,25 @@ namespace Application.Queries.GetSlates
 
         public async Task<List<GetSlateResponse>> Handle(GetSlateRequest request, CancellationToken cancellationToken)
         {
-            var specification = specificationFactory.Create<GetSlatesByDFSSiteAndSport>(request.Site, request.Sport);
-            var slates = (await _dbContext.GetEntities(specification)).OrderByDescending(s => s.Date);
+            var slates = await LookupSlates(request);
 
-            return slates.Select(s => new GetSlateResponse(s.Id, $"{s.Sport} - {s.DFSSite} - {s.GameType} - {s.Name}")).ToList();
+            return slates.
+                OrderByDescending(s=>s.Date).
+                Select(ConstructResponse).ToList();
+        }
+
+        private async Task<IEnumerable<Slate>> LookupSlates(GetSlateRequest request)
+        {
+            var dfsSite = Enum.Parse<DFSSite>(request.Site);
+            var sport = Enum.Parse<Sport>(request.Sport);
+            var specification = specificationFactory.Create<GetSlatesByDFSSiteAndSport>(dfsSite, sport);
+            return await _dbContext.GetEntities(specification);
+        }
+
+        private GetSlateResponse ConstructResponse(Slate slate)
+        {
+            var slateName = $"{slate.Sport} - {slate.DFSSite} - {slate.GameType} - {slate.Name}";
+            return new GetSlateResponse(slate.Id, slateName);
         }
     }
 }

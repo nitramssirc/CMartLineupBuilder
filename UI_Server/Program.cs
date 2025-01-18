@@ -1,4 +1,5 @@
 using Application.Queries.GetSlates;
+using Application.Specifications.Factory;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +28,9 @@ builder.Services.Scan(scan => scan
     .AddClasses(classes => classes.InNamespaces("Repository.Repositories"))
     .AsImplementedInterfaces()
     .WithScopedLifetime());
+
+//Application
+builder.Services.AddScoped<ISpecificationFactory, SpecificationFactory>();
 
 var app = builder.Build();
 
