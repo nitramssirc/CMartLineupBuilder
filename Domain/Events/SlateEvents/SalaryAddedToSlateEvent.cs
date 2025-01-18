@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Events
+namespace Domain.Events.SlateEvents
 {
     /// <summary>
     /// Event that is raised when a salary is added to a slate.

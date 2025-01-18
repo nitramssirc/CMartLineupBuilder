@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Events
+namespace Domain.Events.SalaryEvents
 {
     /// <summary>
     /// Event that is raised when a salary is created.

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Domain.Events;
 
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Common.Enums;
 using Domain.ValueTypes;
+using Domain.Events.SalaryEvents;
 
-namespace Domain.Events.Tests
+namespace DomainTests.Events.SalaryEvents
 {
     [TestClass()]
     public class SalaryCreatedEventTests

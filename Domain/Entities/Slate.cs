@@ -2,6 +2,7 @@
 
 using Domain.Common.Entities;
 using Domain.Events;
+using Domain.Events.SlateEvents;
 using Domain.ValueTypes;
 
 namespace Domain.Entities
@@ -73,7 +74,7 @@ namespace Domain.Entities
                 AddDomainEvent(new SalaryAddedToSlateEvent(this, salary));
             }
             foreach (var existingSalary in existingSalaries) {
-                existingSalary.SalaryAmount = salary.SalaryAmount;
+                existingSalary.UpdateSalaryAmount(salary.SalaryAmount);
             }
             
         }

@@ -2,6 +2,7 @@
 
 using Domain.Common.Entities;
 using Domain.Events;
+using Domain.Events.SalaryEvents;
 using Domain.ValueTypes;
 
 using System;
@@ -16,11 +17,11 @@ namespace Domain.Entities
     {
         #region Properties
 
-        public SlateID SlateID { get; internal set; }
-        public string PlayerName { get; internal set; }
+        public SlateID SlateID { get; private set; }
+        public string PlayerName { get; private set; }
         public PlayerPosition[] Positions { get; private set; }
         public Team Team { get; private set; }
-        public int SalaryAmount { get; internal set; }
+        public int SalaryAmount { get; private set; }
         public string DFSSiteID { get; private set; }
 
         #endregion
@@ -80,6 +81,21 @@ namespace Domain.Entities
             var salaryPositions = ParsePositions(positions);
             var salaryTeam = ParseTeam(team);
             return Create(slateID, playerName, salaryPositions, salaryTeam, salaryAmount, dfsSiteID);
+        }
+
+        #endregion
+
+        #region Update Methods
+
+        public void UpdateSalaryAmount(int salaryAmount)
+        {
+            if (salaryAmount == SalaryAmount)
+            {
+                return;
+            }
+
+            SalaryAmount = salaryAmount;
+            AddDomainEvent(new SalaryAmountUpdatedEvent(this));
         }
 
         #endregion

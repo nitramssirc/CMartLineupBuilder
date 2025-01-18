@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Enums;
-using Domain.Events;
+using Domain.Events.SlateEvents;
+using Domain.Events.SalaryEvents;
 
 namespace Domain.Entities.Tests
 {
@@ -181,6 +182,83 @@ namespace Domain.Entities.Tests
             Assert.IsNotNull(salaryAddedEvent);
             Assert.AreEqual(salary.Id, salaryAddedEvent.SalaryID);
             Assert.AreEqual(slate.Id, salaryAddedEvent.SlateID);
+        }
+
+        [TestMethod]
+        public void AddSalary_Should_UpdateSalaryAmount_When_SalaryAlreadyExistsForDFSSiteID()
+        {
+            // Arrange
+            var slate = Slate.Create(
+                DateTime.Now,
+                Sport.NFL,
+                GameType.Cash,
+                DFSSite.DraftKings,
+                "Test Slate"
+            );
+            var initialSalary = Salary.Create(
+                slate.Id,
+                "PlayerName",
+                new PlayerPosition[] { PlayerPosition.QB },
+                Team.ARI,
+                10000,
+                "DFSSiteID"
+            );
+            var updatedSalary = Salary.Create(
+                slate.Id,
+                "PlayerName",
+                new PlayerPosition[] { PlayerPosition.QB },
+                Team.ARI,
+                20000,
+                "DFSSiteID"
+            );
+
+            // Act
+            slate.AddSalary(initialSalary);
+            slate.AddSalary(updatedSalary);
+
+            // Assert
+            var salary = slate.Salaries.FirstOrDefault(s => s.DFSSiteID == "DFSSiteID");
+            Assert.IsNotNull(salary);
+            var domainEvents = salary.PublishDomainEvents();
+            Assert.IsTrue(domainEvents.Any(e => e is SalaryAmountUpdatedEvent));
+        }
+
+        [TestMethod]
+        public void AddSalary_Should_NotAddNewSalary_When_SalaryAlreadyExistsForDFSSiteID()
+        {
+            // Arrange
+            var slate = Slate.Create(
+                DateTime.Now,
+                Sport.NFL,
+                GameType.Cash,
+                DFSSite.DraftKings,
+                "Test Slate"
+            );
+            var initialSalary = Salary.Create(
+                slate.Id,
+                "PlayerName",
+                new PlayerPosition[] { PlayerPosition.QB },
+                Team.ARI,
+                10000,
+                "DFSSiteID"
+            );
+            var updatedSalary = Salary.Create(
+                slate.Id,
+                "PlayerName",
+                new PlayerPosition[] { PlayerPosition.QB },
+                Team.ARI,
+                20000,
+                "DFSSiteID"
+            );
+            slate.AddSalary(initialSalary);
+            slate.PublishDomainEvents();
+
+            // Act
+            slate.AddSalary(updatedSalary);
+
+            // Assert
+            var domainEvents = slate.PublishDomainEvents();
+            Assert.IsFalse(domainEvents.Any(e => e is SalaryAddedToSlateEvent));
         }
 
         #endregion

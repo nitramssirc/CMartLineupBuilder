@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Domain.Events;
 
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Common.Enums;
 using Domain.Entities;
+using Domain.Events.SlateEvents;
 
-namespace Domain.Events.Tests
+namespace DomainTests.Events.SlateEvents
 {
     [TestClass()]
     public class SlateCreatedEventTests

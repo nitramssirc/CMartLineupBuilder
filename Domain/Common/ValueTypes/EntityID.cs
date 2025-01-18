@@ -21,5 +21,10 @@
         }
 
         protected abstract IEnumerable<object> GetAdditionalIDComponents();
+
+        override public string ToString()
+        {
+            return Id.ToString();
+        }
     }
 }
