@@ -15,7 +15,7 @@ namespace Application.Commands.AddSalaries
     {
         #region Dependencies
 
-        private readonly ICommandRepository<Slate, SlateID> _slateCommandRepository;
+        private readonly ICommandRepository<Slate> _slateCommandRepository;
         private readonly ISpecificationFactory specificationFactory;
 
         #endregion
@@ -23,7 +23,7 @@ namespace Application.Commands.AddSalaries
         #region Constructor
 
         public AddSalariesCommand(
-            ICommandRepository<Slate, SlateID> slateCommandRepository,
+            ICommandRepository<Slate> slateCommandRepository,
             ISpecificationFactory specificationFactory)
         {
             _slateCommandRepository = slateCommandRepository;

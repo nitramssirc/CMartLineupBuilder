@@ -16,7 +16,7 @@ namespace Application.Queries.GetPlayersForSlate
     {
         #region Dependencies
 
-        private readonly IQueryRepository<Slate, SlateID> _slateRepository;
+        private readonly IQueryRepository<Slate> _slateRepository;
         private readonly ISpecificationFactory specificationFactory;
 
         #endregion
@@ -24,7 +24,7 @@ namespace Application.Queries.GetPlayersForSlate
         #region Constructor
 
         public GetPlayerForSlateQuery(
-            IQueryRepository<Slate, SlateID> slateRepository,
+            IQueryRepository<Slate> slateRepository,
             ISpecificationFactory specificationFactory)
         {
             _slateRepository = slateRepository;

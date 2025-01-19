@@ -46,6 +46,12 @@ namespace Application.Specifications.Factory.Tests
                     case nameof(GetSlatesByDFSSiteAndSport):
                         yield return new object[] { predicateImplementationType, new object[] { DFSSite.DraftKings, Sport.NFL } };
                         break;
+                    case nameof(GetSlateByID):
+                        yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
+                        break;
+                    case nameof(GetSlateByIDWithProjections):
+                        yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
+                        break;
                     default:
                         throw new ArgumentException($"Test Case Needs to be written for: {predicateImplementationType.Name}");
                 }

@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.SlateSpecs
 {
-    internal class GetSlateByIDWithSalaries : GetSlateByID
+    internal class GetSlateByID : Specification<Slate>
     {
-        public GetSlateByIDWithSalaries(SlateID slateID):base(slateID)
+        public override Expression<Func<Slate, bool>> Expression { get; }
+
+        public GetSlateByID(SlateID slateID)
         {
-            AddInclude(slate => slate.Salaries);
+            Expression = slate => slate.Id == slateID;
         }
+
     }
 }

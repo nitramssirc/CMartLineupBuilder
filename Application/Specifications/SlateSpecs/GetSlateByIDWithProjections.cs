@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.SlateSpecs
 {
-    internal class GetSlateByIDWithSalaries : GetSlateByID
+    internal class GetSlateByIDWithProjections : GetSlateByID
     {
-        public GetSlateByIDWithSalaries(SlateID slateID):base(slateID)
+        public GetSlateByIDWithProjections(SlateID slateID) : base(slateID)
         {
-            AddInclude(slate => slate.Salaries);
+            AddInclude(slate => slate.Projections);
         }
     }
 }

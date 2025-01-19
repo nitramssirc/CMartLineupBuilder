@@ -22,7 +22,7 @@ namespace Domain.Entities
         public string Name { get; private set; } = string.Empty;
 
         private readonly List<Projection> _projections = [];
-        //public IReadOnlyCollection<Projection> Projections => _projections;
+        public IReadOnlyCollection<Projection> Projections => _projections;
 
         private readonly List<Salary> _salaries = [];
         public IReadOnlyCollection<Salary> Salaries => _salaries;
@@ -77,6 +77,22 @@ namespace Domain.Entities
                 existingSalary.UpdateSalaryAmount(salary.SalaryAmount);
             }
             
+        }
+
+        public void AddProjection(Projection projection)
+        {
+            _projections.Add(projection);
+            AddDomainEvent(new ProjectionAddedToSlateEvent(projection));
+        }
+
+        public void ClearProjectionsFromSource(ProjectionSource projectionSource)
+        {
+            var projectionsToRemove = _projections.Where(p => p.ProjectionSource == projectionSource).ToList();
+            foreach (var projection in projectionsToRemove)
+            {
+                _projections.Remove(projection);
+                AddDomainEvent(new ProjectionRemovedFromSlateEvent(projection));
+            }
         }
 
         #endregion

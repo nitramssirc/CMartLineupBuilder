@@ -15,8 +15,7 @@ namespace Application.Repositories
     /// Defines a repository for looking up entities without tracking
     /// </summary>
     /// <typeparam name="TEntity">Type of entity</typeparam>
-    /// <typeparam name="TId">Type of ID used by the entity</typeparam>
-    public interface IQueryRepository<TEntity, TId> where TEntity : Entity<TId> where TId : EntityID
+    public interface IQueryRepository<TEntity> where TEntity : IAggregateRoot
     {
         /// <summary>
         /// Gets an entity that matches the given specification

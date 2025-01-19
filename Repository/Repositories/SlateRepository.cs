@@ -20,9 +20,9 @@ using System.Threading.Tasks;
 namespace Repository.Repositories
 {
     public class SlateRepository(CMartDbContext context) : 
-        BaseRepository<Slate, SlateID>(context),
-        ICommandRepository<Slate, SlateID>,
-        IQueryRepository<Slate, SlateID>
+        BaseRepository<Slate>(context),
+        ICommandRepository<Slate>,
+        IQueryRepository<Slate>
     {
         #region Dependencies
 
@@ -32,17 +32,17 @@ namespace Repository.Repositories
 
         #region ICommandRespository Implementation
 
-        async Task ICommandRepository<Slate, SlateID>.AddAsync(Slate model)
+        async Task ICommandRepository<Slate>.AddAsync(Slate model)
         {
             await _context.Slates.AddAsync(model);
         }
 
-        async Task ICommandRepository<Slate, SlateID>.SaveAsync()
+        async Task ICommandRepository<Slate>.SaveAsync()
         {
             await _context.SaveChangesAsync();
         }
 
-        async Task<Slate?> ICommandRepository<Slate, SlateID>.GetEntity(ISpecification<Slate> specification)
+        async Task<Slate?> ICommandRepository<Slate>.GetEntity(ISpecification<Slate> specification)
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }

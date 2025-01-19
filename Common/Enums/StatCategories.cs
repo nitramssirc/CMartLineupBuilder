@@ -29,6 +29,20 @@ namespace Common.Enums
         PuntReturnTouchdowns,
         BlockedKicks,
         PointsAllowed,
-        YardsAllowed
+        YardsAllowed,
+        PlayerId,
+        Opponent,
+        FantasyPoints,
+        ProjectedOwnership,
+        Smash,
+        OpprotunityPct,
+        Minutes,
+        Ceiling,
+        Floor,
+        MinExposure,
+        MaxExposure,
+        RotoGrindersValue,
+        RotoGrindersID,
+        PartnerID
     }
 }

@@ -17,14 +17,14 @@ namespace Application.Queries.GetSlates
     {
         #region Dependencies
 
-        private readonly IQueryRepository<Slate, SlateID> _dbContext;
+        private readonly IQueryRepository<Slate> _dbContext;
         private readonly ISpecificationFactory specificationFactory;
 
         #endregion
 
         #region Constructor
 
-        public GetSlateQuery(IQueryRepository<Slate, SlateID> dbContext,
+        public GetSlateQuery(IQueryRepository<Slate> dbContext,
             ISpecificationFactory specificationFactory)
         {
             _dbContext = dbContext;

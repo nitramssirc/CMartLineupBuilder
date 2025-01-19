@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public abstract class BaseRepository<TEntity, TId> where TEntity : Entity<TId> where TId : EntityID
+    public abstract class BaseRepository<TEntity> where TEntity : class, IAggregateRoot
     {
         #region Fields
 

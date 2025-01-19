@@ -9,9 +9,9 @@ namespace Application.Commands.CreateSlate
 {
     public class CreateSlateCommand : IRequestHandler<CreateSlateRequest, CreateSlateResponse>
     {
-        private readonly ICommandRepository<Slate, SlateID> _repository;
+        private readonly ICommandRepository<Slate> _repository;
 
-        public CreateSlateCommand(ICommandRepository<Slate, SlateID> repository)
+        public CreateSlateCommand(ICommandRepository<Slate> repository)
         {
             _repository = repository;
         }

@@ -8,8 +8,7 @@ namespace Application.Repositories
     /// Repository for command operations
     /// </summary>
     /// <typeparam name="TEntity">Type of aggregate root the repository manages</typeparam>
-    /// <typeparam name="TKey">Type of ID for the aggregate</typeparam>
-    public interface ICommandRepository<TEntity, TKey> where TEntity : IAggregateRoot
+    public interface ICommandRepository<TEntity> where TEntity : IAggregateRoot
     {
         /// <summary>
         /// Adds a new model to the repository`
