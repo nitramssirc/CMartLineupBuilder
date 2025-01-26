@@ -40,16 +40,16 @@ namespace Application.Specifications.Factory.Tests
             {
                 switch (predicateImplementationType.Name)
                 {
-                    case nameof (GetSlateByIDWithSalaries):
+                    case nameof (GetSlateByIDWithSalariesSpec):
                         yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
                         break;
-                    case nameof(GetSlatesByDFSSiteAndSport):
+                    case nameof(GetSlatesByDFSSiteAndSportSpec):
                         yield return new object[] { predicateImplementationType, new object[] { DFSSite.DraftKings, Sport.NFL } };
                         break;
-                    case nameof(GetSlateByID):
+                    case nameof(GetSlateByIdSpec):
                         yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
                         break;
-                    case nameof(GetSlateByIDWithProjections):
+                    case nameof(GetSlateByIDWithProjectionsSpec):
                         yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
                         break;
                     default:

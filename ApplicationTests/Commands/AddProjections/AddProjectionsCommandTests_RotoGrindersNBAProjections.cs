@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Application.Specifications;
 using Application.Specifications.SlateSpecs;
+using Application.Commands.AddProjections.NBARotoGrinders;
 
 namespace Application.Tests.Commands.AddProjections
 {
@@ -21,7 +22,7 @@ namespace Application.Tests.Commands.AddProjections
     {
         private Mock<ICommandRepository<Slate>> _mockSlateRepository;
         private Mock<ISpecificationFactory> _mockSpecFactory;
-        private IRequestHandler<AddRotoGrindersNBAProjections, AddProjectionsResponse> _command;
+        private IRequestHandler<AddRotoGrindersNBAProjectionsCommand, AddProjectionsResponse> _command;
 
         public AddProjectionsCommandTests_RotoGrindersNBAProjections()
         {
@@ -35,10 +36,10 @@ namespace Application.Tests.Commands.AddProjections
         {
             _mockSlateRepository = new Mock<ICommandRepository<Slate>>();
             _mockSpecFactory = new Mock<ISpecificationFactory>();
-            _command = new AddProjectionsCommand(_mockSlateRepository.Object, _mockSpecFactory.Object);
+            _command = new AddProjectionsHandler(_mockSlateRepository.Object, _mockSpecFactory.Object);
         }
 
-        private (AddRotoGrindersNBAProjections request, Slate slate) SetupForHandle(
+        private (AddRotoGrindersNBAProjectionsCommand request, Slate slate) SetupForHandle(
             List<RotoGrindersNBAProjection>? projections = null,
             Slate? slate = null,
             bool returnsNullSlate = false)
@@ -48,11 +49,11 @@ namespace Application.Tests.Commands.AddProjections
             {
                 new RotoGrindersNBAProjection(1, "ATL", "BOS", "PG", "Player1", 50, 20, 10, 30, 35, 60, 40, 10, 50, 5, 8000, "", 1001, 2001)
             };
-            var request = new AddRotoGrindersNBAProjections(slateID, projections);
+            var request = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
             slate ??= returnsNullSlate ? null : Slate.Create(DateTime.Now, Sport.NBA, GameType.Cash, DFSSite.DraftKings, "TestSlate");
 
-            var spec = new GetSlateByIDWithProjections(new SlateID());
-            _mockSpecFactory.Setup(factory => factory.Create<GetSlateByIDWithProjections>(slateID)).Returns(spec);
+            var spec = new GetSlateByIDWithProjectionsSpec(new SlateID());
+            _mockSpecFactory.Setup(factory => factory.Create<GetSlateByIDWithProjectionsSpec>(slateID)).Returns(spec);
             _mockSlateRepository.Setup(repo => repo.GetEntity(spec)).ReturnsAsync(slate);
 
             return (request, slate!);

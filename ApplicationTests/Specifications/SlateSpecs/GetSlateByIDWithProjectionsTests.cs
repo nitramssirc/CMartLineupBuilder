@@ -25,7 +25,7 @@ namespace Application.Specifications.SlateSpecs.Tests
         {
             // Arrange
             var slateID = new SlateID(Guid.NewGuid());
-            var specification = new GetSlateByIDWithProjections(slateID);
+            var specification = new GetSlateByIDWithProjectionsSpec(slateID);
 
             // Act
             Expression<Func<Slate, bool>> expression = specification.Expression;
@@ -45,7 +45,7 @@ namespace Application.Specifications.SlateSpecs.Tests
         {
             // Arrange
             var slateID = new SlateID(Guid.NewGuid());
-            var specification = new GetSlateByIDWithProjections(slateID);
+            var specification = new GetSlateByIDWithProjectionsSpec(slateID);
 
             // Act
             var includes = specification.Includes;

@@ -13,7 +13,7 @@ using MediatR;
 
 namespace Application.Queries.GetSlates
 {
-    public class GetSlateQuery : IRequestHandler<GetSlateRequest, List<GetSlateResponse>>
+    public class GetSlatesHandler : IRequestHandler<GetSlateRequest, List<GetSlatesResponse>>
     {
         #region Dependencies
 
@@ -24,7 +24,7 @@ namespace Application.Queries.GetSlates
 
         #region Constructor
 
-        public GetSlateQuery(IQueryRepository<Slate> dbContext,
+        public GetSlatesHandler(IQueryRepository<Slate> dbContext,
             ISpecificationFactory specificationFactory)
         {
             _dbContext = dbContext;
@@ -33,7 +33,7 @@ namespace Application.Queries.GetSlates
 
         #endregion
 
-        public async Task<List<GetSlateResponse>> Handle(GetSlateRequest request, CancellationToken cancellationToken)
+        public async Task<List<GetSlatesResponse>> Handle(GetSlateRequest request, CancellationToken cancellationToken)
         {
             var slates = await LookupSlates(request);
 
@@ -46,14 +46,14 @@ namespace Application.Queries.GetSlates
         {
             var dfsSite = Enum.Parse<DFSSite>(request.Site);
             var sport = Enum.Parse<Sport>(request.Sport);
-            var specification = specificationFactory.Create<GetSlatesByDFSSiteAndSport>(dfsSite, sport);
+            var specification = specificationFactory.Create<GetSlatesByDFSSiteAndSportSpec>(dfsSite, sport);
             return await _dbContext.GetEntities(specification);
         }
 
-        private GetSlateResponse ConstructResponse(Slate slate)
+        private GetSlatesResponse ConstructResponse(Slate slate)
         {
             var slateName = $"{slate.Sport} - {slate.DFSSite} - {slate.GameType} - {slate.Name}";
-            return new GetSlateResponse(slate.Id, slateName);
+            return new GetSlatesResponse(slate.Id, slateName);
         }
     }
 }

@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.GetPlayersForSlate
 {
-    public class GetPlayerForSlateRequest: IRequest<List<GetPlayerForSlateResponse>>
+    public class GetPlayersForSlateQuery: IRequest<List<GetPlayerForSlateResponse>>
     {
         public SlateID SlateID { get; private set; }
 
-        public GetPlayerForSlateRequest(SlateID slateID)
+        public GetPlayersForSlateQuery(SlateID slateID)
         {
             SlateID = slateID;
         }

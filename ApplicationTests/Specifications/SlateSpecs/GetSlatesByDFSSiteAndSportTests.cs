@@ -14,13 +14,13 @@ namespace Application.Tests.Specifications.SlateSpecs
 
         #region Expression
 
-        private (GetSlatesByDFSSiteAndSport spec, Slate slate) SetupForExpression(
+        private (GetSlatesByDFSSiteAndSportSpec spec, Slate slate) SetupForExpression(
             DFSSite site = DFSSite.DraftKings,
             Sport sport = Sport.NFL,
             DFSSite slateSite = DFSSite.DraftKings,
             Sport slateSport = Sport.NFL)
         {
-            var spec = new GetSlatesByDFSSiteAndSport(site, sport);
+            var spec = new GetSlatesByDFSSiteAndSportSpec(site, sport);
             var slate = Slate.Create(DateTime.Now, slateSport, GameType.Cash, slateSite, "Test Slate");
             return (spec, slate);
         }
@@ -72,7 +72,7 @@ namespace Application.Tests.Specifications.SlateSpecs
         public void Includes_Should_BeEmpty()
         {
             // Arrange
-            var spec = new GetSlatesByDFSSiteAndSport(DFSSite.DraftKings, Sport.NFL);
+            var spec = new GetSlatesByDFSSiteAndSportSpec(DFSSite.DraftKings, Sport.NFL);
 
             // Act
             var includes = spec.Includes;

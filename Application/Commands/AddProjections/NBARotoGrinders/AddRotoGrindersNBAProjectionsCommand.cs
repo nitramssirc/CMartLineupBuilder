@@ -9,14 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.AddProjections
+namespace Application.Commands.AddProjections.NBARotoGrinders
 {
-    internal class AddRotoGrindersNBAProjections
-        : AddProjectionsRequestBase
+    public class AddRotoGrindersNBAProjectionsCommand
+        : AddProjectionsCommandBase
     {
         private readonly List<RotoGrindersNBAProjection> _projections;
 
-        public AddRotoGrindersNBAProjections(SlateID slateID, List<RotoGrindersNBAProjection> projections)
+        public AddRotoGrindersNBAProjectionsCommand(SlateID slateID, List<RotoGrindersNBAProjection> projections)
             : base(slateID)
         {
             _projections = projections;
@@ -33,8 +33,8 @@ namespace Application.Commands.AddProjections
         {
             var team = ParseTeam(rotoGrindersNBAProjection.team);
             return new ProjectionDTO(
-                rotoGrindersNBAProjection.name, 
-                team, 
+                rotoGrindersNBAProjection.name,
+                team,
                 ConstructProjectionData(rotoGrindersNBAProjection));
         }
 

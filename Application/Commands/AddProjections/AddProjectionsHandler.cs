@@ -1,4 +1,5 @@
-﻿using Application.Repositories;
+﻿using Application.Commands.AddProjections.NBARotoGrinders;
+using Application.Repositories;
 using Application.Specifications.Factory;
 using Application.Specifications.SlateSpecs;
 
@@ -15,8 +16,8 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.AddProjections
 {
-    public class AddProjectionsCommand
-        : IRequestHandler<AddRotoGrindersNBAProjections, AddProjectionsResponse>
+    public class AddProjectionsHandler
+        : IRequestHandler<AddRotoGrindersNBAProjectionsCommand, AddProjectionsResponse>
     {
         #region Dependencies
 
@@ -27,7 +28,7 @@ namespace Application.Commands.AddProjections
 
         #region Constructor
 
-        public AddProjectionsCommand(
+        public AddProjectionsHandler(
             ICommandRepository<Slate> slateRepository,
             ISpecificationFactory specFactory)
         {
@@ -40,8 +41,8 @@ namespace Application.Commands.AddProjections
         #region Handlers
 
 
-        async Task<AddProjectionsResponse> IRequestHandler<AddRotoGrindersNBAProjections, AddProjectionsResponse>.
-            Handle(AddRotoGrindersNBAProjections request, CancellationToken cancellationToken)
+        async Task<AddProjectionsResponse> IRequestHandler<AddRotoGrindersNBAProjectionsCommand, AddProjectionsResponse>.
+            Handle(AddRotoGrindersNBAProjectionsCommand request, CancellationToken cancellationToken)
         {
             return await AddProjections(request);
         }
@@ -51,7 +52,7 @@ namespace Application.Commands.AddProjections
         #region Private Methods
 
 
-        private async Task<AddProjectionsResponse> AddProjections(AddProjectionsRequestBase request)
+        private async Task<AddProjectionsResponse> AddProjections(AddProjectionsCommandBase request)
         {
             try
             {
@@ -81,11 +82,11 @@ namespace Application.Commands.AddProjections
 
         private async Task<Slate?> LoadSlate(SlateID slateID)
         {
-            var spec = _specFactory.Create<GetSlateByIDWithProjections>(slateID);
+            var spec = _specFactory.Create<GetSlateByIDWithProjectionsSpec>(slateID);
             return (await _slateRepository.GetEntity(spec));
         }
 
-        private Projection ConstructProjection(AddProjectionsRequestBase request, ProjectionDTO projectionDTO)
+        private Projection ConstructProjection(AddProjectionsCommandBase request, ProjectionDTO projectionDTO)
         {
             return Projection.Create(
                 request.SlateID,

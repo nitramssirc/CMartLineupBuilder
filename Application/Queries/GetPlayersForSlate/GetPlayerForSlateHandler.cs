@@ -11,8 +11,8 @@ using MediatR;
 
 namespace Application.Queries.GetPlayersForSlate
 {
-    public class GetPlayerForSlateQuery :
-        IRequestHandler<GetPlayerForSlateRequest, List<GetPlayerForSlateResponse>>
+    public class GetPlayerForSlateHandler :
+        IRequestHandler<GetPlayersForSlateQuery, List<GetPlayerForSlateResponse>>
     {
         #region Dependencies
 
@@ -23,7 +23,7 @@ namespace Application.Queries.GetPlayersForSlate
 
         #region Constructor
 
-        public GetPlayerForSlateQuery(
+        public GetPlayerForSlateHandler(
             IQueryRepository<Slate> slateRepository,
             ISpecificationFactory specificationFactory)
         {
@@ -36,9 +36,9 @@ namespace Application.Queries.GetPlayersForSlate
         #region IRequestHandler Implementation
 
         public async Task<List<GetPlayerForSlateResponse>> Handle(
-            GetPlayerForSlateRequest request, CancellationToken cancellationToken)
+            GetPlayersForSlateQuery request, CancellationToken cancellationToken)
         {
-            var specification = specificationFactory.Create<GetSlateByIDWithSalaries>(request.SlateID);
+            var specification = specificationFactory.Create<GetSlateByIDWithSalariesSpec>(request.SlateID);
 
             var slate = await _slateRepository.GetEntity(specification);
             return slate == null

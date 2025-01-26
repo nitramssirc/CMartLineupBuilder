@@ -4,29 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.AddProjections
+namespace Application.Commands.AddProjections.NBARotoGrinders
 {
     public class RotoGrindersNBAProjection
     {
-        public int player_id { get; private set; }
-        public string team { get; private set; }= string.Empty;
-        public string opp { get; private set; } = string.Empty;
-        public string pos { get; private set; } = string.Empty;
-        public string name { get; private set; } = string.Empty;
-        public decimal fpts { get; private set; }
-        public decimal proj_own { get; private set; }
-        public decimal smash { get; private set; }
-        public decimal opto_pct { get; private set; }
-        public int minutes { get; private set; }
-        public decimal ceil { get; private set; }
-        public decimal floor { get; private set; }
-        public decimal min_exposure { get; private set; }
-        public decimal max_exposure { get; private set; }
-        public decimal rg_value { get; private set; }
-        public int salary { get; private set; }
-        public string custom { get; private set; } = string.Empty;
-        public int rg_id { get; private set; }
-        public int partner_id { get; private set; }
+        public int player_id { get; set; }
+        public string team { get; set; } = string.Empty;
+        public string opp { get; set; } = string.Empty;
+        public string pos { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+        public decimal fpts { get; set; }
+        public decimal proj_own { get; set; }
+        public decimal smash { get; set; }
+        public decimal opto_pct { get; set; }
+        public int minutes { get; set; }
+        public decimal ceil { get; set; }
+        public decimal floor { get; set; }
+        public decimal min_exposure { get; set; }
+        public decimal max_exposure { get; set; }
+        public decimal rg_value { get; set; }
+        public int salary { get; set; }
+        public string custom { get; set; } = string.Empty;
+        public int rg_id { get; set; }
+        public int partner_id { get; set; }
+
+        public RotoGrindersNBAProjection() { }
 
         public RotoGrindersNBAProjection(
             int player_id,

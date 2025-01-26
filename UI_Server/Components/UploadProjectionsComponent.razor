@@ -1,0 +1,138 @@
+﻿@using Application.Commands.AddProjections
+@using Application.Commands.AddProjections.NBARotoGrinders
+@using Application.Commands.AddSalaries
+@using Application.Queries.GetSlateById
+@using CsvHelper
+@using CsvHelper.Configuration
+@using Domain.Entities
+<RadzenFileInput TValue="string"
+                 @bind-Value="FileInputBindValue"
+                 ChooseText="Upload Projections"
+                 Change=@OnSalariesUploaded
+                 Error=@OnSalariesUploadError
+                 Accept=".csv" />
+<RadzenDropDown Name="Source" @bind-Value=@Source Data="SourcesData" />
+
+@code {
+    [Inject] IMediator Mediator { get; set; } = null!;
+    [Inject] NotificationService? NotificationService { get; set; } = null;
+    [Parameter] public SlateID? SlateID { get; set; }
+    [Parameter] public EventCallback ProjectionsUploaded { get; set; }
+
+    string? FileInputBindValue;
+    ProjectionSource Source;
+    private List<ProjectionSource> SourcesData { get; }
+        = Enum.GetValues(typeof(ProjectionSource)).Cast<ProjectionSource>().ToList();
+
+
+    async void OnSalariesUploaded(string fileData)
+    {
+        try
+        {
+            if (SlateID == null) return;
+            if (fileData == null) return;
+            FileInputBindValue = null;
+
+            var slate = await LoadSlate();
+            var result = await SendAddProjectionsCommand(slate.Sport, fileData);
+
+            if (!result.Success)
+            {
+                throw new Exception(result.Error);
+            }
+
+            await ProjectionsUploaded.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex.Message);
+        }
+    }
+
+    private void ShowError(string message)
+    {
+        Console.WriteLine(message);
+        NotificationService?.Notify(NotificationSeverity.Error, message, duration:
+            int.MaxValue, closeOnClick: true);
+    }
+
+    void OnSalariesUploadError(UploadErrorEventArgs args)
+    {
+        throw new Exception(args.Message);
+    }
+
+    async Task<GetSlateByIdResponse> LoadSlate()
+    {
+        var getSlateQuery = new GetSlateByIdQuery(SlateID!);
+        return await Mediator.Send(getSlateQuery);
+    }
+
+    async Task<AddProjectionsResponse> SendAddProjectionsCommand(Sport slateSport, string fileData)
+    {
+        switch (slateSport)
+        {
+            case Sport.NBA:
+                return await SendAddNBAProjectionsCommand(fileData);
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    async Task<AddProjectionsResponse> SendAddNBAProjectionsCommand(string fileData)
+    {
+        switch (Source)
+        {
+            case ProjectionSource.RotoGrinders:
+                return await SendAddNBARotoGrindersProjections(fileData);
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    async Task<AddProjectionsResponse> SendAddNBARotoGrindersProjections(string fileData)
+    {
+        var projections =
+            DeserializeProjectionCSV<RotoGrindersNBAProjection, RotoGrindersNBAProjectionMap>(fileData);
+        var addProjectionsCommand = new AddRotoGrindersNBAProjectionsCommand(SlateID!, projections);
+        return await Mediator.Send(addProjectionsCommand);
+    }
+
+    List<TRecord> DeserializeProjectionCSV<TRecord, TMap>(string fileData) where TMap : ClassMap<TRecord>
+    {
+        var fileBytes = Convert.FromBase64String(
+                fileData.Split(',')[1]);
+        var fileString = System.Text.Encoding.UTF8.GetString(fileBytes);
+
+        using (var csvReader = new CsvReader(new StringReader(fileString), System.Globalization.CultureInfo.InvariantCulture))
+        {
+            csvReader.Context.RegisterClassMap<TMap>();
+            return csvReader.GetRecords<TRecord>().ToList();
+        }
+    }
+
+    public class RotoGrindersNBAProjectionMap : ClassMap<RotoGrindersNBAProjection>
+    {
+        public RotoGrindersNBAProjectionMap()
+        {
+            Map(m => m.player_id).Name("player_id").Default(0);
+            Map(m => m.team).Name("team").Default("Unknown");
+            Map(m => m.opp).Name("opp").Default("Unknown");
+            Map(m => m.pos).Name("pos").Default("Unknown");
+            Map(m => m.name).Name("name").Default("Unknown");
+            Map(m => m.fpts).Name("fpts").Default(0.0m);
+            Map(m => m.proj_own).Name("proj_own").Default(0.0m);
+            Map(m => m.smash).Name("smash").Default(0.0m);
+            Map(m => m.opto_pct).Name("opto_pct").Default(0.0m);
+            Map(m => m.minutes).Name("minutes").Default(0);
+            Map(m => m.ceil).Name("ceil").Default(0.0m);
+            Map(m => m.floor).Name("floor").Default(0.0m);
+            Map(m => m.min_exposure).Name("min_exposure").Default(0.0m);
+            Map(m => m.max_exposure).Name("max_exposure").Default(0.0m);
+            Map(m => m.rg_value).Name("rg_value").Default(0.0m);
+            Map(m => m.salary).Name("salary").Default(0);
+            Map(m => m.custom).Name("custom").Default("");
+            Map(m => m.rg_id).Name("rg_id").Default(0);
+            Map(m => m.partner_id).Name("partner_id").Default(0);
+        }
+    }
+}

@@ -76,7 +76,7 @@
 
     private async Task OnAddSlateClick(AddSlateData formModel)
     {
-        var request = new CreateSlateRequest(formModel.Sport, formModel.Site, formModel.GameType, formModel.Name);
+        var request = new CreateSlateCommand(formModel.Sport, formModel.Site, formModel.GameType, formModel.Name);
         var response = await Mediator.Send(request);
 
         Error = response.Error;

@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Application.Commands.AddProjections;
 using Domain.ValueTypes;
 using Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Application.Commands.AddProjections.NBARotoGrinders;
 
 namespace Application.Tests.Commands.AddProjections
 {
@@ -20,7 +20,7 @@ namespace Application.Tests.Commands.AddProjections
         {
             // Arrange
             var slateID = new SlateID(Guid.NewGuid());
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, new List<RotoGrindersNBAProjection>());
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, new List<RotoGrindersNBAProjection>());
             // Act
             var result = addProjections.ProjectionSource;
             // Assert
@@ -84,7 +84,7 @@ namespace Application.Tests.Commands.AddProjections
                 CreateRotoGrindersNBAProjection(),
                 CreateRotoGrindersNBAProjection(player_id: 2, team: "BKN", name: "Player2")
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().ToList();
@@ -104,7 +104,7 @@ namespace Application.Tests.Commands.AddProjections
             };
 
             // Act
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
 
             // Assert
@@ -120,7 +120,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(name: "Player1")
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -138,7 +138,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(team: "ATL")
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -156,7 +156,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(player_id: 1)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -174,7 +174,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(opp: "BOS")
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -192,7 +192,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(fpts: 50)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -210,7 +210,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(proj_own: 20)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -228,7 +228,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(smash: 10)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -246,7 +246,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(opto_pct: 30)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -264,7 +264,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(minutes: 35)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -282,7 +282,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(ceil: 60)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -300,7 +300,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(floor: 40)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -318,7 +318,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(min_exposure: 10)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -336,7 +336,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(max_exposure: 50)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -354,7 +354,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(rg_value: 5)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -372,7 +372,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(rg_id: 1001)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();
@@ -390,7 +390,7 @@ namespace Application.Tests.Commands.AddProjections
             {
                 CreateRotoGrindersNBAProjection(partner_id: 2001)
             };
-            var addProjections = new AddRotoGrindersNBAProjections(slateID, projections);
+            var addProjections = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
 
             // Act
             var result = addProjections.GetProjections().First();

@@ -42,7 +42,7 @@
 
     #region Internal Properties
 
-    private List<GetSlateResponse> Slates { get; set; } = new List<GetSlateResponse>();
+    private List<GetSlatesResponse> Slates { get; set; } = new List<GetSlatesResponse>();
     private List<Sport> Sports { get; } = Enum.GetValues(typeof(Sport)).Cast<Sport>().ToList();
 
     private List<DFSSite> Sites { get; } = Enum.GetValues(typeof(DFSSite)).Cast<DFSSite>().ToList();

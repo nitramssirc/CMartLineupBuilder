@@ -1,42 +1,26 @@
-﻿using Application.Repositories;
-
-using Domain.Entities;
-using Domain.ValueTypes;
+﻿using Common.Enums;
 
 using MediatR;
 
 namespace Application.Commands.CreateSlate
 {
-    public class CreateSlateCommand : IRequestHandler<CreateSlateRequest, CreateSlateResponse>
+    public class CreateSlateCommand : IRequest<CreateSlateResponse>
     {
-        private readonly ICommandRepository<Slate> _repository;
+        public Sport Sport { get; }
+        public DFSSite Site { get; }
+        public GameType GameType { get; }
+        public string Name { get; }
 
-        public CreateSlateCommand(ICommandRepository<Slate> repository)
+        public CreateSlateCommand(
+            Sport sport,
+            DFSSite site,
+            GameType gameType,
+            string name)
         {
-            _repository = repository;
-        }
-
-        public async Task<CreateSlateResponse> Handle(CreateSlateRequest request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var slate = Slate.Create(
-                    DateTime.Now,
-                    request.Sport,
-                    request.GameType,
-                    request.Site,
-                    request.Name);
-
-                await _repository.AddAsync(slate);
-                await _repository.SaveAsync();
-
-                return new CreateSlateResponse(slate.Id);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-                return new CreateSlateResponse(ex.ToString());
-            }
+            Sport = sport;
+            Site = site;
+            GameType = gameType;
+            Name = name;
         }
     }
 }

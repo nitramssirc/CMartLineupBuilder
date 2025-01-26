@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.AddProjections
 {
-    internal class AddProjectionsResponse:CommandResultResponse
+    public class AddProjectionsResponse:CommandResultResponse
     {
         public AddProjectionsResponse() : base()
         {

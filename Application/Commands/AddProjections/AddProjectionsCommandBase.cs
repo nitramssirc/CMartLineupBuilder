@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.AddProjections
 {
-    public abstract class AddProjectionsRequestBase:IRequest<AddProjectionsResponse>
+    public abstract class AddProjectionsCommandBase:IRequest<AddProjectionsResponse>
     {
         public SlateID SlateID { get; }
 
@@ -21,7 +21,7 @@ namespace Application.Commands.AddProjections
 
         internal abstract IEnumerable<ProjectionDTO> GetProjections();
 
-        protected AddProjectionsRequestBase(SlateID slateID)
+        protected AddProjectionsCommandBase(SlateID slateID)
         {
             SlateID = slateID;
         }

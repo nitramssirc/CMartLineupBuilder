@@ -3,7 +3,8 @@
 
 <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
-        <UploadSalariesComponent SlateID="@SlateID" SalariesUploaded="@OnSalariesUploaded" />
+        <UploadSalariesComponent SlateID="@SlateID" SalariesUploaded="@OnPlayerInfoUploaded" />
+        <UploadProjectionsComponent SlateID="@SlateID" ProjectionsUploaded="@OnPlayerInfoUploaded" />
     </RadzenStack>
     <RadzenDataGrid TItem="GetPlayerForSlateResponse" Data="@Players">
         <Columns>
@@ -37,7 +38,7 @@
         await LoadPlayers();
     }
 
-    private async void OnSalariesUploaded()
+    private async void OnPlayerInfoUploaded()
     {
         await LoadPlayers();
         StateHasChanged();
@@ -46,7 +47,7 @@
     private async Task LoadPlayers()
     {
         if (SlateID == null) return;
-        var getPlayersRequest = new GetPlayerForSlateRequest(SlateID);
+        var getPlayersRequest = new GetPlayersForSlateQuery(SlateID);
         Players = await Mediator.Send(getPlayersRequest);
     }
 

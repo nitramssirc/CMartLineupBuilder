@@ -28,7 +28,7 @@
 
             var salaries = DeserializeSalaries(fileData);
 
-            var addSalariesCommand = new AddSalariesRequest(SlateID, salaries);
+            var addSalariesCommand = new AddSalariesCommand(SlateID, salaries);
             var result = await Mediator.Send(addSalariesCommand);
 
             if (!result.Success)

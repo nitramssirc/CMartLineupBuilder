@@ -2,14 +2,14 @@
 
 namespace Application.Queries.GetSlates
 {
-    public class GetSlateResponse
+    public class GetSlatesResponse
     {
         public SlateID Id { get; }
 
 
         public string Name { get; }
 
-        public GetSlateResponse(SlateID id, string name)
+        public GetSlatesResponse(SlateID id, string name)
         {
             Id = id;
             Name = name;
