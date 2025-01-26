@@ -24,6 +24,11 @@ namespace Repository.Configurations
                     value => new SlateID(value))
                 .IsRequired();
 
+            builder.HasOne<Slate>()
+                .WithMany(s => s.Salaries)
+                .HasForeignKey(p => p.SlateID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.Property(s => s.PlayerName)
                 .HasMaxLength(100)
                 .IsRequired();
@@ -34,11 +39,6 @@ namespace Repository.Configurations
             builder.Property(s => s.DFSSiteID)
                 .HasMaxLength(50)
                 .IsRequired();
-
-            builder.HasOne<Slate>()
-                .WithMany(s => s.Salaries)
-                .HasForeignKey(s => s.SlateID)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

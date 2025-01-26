@@ -23,6 +23,13 @@ namespace Application.Tests.Commands.AddProjections
         private Mock<ISpecificationFactory> _mockSpecFactory;
         private IRequestHandler<AddRotoGrindersNBAProjections, AddProjectionsResponse> _command;
 
+        public AddProjectionsCommandTests_RotoGrindersNBAProjections()
+        {
+            _mockSlateRepository = null!;
+            _mockSpecFactory = null!;
+            _command = null!;
+        }
+
         [TestInitialize]
         public void Setup()
         {
@@ -48,7 +55,7 @@ namespace Application.Tests.Commands.AddProjections
             _mockSpecFactory.Setup(factory => factory.Create<GetSlateByIDWithProjections>(slateID)).Returns(spec);
             _mockSlateRepository.Setup(repo => repo.GetEntity(spec)).ReturnsAsync(slate);
 
-            return (request, slate);
+            return (request, slate!);
         }
 
         #region Tests
