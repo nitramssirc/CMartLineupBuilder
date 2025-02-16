@@ -102,7 +102,7 @@ namespace Common.Enums
         [TeamName(Sport.NBA, "Milwaukee Bucks")]
         MIL,
         [TeamName(Sport.NBA, "New York Knicks")]
-        NY,
+        NYK,
         [TeamName(Sport.NBA, "Oklahoma City Thunder")]
         OKC,
         [TeamName(Sport.NBA, "Orlando Magic")]
@@ -114,7 +114,7 @@ namespace Common.Enums
         [TeamName(Sport.NBA, "Sacramento Kings")]
         SAC,
         [TeamName(Sport.NBA, "San Antonio Spurs")]
-        SA,
+        SAS,
         [TeamName(Sport.NBA, "Toronto Raptors")]
         TOR,
         [TeamName(Sport.NBA, "Utah Jazz")]
