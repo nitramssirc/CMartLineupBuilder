@@ -46,7 +46,15 @@
                             @foreach (var projData in projection.Data)
                             {
                                 <RadzenTableCell>
-                                    @projData.Value
+                                    @if (projData.StatName == "Opponent")
+                                    {
+                                        @((Team)projData.Value)
+                                    }
+                                    else
+                                    {
+
+                                        @projData.Value
+                                    }
                                 </RadzenTableCell>
                             }
                         </RadzenTableRow>

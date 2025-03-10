@@ -5,13 +5,25 @@
             <RadzenTabsItem Text="Players">
                 <SlatePlayerList SlateID="@SlateID" />
             </RadzenTabsItem>
+            <RadzenTabsItem Text="Games">
+                Games
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="Exposure Rules">
+                Exposure Rules
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="Lineup Rules">
+                Lineup Rules
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="Lineups">
+                Lineups
+            </RadzenTabsItem>
         </Tabs>
     </RadzenTabs>
 }
 else
 {
     <RadzenAlert AlertStyle="AlertStyle.Warning" RadzenAlert Text="Select a Slate"
-    AllowClose="false" Shade="Shade.Lighter" />
+                 AllowClose="false" Shade="Shade.Lighter" />
 }
 
 @code {
