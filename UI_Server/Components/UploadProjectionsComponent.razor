@@ -6,11 +6,11 @@
 @using CsvHelper.Configuration
 @using Domain.Entities
 <RadzenFileInput TValue="string"
-                 @bind-Value="FileInputBindValue"
-                 ChooseText="Upload Projections"
-                 Change=@OnSalariesUploaded
-                 Error=@OnSalariesUploadError
-                 Accept=".csv" />
+@bind-Value="FileInputBindValue"
+ChooseText="Upload Projections"
+Change=@OnSalariesUploaded
+Error=@OnSalariesUploadError
+Accept=".csv" />
 <RadzenDropDown Name="Source" @bind-Value=@Source Data="SourcesData" />
 
 @code {
@@ -52,8 +52,15 @@
     private void ShowError(string message)
     {
         Console.WriteLine(message);
-        NotificationService?.Notify(NotificationSeverity.Error, message, duration:
-            int.MaxValue, closeOnClick: true);
+        NotificationService?.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error",
+            Detail = message,
+                Style = "width:100%",
+                CloseOnClick = true,
+                Duration = int.MaxValue
+            });
     }
 
     void OnSalariesUploadError(UploadErrorEventArgs args)

@@ -6,24 +6,54 @@
         <UploadSalariesComponent SlateID="@SlateID" SalariesUploaded="@OnPlayerInfoUploaded" />
         <UploadProjectionsComponent SlateID="@SlateID" ProjectionsUploaded="@OnPlayerInfoUploaded" />
     </RadzenStack>
-    <RadzenDataGrid TItem="GetPlayerForSlateResponse" Data="@Players">
+    <RadzenDataGrid TItem="SlatePlayer" Data="@Players" RowRender="@OnRowRender">
         <Columns>
-            <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Name)" Title="Player Name" />
-            <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Positions)" Title="Position">
+            <RadzenDataGridColumn Property="@nameof(SlatePlayer.Name)" Title="Player Name" />
+            <RadzenDataGridColumn Property="@nameof(SlatePlayer.Positions)" Title="Position">
                 <Template Context="player">
                     @string.Join("/", player.Positions)
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.TeamName)" Title="Team">
+            <RadzenDataGridColumn Property="@nameof(SlatePlayer.TeamName)" Title="Team">
                 <Template Context="player">
                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
-                        <RadzenImage Path=@GetTeamLogoPath(player.TeamName) Style="width:30px;height:30px"/>
+                        <RadzenImage Path=@GetTeamLogoPath(player.TeamName) Style="width:30px;height:30px" />
                         @player.Team
-                    </RadzenStack>                       
+                    </RadzenStack>
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn Property="@nameof(GetPlayerForSlateResponse.Salary)" Title="Salary" FormatString="{0:C0}" />
+            <RadzenDataGridColumn Property="@nameof(SlatePlayer.Salary)" Title="Salary" FormatString="{0:C0}" />
         </Columns>
+        <Template Context="player">
+            @foreach (var projection in player.Projections)
+            {
+                <RadzenCard Variant="Variant.Text" class="rz-background-color-primary-lighter rz-color-on-primary-lighter rz-m-4">
+                    @projection.Source
+                </RadzenCard>
+                <RadzenTable>
+                    <RadzenTableHeader>
+                        <RadzenTableHeaderRow>
+                            @foreach (var projData in projection.Data)
+                            {
+                                <RadzenTableHeaderCell>
+                                    @projData.StatName
+                                </RadzenTableHeaderCell>
+                            }
+                        </RadzenTableHeaderRow>
+                    </RadzenTableHeader>
+                    <RadzenTableBody>
+                        <RadzenTableRow>
+                            @foreach (var projData in projection.Data)
+                            {
+                                <RadzenTableCell>
+                                    @projData.Value
+                                </RadzenTableCell>
+                            }
+                        </RadzenTableRow>
+                    </RadzenTableBody>
+                </RadzenTable>
+            }
+        </Template>
     </RadzenDataGrid>
 </RadzenStack>
 
@@ -31,7 +61,7 @@
     [Parameter] public SlateID? SlateID { get; set; }
     [Inject] IMediator Mediator { get; set; } = null!;
 
-    List<GetPlayerForSlateResponse> Players = new List<GetPlayerForSlateResponse>();
+    SlatePlayer[] Players = [];
 
     protected override async Task OnParametersSetAsync()
     {
@@ -48,11 +78,16 @@
     {
         if (SlateID == null) return;
         var getPlayersRequest = new GetPlayersForSlateQuery(SlateID);
-        Players = await Mediator.Send(getPlayersRequest);
+        Players = (await Mediator.Send(getPlayersRequest)).Players;
     }
 
     private string GetTeamLogoPath(string teamName)
     {
         return $"logos/{teamName.Replace(" ", string.Empty)}.png";
+    }
+
+    private void OnRowRender(RowRenderEventArgs<SlatePlayer> row)
+    {
+        row.Expandable = row.Data.Projections.Length > 0;
     }
 }

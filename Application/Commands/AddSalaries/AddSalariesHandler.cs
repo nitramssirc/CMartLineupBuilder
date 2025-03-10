@@ -65,7 +65,7 @@ namespace Application.Commands.AddSalaries
 
         private async Task<Slate> LookupSlate(SlateID id)
         {
-            var specification = specificationFactory.Create<GetSlateByIDWithSalariesSpec>(id);
+            var specification = specificationFactory.Create<GetSlateByIDWithSalariesAndProjectionsSpec>(id);
             var slate = await _slateCommandRepository.GetEntity(specification);
             return slate ?? throw new Exception("Slate not found");
         }

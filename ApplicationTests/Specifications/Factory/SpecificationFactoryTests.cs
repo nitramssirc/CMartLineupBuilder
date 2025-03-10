@@ -40,7 +40,7 @@ namespace Application.Specifications.Factory.Tests
             {
                 switch (predicateImplementationType.Name)
                 {
-                    case nameof (GetSlateByIDWithSalariesSpec):
+                    case nameof (GetSlateByIDWithSalariesAndProjectionsSpec):
                         yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
                         break;
                     case nameof(GetSlatesByDFSSiteAndSportSpec):

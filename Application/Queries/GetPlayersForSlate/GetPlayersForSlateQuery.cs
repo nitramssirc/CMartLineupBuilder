@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.GetPlayersForSlate
 {
-    public class GetPlayersForSlateQuery: IRequest<List<GetPlayerForSlateResponse>>
+    public class GetPlayersForSlateQuery: IRequest<GetPlayersForSlateResponse>
     {
         public SlateID SlateID { get; private set; }
 

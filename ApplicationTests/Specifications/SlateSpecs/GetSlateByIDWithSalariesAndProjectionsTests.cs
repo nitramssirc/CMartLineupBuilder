@@ -7,7 +7,7 @@ using Common.Enums;
 namespace Application.Specifications.Tests.SlateSpecs
 {
     [TestClass()]
-    public class GetSlateByIDWithSalariesTests
+    public class GetSlateByIDWithSalariesAndProjectionsTests
     {
         #region Tests
 
@@ -18,7 +18,7 @@ namespace Application.Specifications.Tests.SlateSpecs
         {
             // Arrange
             var slateID = new SlateID(Guid.NewGuid());
-            var specification = new GetSlateByIDWithSalariesSpec(slateID);
+            var specification = new GetSlateByIDWithSalariesAndProjectionsSpec(slateID);
 
             // Act
             Expression<Func<Slate, bool>> expression = specification.Expression;
@@ -38,13 +38,15 @@ namespace Application.Specifications.Tests.SlateSpecs
         {
             // Arrange
             var slateID = new SlateID(Guid.NewGuid());
-            var specification = new GetSlateByIDWithSalariesSpec(slateID);
+            var specification = new GetSlateByIDWithSalariesAndProjectionsSpec(slateID);
 
             // Act
             var includes = specification.Includes;
 
             // Assert
+            Assert.AreEqual(2, includes.Count);
             Assert.IsTrue(includes.Any(include => include.Body is MemberExpression member && member.Member.Name == nameof(Slate.Salaries)));
+            Assert.IsTrue(includes.Any(include => include.Body is MemberExpression member && member.Member.Name == nameof(Slate.Projections)));
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace Application.Commands.AddProjections.NBARotoGrinders
         public decimal proj_own { get; set; }
         public decimal smash { get; set; }
         public decimal opto_pct { get; set; }
-        public int minutes { get; set; }
+        public decimal minutes { get; set; }
         public decimal ceil { get; set; }
         public decimal floor { get; set; }
         public decimal min_exposure { get; set; }
