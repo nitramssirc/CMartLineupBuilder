@@ -27,6 +27,9 @@ namespace Domain.Entities
         private readonly List<Salary> _salaries = [];
         public IReadOnlyCollection<Salary> Salaries => _salaries;
 
+        private readonly List<Game> _games = [];
+        public IReadOnlyCollection<Game> Games => _games;
+
         #endregion
 
         #region Constructors

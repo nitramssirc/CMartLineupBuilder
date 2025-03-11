@@ -1,0 +1,14 @@
+﻿<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+    <RadzenImage Path=@GetTeamLogoPath(TeamName) Style="width:30px;height:30px" />
+    @Team
+</RadzenStack>
+
+@code {
+    [Parameter] public Team Team { get; set; }
+    [Parameter] public string TeamName { get; set; }
+
+    private string GetTeamLogoPath(string teamName)
+    {
+        return $"logos/{teamName.Replace(" ", string.Empty)}.png";
+    }
+}

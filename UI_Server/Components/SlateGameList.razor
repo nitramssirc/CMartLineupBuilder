@@ -1,0 +1,41 @@
+﻿@using Application.Queries.GetGamesForSlate
+
+<RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+    <RadzenDataGrid TItem="GameInfo" Data="@Games">
+        <Columns>
+            <RadzenDataGridColumn Property="@nameof(GameInfo.HomeTeam)" Title="Home Team">
+                <Template Context="game">
+                    <TeamWithLogo TeamName="@game.HomeTeamName" Team="@game.HomeTeam" />
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Property="@nameof(GameInfo.AwayTeam)" Title="Away Team">
+                <Template Context="game">
+                    <TeamWithLogo TeamName="@game.AwayTeamName" Team="@game.AwayTeam" />
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Property="@nameof(GameInfo.StartTime)" Title="Start Time" />
+            <RadzenDataGridColumn Property="@nameof(GameInfo.HomePoints)" Title="Home Points" />
+            <RadzenDataGridColumn Property="@nameof(GameInfo.AwayPoints)" Title="Away Points" />
+        </Columns>
+    </RadzenDataGrid>
+</RadzenStack>
+
+@code {
+    [Parameter] public SlateID? SlateID { get; set; }
+    [Inject] IMediator Mediator { get; set; } = null!;
+
+    private GameInfo[] Games = [];
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadGames();
+    }
+
+    private async Task LoadGames()
+    {
+        if (SlateID == null) return;
+        var getGamesRequest = new GetGamesForSlateQuery(SlateID);
+        Games = (await Mediator.Send(getGamesRequest)).Games;
+    }
+}
+

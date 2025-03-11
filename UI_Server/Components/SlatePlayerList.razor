@@ -16,10 +16,7 @@
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Property="@nameof(SlatePlayer.TeamName)" Title="Team">
                 <Template Context="player">
-                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
-                        <RadzenImage Path=@GetTeamLogoPath(player.TeamName) Style="width:30px;height:30px" />
-                        @player.Team
-                    </RadzenStack>
+                    <TeamWithLogo TeamName="@player.TeamName" Team="@player.Team" />
                 </Template>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Property="@nameof(SlatePlayer.Salary)" Title="Salary" FormatString="{0:C0}" />
@@ -87,11 +84,6 @@
         if (SlateID == null) return;
         var getPlayersRequest = new GetPlayersForSlateQuery(SlateID);
         Players = (await Mediator.Send(getPlayersRequest)).Players;
-    }
-
-    private string GetTeamLogoPath(string teamName)
-    {
-        return $"logos/{teamName.Replace(" ", string.Empty)}.png";
     }
 
     private void OnRowRender(RowRenderEventArgs<SlatePlayer> row)

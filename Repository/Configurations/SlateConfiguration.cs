@@ -48,6 +48,11 @@ namespace Repository.Configurations
                 .WithOne()
                 .HasForeignKey(s => s.SlateID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(s => s.Games)
+                .WithOne()
+                .HasForeignKey(g => g.SlateID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
