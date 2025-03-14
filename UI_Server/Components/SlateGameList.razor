@@ -1,7 +1,9 @@
-﻿@using Application.Queries.GetGamesForSlate
+﻿@using Application.Commands.SetGameLine
+@using Application.Queries.GetGamesForSlate
 
 <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
-    <RadzenDataGrid TItem="GameInfo" Data="@Games">
+    <RadzenDataGrid @ref="gameGrid" TItem="GameInfo" Data="@Games" EditMode="DataGridEditMode.Single"
+    RowUpdate="@OnUpdateRow">
         <Columns>
             <RadzenDataGridColumn Property="@nameof(GameInfo.HomeTeam)" Title="Home Team">
                 <Template Context="game">
@@ -14,8 +16,26 @@
                 </Template>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn Property="@nameof(GameInfo.StartTime)" Title="Start Time" />
-            <RadzenDataGridColumn Property="@nameof(GameInfo.HomePoints)" Title="Home Points" />
-            <RadzenDataGridColumn Property="@nameof(GameInfo.AwayPoints)" Title="Away Points" />
+            <RadzenDataGridColumn Property="@nameof(GameInfo.HomePoints)" Title="Home Points">
+                <EditTemplate Context="game">
+                    <RadzenNumeric @bind-Value="game.HomePoints" Style="width:100%" Min="0"  />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Property="@nameof(GameInfo.AwayPoints)" Title="Away Points">
+                <EditTemplate Context="game">
+                    <RadzenNumeric @bind-Value="game.AwayPoints" Style="width:100%" Min="0" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Property="@nameof(GameInfo.Spread)" Title="Spread" />
+            <RadzenDataGridColumn Property="@nameof(GameInfo.OverUnder)" Title="Over/Under" />
+            <RadzenDataGridColumn Context="game" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Frozen="true" FrozenPosition="FrozenColumnPosition.Right" >
+                <Template Context="game">
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => EditRow(game))" @onclick:stopPropagation="true" />
+                </Template>
+                <EditTemplate Context="game">
+                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(game))" aria-label="Save" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
 </RadzenStack>
@@ -23,7 +43,9 @@
 @code {
     [Parameter] public SlateID? SlateID { get; set; }
     [Inject] IMediator Mediator { get; set; } = null!;
+    [Inject] NotificationService? NotificationService { get; set; } = null;
 
+    RadzenDataGrid<GameInfo> gameGrid;
     private GameInfo[] Games = [];
 
     protected override async Task OnParametersSetAsync()
@@ -37,5 +59,49 @@
         var getGamesRequest = new GetGamesForSlateQuery(SlateID);
         Games = (await Mediator.Send(getGamesRequest)).Games;
     }
+
+    async Task EditRow(GameInfo game)
+    {
+        if (!gameGrid.IsValid) return;
+        await gameGrid.EditRow(game);
+    }
+
+    async Task SaveRow(GameInfo game)
+    {
+        await gameGrid.UpdateRow(game);
+    }
+
+    async Task OnUpdateRow(GameInfo game)
+    {
+        try
+        {
+            var updateGameLineCommand = new SetGameLineCommand(SlateID!, game.GameID, game.HomePoints, game.AwayPoints);
+            var response = await Mediator.Send(updateGameLineCommand);
+
+            if (!response.Success)
+            {
+                throw new Exception(response.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex.Message);
+        }
+    }
+
+    private void ShowError(string message)
+    {
+        Console.WriteLine(message);
+        NotificationService?.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error",
+                Detail = message,
+                Style = "width:100%",
+                CloseOnClick = true,
+                Duration = int.MaxValue
+            });
+    }
+
 }
 

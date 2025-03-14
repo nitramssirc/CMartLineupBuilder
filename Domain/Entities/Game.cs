@@ -76,11 +76,11 @@ namespace Domain.Entities
 
         #region Update Methods
 
-        public void UpdateOdds(decimal homePoints, decimal awayPoints)
+        public void UpdateLine(decimal homePoints, decimal awayPoints)
         {
             HomePoints = homePoints;
             AwayPoints = awayPoints;
-            AddDomainEvent(new GameOddsUpdatedEvent(this));
+            AddDomainEvent(new GameLineUpdatedEvent(this));
         }
 
         #endregion

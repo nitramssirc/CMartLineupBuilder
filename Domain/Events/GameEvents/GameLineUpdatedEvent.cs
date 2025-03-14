@@ -6,13 +6,13 @@ using System;
 
 namespace Domain.Events.GameEvents
 {
-    public class GameOddsUpdatedEvent : IDomainEvent
+    public class GameLineUpdatedEvent : IDomainEvent
     {
         public GameID GameID { get; }
         public decimal HomePoints { get; }
         public decimal AwayPoints { get; }
 
-        public GameOddsUpdatedEvent(Game game)
+        public GameLineUpdatedEvent(Game game)
         {
             GameID = game.Id;
             HomePoints = game.HomePoints;

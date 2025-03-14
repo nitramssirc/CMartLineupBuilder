@@ -22,6 +22,10 @@ namespace Application.Queries.GetGamesForSlate
         public decimal HomePoints { get; set; }
         public decimal AwayPoints { get; set; }
 
+        public decimal OverUnder => HomePoints + AwayPoints;
+
+        public decimal Spread => HomePoints - AwayPoints;
+
         internal GameInfo(
             Game game,
             Slate slate)
