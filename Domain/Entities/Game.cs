@@ -65,11 +65,9 @@ namespace Domain.Entities
             SlateID slateID,
             Team homeTeam,
             Team awayTeam,
-            TimeOnly startTime,
-            decimal homePoints,
-            decimal awayPoints)
+            TimeOnly startTime)
         {
-            var newGame = new Game(new GameID(), slateID, homeTeam, awayTeam, startTime, homePoints, awayPoints);
+            var newGame = new Game(new GameID(), slateID, homeTeam, awayTeam, startTime, 0, 0);
             newGame.AddDomainEvent(new GameCreatedEvent(newGame));
             return newGame;
         }

@@ -98,6 +98,17 @@ namespace Domain.Entities
             }
         }
 
+        public void AddGame(Game game)
+        {
+            if(_games.Any(g => g.HomeTeam == game.HomeTeam && g.AwayTeam == game.AwayTeam))
+            {
+                return;
+            }
+
+            _games.Add(game);
+            AddDomainEvent(new GameAddedToSlateEvent(this, game));
+        }
+
         #endregion
     }
 }

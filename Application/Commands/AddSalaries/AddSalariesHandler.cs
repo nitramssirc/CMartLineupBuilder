@@ -45,6 +45,7 @@ namespace Application.Commands.AddSalaries
                 foreach (var salary in request.Salaries)
                 {
                     AddSalary(slate, salary);
+                    AddGame(slate, salary);
                 }
 
                 //Save the changes
@@ -65,7 +66,7 @@ namespace Application.Commands.AddSalaries
 
         private async Task<Slate> LookupSlate(SlateID id)
         {
-            var specification = specificationFactory.Create<GetSlateByIDWithSalariesAndProjectionsSpec>(id);
+            var specification = specificationFactory.Create<GetSlateByIDWithSalariesAndGamesSpec>(id);
             var slate = await _slateCommandRepository.GetEntity(specification);
             return slate ?? throw new Exception("Slate not found");
         }
@@ -74,6 +75,12 @@ namespace Application.Commands.AddSalaries
         {
             Salary constructSalary = ConstructSalary(slate, salary);
             slate.AddSalary(constructSalary);
+        }
+
+        private void AddGame(Slate slate, SalaryData salary)
+        {
+            Game constructGame = ConstructGame(slate, salary);
+            slate.AddGame(constructGame);
         }
 
 
@@ -86,6 +93,16 @@ namespace Application.Commands.AddSalaries
                 salary.Team,
                 salary.Salary,
                 salary.SiteID
+            );
+        }
+
+        private Game ConstructGame(Slate slate, SalaryData salary)
+        {
+            return Game.Create(
+                slate.Id,
+                Enum.Parse<Team>(salary.IsHomeTeam ? salary.Team : salary.Opponent),
+                Enum.Parse<Team>(salary.IsHomeTeam ? salary.Opponent : salary.Team),
+                TimeOnly.FromDateTime(salary.GameTime)
             );
         }
 
