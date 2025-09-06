@@ -49,10 +49,10 @@ namespace Common.Enums
         JAX,
         [TeamName(Sport.NFL, "Kansas City Chiefs")]
         KC,
-        [TeamName(Sport.NFL, "Las Angeles Chargers")]
+        [TeamName(Sport.NFL, "Los Angeles Chargers")]
         [TeamName(Sport.NBA, "Los Angeles Clippers")]
         LAC,
-        [TeamName(Sport.NFL, "Las Angeles Rams")]
+        [TeamName(Sport.NFL, "Los Angeles Rams")]
         LAR,
         [TeamName(Sport.NFL, "Las Vegas Raiders")]
         LV,
