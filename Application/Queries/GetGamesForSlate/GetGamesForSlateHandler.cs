@@ -39,7 +39,7 @@ namespace Application.Queries.GetGamesForSlate
 
         public async Task<GetGamesForSlateResponse> Handle(GetGamesForSlateQuery request, CancellationToken cancellationToken)
         {
-            var specification = specificationFactory.Create<GetSlateByIDWithGames>(request.SlateID);
+            var specification = specificationFactory.Create<GetSlateByIDWithGamesSpec>(request.SlateID);
 
             var slate = await _slateRepository.GetEntity(specification);
 

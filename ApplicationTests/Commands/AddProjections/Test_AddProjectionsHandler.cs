@@ -1,30 +1,24 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Moq;
 using Application.Commands.AddProjections;
 using Application.Repositories;
 using Application.Specifications.Factory;
 using Domain.Entities;
 using Domain.ValueTypes;
 using Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
-using Application.Specifications;
 using Application.Specifications.SlateSpecs;
-using Application.Commands.AddProjections.NBARotoGrinders;
+using Application.Commands.AddProjections.Models;
 
-namespace Application.Tests.Commands.AddProjections
+namespace ApplicationTests.Commands.AddProjections
 {
     [TestClass]
-    public class AddProjectionsCommandTests_RotoGrindersNBAProjections
+    public class Test_AddProjectionsHandler
     {
         private Mock<ICommandRepository<Slate>> _mockSlateRepository;
         private Mock<ISpecificationFactory> _mockSpecFactory;
-        private IRequestHandler<AddRotoGrindersNBAProjectionsCommand, AddProjectionsResponse> _command;
+        private IRequestHandler<AddProjectionsCommand, AddProjectionsResponse> _command;
 
-        public AddProjectionsCommandTests_RotoGrindersNBAProjections()
+        public Test_AddProjectionsHandler()
         {
             _mockSlateRepository = null!;
             _mockSpecFactory = null!;
@@ -39,17 +33,37 @@ namespace Application.Tests.Commands.AddProjections
             _command = new AddProjectionsHandler(_mockSlateRepository.Object, _mockSpecFactory.Object);
         }
 
-        private (AddRotoGrindersNBAProjectionsCommand request, Slate slate) SetupForHandle(
-            List<RotoGrindersNBAProjection>? projections = null,
+        private class TestUploadedProjection : UploadedProjection
+        {
+            public override string Name { get; }
+
+            public override Team Team { get; }
+
+            public override IEnumerable<ProjectionData> ProjectionData { get; }
+
+            public TestUploadedProjection(
+                string name = "Name",
+                Team team = Team.DAL,
+                ProjectionData projectionData = null!)
+            {
+                Name = name;
+                Team = team;
+                ProjectionData = projectionData == null ? new List<ProjectionData>() : new List<ProjectionData> { projectionData };
+            }
+        }
+
+        private (AddProjectionsCommand request, Slate slate) SetupForHandle(
+            List<TestUploadedProjection>? projections = null,
             Slate? slate = null,
+            ProjectionSource projectionSource = default,
             bool returnsNullSlate = false)
         {
             var slateID = new SlateID(Guid.NewGuid());
-            projections ??= new List<RotoGrindersNBAProjection>
+            projections ??= new List<TestUploadedProjection>
             {
-                new RotoGrindersNBAProjection(1, "ATL", "BOS", "PG", "Player1", 50, 20, 10, 30, 35, 60, 40, 10, 50, 5, 8000, "", 1001, 2001)
+                new TestUploadedProjection()
             };
-            var request = new AddRotoGrindersNBAProjectionsCommand(slateID, projections);
+            var request = new AddProjectionsCommand(slateID, projectionSource, projections);
             slate ??= returnsNullSlate ? null : Slate.Create(DateTime.Now, Sport.NBA, GameType.Cash, DFSSite.DraftKings, "TestSlate");
 
             var spec = new GetSlateByIDWithProjectionsSpec(new SlateID());
@@ -64,7 +78,7 @@ namespace Application.Tests.Commands.AddProjections
         #region Handle
 
         [TestMethod]
-        public async Task Handle_RotoGrindersNBAProjections_Should_ClearAllRotoGrindersProjections()
+        public async Task Handle_Should_ClearAllRotoGrindersProjections()
         {
             // Arrange
             var (request, slate) = SetupForHandle();
@@ -78,10 +92,14 @@ namespace Application.Tests.Commands.AddProjections
         }
 
         [TestMethod]
-        public async Task Handle_RotoGrindersNBAProjections_Should_AddRequestedProjections()
+        public async Task Handle_Should_AddRequestedProjections()
         {
             // Arrange
-            var (request, slate) = SetupForHandle();
+            var (request, slate) = SetupForHandle(projections:
+                new List<TestUploadedProjection>
+                {
+                    new TestUploadedProjection(name: "Player1")
+                });
 
             // Act
             await _command.Handle(request, CancellationToken.None);
@@ -92,7 +110,7 @@ namespace Application.Tests.Commands.AddProjections
         }
 
         [TestMethod]
-        public async Task Handle_RotoGrindersNBAProjections_Should_ReturnSuccessfulResponse()
+        public async Task Handle_Should_ReturnSuccessfulResponse()
         {
             // Arrange
             var (request, slate) = SetupForHandle();
@@ -105,10 +123,10 @@ namespace Application.Tests.Commands.AddProjections
         }
 
         [TestMethod]
-        public async Task Handle_RotoGrindersNBAProjections_Should_ReturnError_When_SlateCannotBeFound()
+        public async Task Handle_Should_ReturnError_When_SlateCannotBeFound()
         {
             // Arrange
-            var (request, _) = SetupForHandle(returnsNullSlate:true);
+            var (request, _) = SetupForHandle(returnsNullSlate: true);
 
             // Act
             var response = await _command.Handle(request, CancellationToken.None);
@@ -119,7 +137,7 @@ namespace Application.Tests.Commands.AddProjections
         }
 
         [TestMethod]
-        public async Task Handle_RotoGrindersNBAProjections_Should_ReturnError_When_SaveFails()
+        public async Task Handle_Should_ReturnError_When_SaveFails()
         {
             // Arrange
             var (request, slate) = SetupForHandle();

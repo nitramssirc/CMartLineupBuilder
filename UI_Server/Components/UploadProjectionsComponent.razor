@@ -1,5 +1,5 @@
 ﻿@using Application.Commands.AddProjections
-@using Application.Commands.AddProjections.NBARotoGrinders
+@using Application.Commands.AddProjections.Models
 @using Application.Commands.AddSalaries
 @using Application.Queries.GetSlateById
 @using CsvHelper
@@ -76,35 +76,39 @@ Accept=".csv" />
 
     async Task<AddProjectionsResponse> SendAddProjectionsCommand(Sport slateSport, string fileData)
     {
-        switch (slateSport)
-        {
-            case Sport.NBA:
-                return await SendAddNBAProjectionsCommand(fileData);
-            default:
-                throw new NotImplementedException();
-        }
-    }
-
-    async Task<AddProjectionsResponse> SendAddNBAProjectionsCommand(string fileData)
-    {
-        switch (Source)
-        {
-            case ProjectionSource.RotoGrinders:
-                return await SendAddNBARotoGrindersProjections(fileData);
-            default:
-                throw new NotImplementedException();
-        }
-    }
-
-    async Task<AddProjectionsResponse> SendAddNBARotoGrindersProjections(string fileData)
-    {
-        var projections =
-            DeserializeProjectionCSV<RotoGrindersNBAProjection, RotoGrindersNBAProjectionMap>(fileData);
-        var addProjectionsCommand = new AddRotoGrindersNBAProjectionsCommand(SlateID!, projections);
+        var projections = ConstructProjections(slateSport, fileData);
+        var addProjectionsCommand = new AddProjectionsCommand(SlateID!, Source, projections);
         return await Mediator.Send(addProjectionsCommand);
     }
 
-    List<TRecord> DeserializeProjectionCSV<TRecord, TMap>(string fileData) where TMap : ClassMap<TRecord>
+    private List<UploadedProjection> ConstructProjections(Sport slateSport, string fileData)
+    {
+        switch (slateSport)
+        {
+            case Sport.NBA:
+                switch (Source)
+                {
+                    case ProjectionSource.RotoGrinders:
+                        return DeserializeProjectionCSV<RotoGrindersNBAUploadedProjection, RotoGrindersNBAProjectionMap>(fileData);
+                    default:
+                        throw new NotImplementedException();
+                }
+            case Sport.NFL:
+                switch (Source)
+                {
+                    case ProjectionSource.RotoGrinders:
+                        return DeserializeProjectionCSV<RotoGrindersNFLUploadedProjection, RotoGrindersNFLProjectionMap>(fileData);
+                    default:
+                        throw new NotImplementedException();
+                }
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    List<UploadedProjection> DeserializeProjectionCSV<TRecord, TMap>(string fileData) 
+        where TMap : ClassMap<TRecord>
+        where TRecord : UploadedProjection
     {
         var fileBytes = Convert.FromBase64String(
                 fileData.Split(',')[1]);
@@ -113,11 +117,11 @@ Accept=".csv" />
         using (var csvReader = new CsvReader(new StringReader(fileString), System.Globalization.CultureInfo.InvariantCulture))
         {
             csvReader.Context.RegisterClassMap<TMap>();
-            return csvReader.GetRecords<TRecord>().ToList();
+            return csvReader.GetRecords<TRecord>().Cast<UploadedProjection>().ToList();
         }
     }
 
-    public class RotoGrindersNBAProjectionMap : ClassMap<RotoGrindersNBAProjection>
+    public class RotoGrindersNBAProjectionMap : ClassMap<RotoGrindersNBAUploadedProjection>
     {
         public RotoGrindersNBAProjectionMap()
         {
@@ -131,6 +135,31 @@ Accept=".csv" />
             Map(m => m.smash).Name("smash").Default(0.0m);
             Map(m => m.opto_pct).Name("opto_pct").Default(0.0m);
             Map(m => m.minutes).Name("minutes").Default(0);
+            Map(m => m.ceil).Name("ceil").Default(0.0m);
+            Map(m => m.floor).Name("floor").Default(0.0m);
+            Map(m => m.min_exposure).Name("min_exposure").Default(0.0m);
+            Map(m => m.max_exposure).Name("max_exposure").Default(0.0m);
+            Map(m => m.rg_value).Name("rg_value").Default(0.0m);
+            Map(m => m.salary).Name("salary").Default(0);
+            Map(m => m.custom).Name("custom").Default("");
+            Map(m => m.rg_id).Name("rg_id").Default(0);
+            Map(m => m.partner_id).Name("partner_id").Default(0);
+        }
+    }
+
+    public class RotoGrindersNFLProjectionMap : ClassMap<RotoGrindersNFLUploadedProjection>
+    {
+        public RotoGrindersNFLProjectionMap()
+        {
+            Map(m => m.player_id).Name("player_id").Default(0);
+            Map(m => m.team).Name("team").Default("Unknown");
+            Map(m => m.opp).Name("opp").Default("Unknown");
+            Map(m => m.pos).Name("pos").Default("Unknown");
+            Map(m => m.name).Name("name").Default("Unknown");
+            Map(m => m.fpts).Name("fpts").Default(0.0m);
+            Map(m => m.proj_own).Name("proj_own").Default(0.0m);
+            Map(m => m.smash).Name("smash").Default(0.0m);
+            Map(m => m.opto_pct).Name("opto_pct").Default(0.0m);
             Map(m => m.ceil).Name("ceil").Default(0.0m);
             Map(m => m.floor).Name("floor").Default(0.0m);
             Map(m => m.min_exposure).Name("min_exposure").Default(0.0m);

@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Common.Enums;
+
+using Domain.ValueTypes;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.AddProjections.NBARotoGrinders
+namespace Application.Commands.AddProjections.Models
 {
-    public class RotoGrindersNBAProjection
+    public class RotoGrindersNBAUploadedProjection : UploadedProjection
     {
         public int player_id { get; set; }
         public string team { get; set; } = string.Empty;
@@ -28,9 +32,37 @@ namespace Application.Commands.AddProjections.NBARotoGrinders
         public int rg_id { get; set; }
         public int partner_id { get; set; }
 
-        public RotoGrindersNBAProjection() { }
+        public override IEnumerable<ProjectionData> ProjectionData
+        {
+            get
+            {
+                return new List<ProjectionData>
+            {
+                new ProjectionData(StatCategories.PlayerId, player_id),
+                new ProjectionData(StatCategories.Opponent, (decimal)ParseTeam(opp)),
+                new ProjectionData(StatCategories.FantasyPoints, fpts),
+                new ProjectionData(StatCategories.ProjectedOwnership, proj_own),
+                new ProjectionData(StatCategories.Smash, smash),
+                new ProjectionData(StatCategories.OpprotunityPct, opto_pct),
+                new ProjectionData(StatCategories.Minutes, minutes),
+                new ProjectionData(StatCategories.Ceiling, ceil),
+                new ProjectionData(StatCategories.Floor, floor),
+                new ProjectionData(StatCategories.MinExposure, min_exposure),
+                new ProjectionData(StatCategories.MaxExposure, max_exposure),
+                new ProjectionData(StatCategories.RotoGrindersValue, rg_value),
+                new ProjectionData(StatCategories.RotoGrindersID, rg_id),
+                new ProjectionData(StatCategories.PartnerID, partner_id)
+            };
+            }
+        }
 
-        public RotoGrindersNBAProjection(
+        public override string Name => name;
+
+        public override Team Team => ParseTeam(team);
+
+        public RotoGrindersNBAUploadedProjection() { }
+
+        public RotoGrindersNBAUploadedProjection(
             int player_id,
             string team,
             string opp,
@@ -70,6 +102,15 @@ namespace Application.Commands.AddProjections.NBARotoGrinders
             this.custom = custom;
             this.rg_id = rg_id;
             this.partner_id = partner_id;
+        }
+
+        private Team ParseTeam(string team)
+        {
+            if (Enum.TryParse<Team>(team, out var parsedTeam))
+            {
+                return parsedTeam;
+            }
+            return Team.UNKNOWN;
         }
     }
 }

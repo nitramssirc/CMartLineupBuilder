@@ -3,8 +3,9 @@ using Domain.Entities;
 using Domain.ValueTypes;
 using System.Linq.Expressions;
 using Common.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Application.Specifications.Tests.SlateSpecs
+namespace ApplicationTests.Specifications.SlateSpecs
 {
     [TestClass()]
     public class GetSlateByIDWithSalariesAndProjectionsTests
@@ -47,6 +48,24 @@ namespace Application.Specifications.Tests.SlateSpecs
             Assert.AreEqual(2, includes.Count);
             Assert.IsTrue(includes.Any(include => include.Body is MemberExpression member && member.Member.Name == nameof(Slate.Salaries)));
             Assert.IsTrue(includes.Any(include => include.Body is MemberExpression member && member.Member.Name == nameof(Slate.Projections)));
+        }
+
+        #endregion
+
+        #region UseSplitQuery
+
+        [TestMethod]
+        public void UseSplitQuery_Should_ReturnTrue()
+        {
+            // Arrange
+            var slateID = new SlateID(Guid.NewGuid());
+            var specification = new GetSlateByIDWithSalariesAndProjectionsSpec(slateID);
+
+            // Act
+            var result = specification.UseSplitQuery;
+
+            // Assert
+            Assert.IsTrue(result);
         }
 
         #endregion

@@ -1,4 +1,6 @@
-﻿using Application.Specifications.SlateSpecs;
+﻿using Application.Specifications;
+using Application.Specifications.Factory;
+using Application.Specifications.SlateSpecs;
 
 using Common.Enums;
 
@@ -6,7 +8,7 @@ using Domain.ValueTypes;
 
 using System.Reflection;
 
-namespace Application.Specifications.Factory.Tests
+namespace ApplicationTests.Specifications.Factory
 {
     [TestClass()]
     public class SpecificationFactoryTests
@@ -40,7 +42,7 @@ namespace Application.Specifications.Factory.Tests
             {
                 switch (predicateImplementationType.Name)
                 {
-                    case nameof (GetSlateByIDWithSalariesAndProjectionsSpec):
+                    case nameof(GetSlateByIDWithSalariesAndProjectionsSpec):
                         yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
                         break;
                     case nameof(GetSlatesByDFSSiteAndSportSpec):
@@ -50,6 +52,12 @@ namespace Application.Specifications.Factory.Tests
                         yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
                         break;
                     case nameof(GetSlateByIDWithProjectionsSpec):
+                        yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
+                        break;
+                    case nameof(GetSlateByIDWithGamesSpec):
+                        yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
+                        break;
+                    case nameof(GetSlateByIDWithSalariesAndGamesSpec):
                         yield return new object[] { predicateImplementationType, new object[] { new SlateID(Guid.NewGuid()) } };
                         break;
                     default:

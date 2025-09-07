@@ -12,6 +12,8 @@ namespace Application.Specifications
         public abstract Expression<Func<T, bool>> Expression { get; }
         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
 
+        public bool UseSplitQuery { get; protected set; } = false;
+
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);

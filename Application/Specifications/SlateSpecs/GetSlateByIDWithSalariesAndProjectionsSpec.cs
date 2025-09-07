@@ -16,6 +16,7 @@ namespace Application.Specifications.SlateSpecs
         {
             AddInclude(slate => slate.Salaries);
             AddInclude(slate => slate.Projections);
+            UseSplitQuery = true;
         }
     }
 }

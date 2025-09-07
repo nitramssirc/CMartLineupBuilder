@@ -12,6 +12,6 @@ namespace Application.Specifications
     {
         Expression<Func<T, bool>> Expression { get; }
         List<Expression<Func<T, object>>> Includes { get; }
-
+        bool UseSplitQuery { get; }
     }
 }

@@ -42,7 +42,12 @@ namespace Repository.Repositories
             {
                 query = query.Include(include);
             }
-                        
+
+            if (specification.UseSplitQuery)
+            {
+                query = query.AsSplitQuery();
+            }
+
             return query;
         }
 

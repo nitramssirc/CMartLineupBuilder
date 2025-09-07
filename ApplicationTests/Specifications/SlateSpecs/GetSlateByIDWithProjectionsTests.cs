@@ -11,7 +11,7 @@ using Domain.Entities;
 using Domain.ValueTypes;
 using System.Linq.Expressions;
 
-namespace Application.Specifications.SlateSpecs.Tests
+namespace ApplicationTests.Specifications.SlateSpecs
 {
     [TestClass()]
     public class GetSlateByIDWithProjectionsTests

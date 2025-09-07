@@ -34,7 +34,7 @@ namespace Application.Commands.SetGameLine
         {
             try
             {
-                var spec = _specificationFactory.Create<GetSlateByIDWithGames>(request.SlateID);
+                var spec = _specificationFactory.Create<GetSlateByIDWithGamesSpec>(request.SlateID);
                 var slate = await _slateCommandRepository.GetEntity(spec);
                 if (slate == null)
                 {

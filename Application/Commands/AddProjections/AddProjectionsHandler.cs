@@ -1,4 +1,4 @@
-﻿using Application.Commands.AddProjections.NBARotoGrinders;
+﻿using Application.Commands.AddProjections.Models;
 using Application.Repositories;
 using Application.Specifications.Factory;
 using Application.Specifications.SlateSpecs;
@@ -8,16 +8,10 @@ using Domain.ValueTypes;
 
 using MediatR;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Application.Commands.AddProjections
 {
     public class AddProjectionsHandler
-        : IRequestHandler<AddRotoGrindersNBAProjectionsCommand, AddProjectionsResponse>
+        : IRequestHandler<AddProjectionsCommand, AddProjectionsResponse>
     {
         #region Dependencies
 
@@ -41,8 +35,8 @@ namespace Application.Commands.AddProjections
         #region Handlers
 
 
-        async Task<AddProjectionsResponse> IRequestHandler<AddRotoGrindersNBAProjectionsCommand, AddProjectionsResponse>.
-            Handle(AddRotoGrindersNBAProjectionsCommand request, CancellationToken cancellationToken)
+        async Task<AddProjectionsResponse> IRequestHandler<AddProjectionsCommand, AddProjectionsResponse>.
+            Handle(AddProjectionsCommand request, CancellationToken cancellationToken)
         {
             return await AddProjections(request);
         }
@@ -52,7 +46,7 @@ namespace Application.Commands.AddProjections
         #region Private Methods
 
 
-        private async Task<AddProjectionsResponse> AddProjections(AddProjectionsCommandBase request)
+        private async Task<AddProjectionsResponse> AddProjections(AddProjectionsCommand request)
         {
             try
             {
@@ -64,10 +58,10 @@ namespace Application.Commands.AddProjections
 
                 slate.ClearProjectionsFromSource(request.ProjectionSource);
 
-                var projections = request.GetProjections();
-                foreach (var projectionDTO in projections)
+                var projections = request.UploadedProjections;
+                foreach (var projection in projections)
                 {
-                    slate.AddProjection(ConstructProjection(request, projectionDTO));
+                    slate.AddProjection(ConstructProjection(request, projection));
                 }
 
                 await _slateRepository.SaveAsync();
@@ -86,14 +80,14 @@ namespace Application.Commands.AddProjections
             return (await _slateRepository.GetEntity(spec));
         }
 
-        private Projection ConstructProjection(AddProjectionsCommandBase request, ProjectionDTO projectionDTO)
+        private Projection ConstructProjection(AddProjectionsCommand request, UploadedProjection projection)
         {
             return Projection.Create(
                 request.SlateID,
                 request.ProjectionSource,
-                projectionDTO.PlayerName,
-                projectionDTO.Team,
-                projectionDTO.Data);
+                projection.Name,
+                projection.Team,
+                projection.ProjectionData);
         }
 
         #endregion
