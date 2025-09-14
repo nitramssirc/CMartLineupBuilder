@@ -2,12 +2,12 @@
 using Application.Commands.AddProjections;
 using Application.Repositories;
 using Application.Specifications.Factory;
-using Domain.Entities;
 using Domain.ValueTypes;
 using Common.Enums;
 using MediatR;
 using Application.Specifications.SlateSpecs;
 using Application.Commands.AddProjections.Models;
+using Domain.Aggregates;
 
 namespace ApplicationTests.Commands.AddProjections
 {

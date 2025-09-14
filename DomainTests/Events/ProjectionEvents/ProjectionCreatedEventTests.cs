@@ -2,7 +2,6 @@
 using Domain.Events.ProjectionEvents;
 using Domain.ValueTypes;
 using System;
-using Domain.Entities;
 using Common.Enums;
 
 namespace Domain.Tests.Events.ProjectionEvents

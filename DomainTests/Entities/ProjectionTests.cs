@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Domain.Entities;
 using Domain.ValueTypes;
 using Common.Enums;
 using System;
 using System.Collections.Generic;
 using Domain.Events.ProjectionEvents;
 using Domain.Events.SlateEvents;
+using Domain.Aggregates;
 
 namespace Domain.Tests.Entities
 {

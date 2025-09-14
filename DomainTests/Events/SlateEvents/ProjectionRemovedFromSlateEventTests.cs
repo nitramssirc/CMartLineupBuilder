@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Domain.Events.SlateEvents;
-using Domain.Entities;
 using Domain.ValueTypes;
 using Common.Enums;
 using System;

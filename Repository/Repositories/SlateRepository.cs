@@ -3,8 +3,8 @@ using Application.Specifications;
 
 using Common.Enums;
 
+using Domain.Aggregates;
 using Domain.Common.Entities;
-using Domain.Entities;
 using Domain.ValueTypes;
 
 using Microsoft.EntityFrameworkCore;

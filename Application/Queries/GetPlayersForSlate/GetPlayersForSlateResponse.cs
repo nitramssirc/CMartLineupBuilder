@@ -1,6 +1,6 @@
 ﻿using Common.Enums;
 
-using Domain.Entities;
+using Domain.Aggregates;
 using Domain.ValueTypes;
 
 using System;

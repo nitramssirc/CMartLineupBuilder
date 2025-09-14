@@ -1,9 +1,9 @@
 ﻿using Application.Specifications.SlateSpecs;
-using Domain.Entities;
 using Domain.ValueTypes;
 using System.Linq.Expressions;
 using Common.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Domain.Aggregates;
 
 namespace ApplicationTests.Specifications.SlateSpecs
 {

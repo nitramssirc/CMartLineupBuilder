@@ -2,7 +2,7 @@
 using Application.Specifications.Factory;
 using Application.Specifications.SlateSpecs;
 
-using Domain.Entities;
+using Domain.Aggregates;
 
 using MediatR;
 

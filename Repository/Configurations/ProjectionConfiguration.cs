@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain.Entities;
 using Domain.ValueTypes;
+using Domain.Aggregates;
 
 namespace Infrastructure.Persistence.Configurations
 {

@@ -1,5 +1,4 @@
 using Domain.Events.SalaryEvents;
-using Domain.Entities;
 using Domain.ValueTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

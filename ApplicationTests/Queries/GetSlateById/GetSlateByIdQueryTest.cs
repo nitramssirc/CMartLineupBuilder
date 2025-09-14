@@ -3,7 +3,6 @@ using Application.Repositories;
 using Application.Specifications.Factory;
 using Application.Specifications;
 using Common.Enums;
-using Domain.Entities;
 using Domain.ValueTypes;
 using Moq;
 
@@ -13,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Specifications.SlateSpecs;
+using Domain.Aggregates;
 
 namespace ApplicationTests.Queries.GetSlateById
 {

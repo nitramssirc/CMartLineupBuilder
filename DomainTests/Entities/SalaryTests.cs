@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Domain.Entities;
 using Common.Enums;
 using System;
 using System.Linq;
 using Domain.ValueTypes;
-using Domain.Events.SalaryEvents;
+using Domain.Events.PlayerEvents;
 
 namespace Domain.Entities.Tests
 {
@@ -175,7 +174,7 @@ namespace Domain.Entities.Tests
 
             // Assert
             var domainEvent = salary.PublishDomainEvents().FirstOrDefault();
-            Assert.IsInstanceOfType(domainEvent, typeof(SalaryCreatedEvent));
+            Assert.IsInstanceOfType(domainEvent, typeof(PlayerSalaryUpdatedEvent));
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using Common.Enums;
 
-using Domain.Entities;
+using Domain.Aggregates;
 
 using System;
 using System.Collections.Generic;

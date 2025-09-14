@@ -1,5 +1,6 @@
-using Domain.Entities;
+using Domain.Aggregates;
 using Domain.ValueTypes;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

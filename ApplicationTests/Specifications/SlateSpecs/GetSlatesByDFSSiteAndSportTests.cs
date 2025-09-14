@@ -3,7 +3,7 @@ using System;
 using System.Linq.Expressions;
 using Application.Specifications.SlateSpecs;
 using Common.Enums;
-using Domain.Entities;
+using Domain.Aggregates;
 
 namespace Application.Tests.Specifications.SlateSpecs
 {

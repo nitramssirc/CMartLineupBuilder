@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Enums;
-using Domain.Entities;
 using Domain.ValueTypes;
 using System.Linq.Expressions;
+using Domain.Aggregates;
 
 namespace ApplicationTests.Specifications.SlateSpecs
 {

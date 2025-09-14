@@ -3,7 +3,7 @@ using Application.Repositories;
 using Application.Specifications.Factory;
 using Application.Specifications.SlateSpecs;
 
-using Domain.Entities;
+using Domain.Aggregates;
 using Domain.ValueTypes;
 
 using MediatR;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Domain.Entities;
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using Common.Enums;
 using Domain.Events.SlateEvents;
 using Domain.Events.SalaryEvents;
 using Domain.ValueTypes;
+using Domain.Aggregates;
 
 namespace Domain.Entities.Tests
 {

@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Enums;
-using Domain.Entities;
 using Domain.Events.SlateEvents;
+using Domain.Aggregates;
 
 namespace DomainTests.Events.SlateEvents
 {
