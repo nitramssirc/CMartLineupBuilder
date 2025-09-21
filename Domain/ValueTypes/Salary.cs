@@ -16,13 +16,6 @@ namespace Domain.ValueTypes
 
         #region Constructor
 
-        internal Salary() 
-        {
-            Positions = Array.Empty<PlayerPosition>();
-            SalaryAmount = 0;
-            DFSSiteID = string.Empty;
-        }
-
         private Salary(
             PlayerPosition[] positions,
             int salaryAmount,
@@ -33,32 +26,16 @@ namespace Domain.ValueTypes
             DFSSiteID = dfsSiteID;
         }
 
-        private Salary(
-            string positions,
+        #endregion
+
+        #region Factory Methods
+
+        public static Salary Create(
+            PlayerPosition[] positions,
             int salaryAmount,
             string dfsSiteID)
         {
-            Positions = ParsePositions(positions);
-            SalaryAmount = salaryAmount;
-            DFSSiteID = dfsSiteID;
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private static PlayerPosition[] ParsePositions(string positions)
-        {
-            var positionStrings = positions.Split('/');
-            var playerPositions = new List<PlayerPosition>();
-            foreach (var position in positionStrings)
-            {
-                if (Enum.TryParse(position, out PlayerPosition playerPosition))
-                {
-                    playerPositions.Add(playerPosition);
-                }
-            }
-            return playerPositions.ToArray();
+            return new Salary(positions, salaryAmount, dfsSiteID);
         }
 
         #endregion

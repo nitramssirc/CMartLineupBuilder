@@ -38,7 +38,7 @@ namespace Domain.Aggregates
             string name,
             Team team,
             Salary salary,
-            GameID game) : base(new PlayerID(slateID, name, team))
+            GameID game) : base(PlayerID.CreateNew(slateID, name, team))
         {
             Salary = salary;
             GameID = game;
@@ -55,7 +55,7 @@ namespace Domain.Aggregates
             Game game)
         {
             var player = new Player(game.SlateID, name, team, salary, game.Id);
-            player.AddDomainEvent(new PlayerCreatedEvent(player.Id));
+            player.AddDomainEvent(new PlayerCreatedEvent(player));
 
             return player;
         }
@@ -66,11 +66,11 @@ namespace Domain.Aggregates
             AddDomainEvent(new PlayerSalaryUpdatedEvent(Id, Salary.SalaryAmount));
         }
 
-        public void SetProjections(IEnumerable<Projection> projections)
+        public void SetProjection(Projection projection)
         {
-            _projections.Clear();
-            _projections.AddRange(projections);
-            AddDomainEvent(new PlayerProjectionsUpdatedEvent(Id));
+            _projections.RemoveAll(p => p.ProjectionSource == projection.ProjectionSource);
+            _projections.Add(projection);
+            AddDomainEvent(new PlayerProjectionsUpdatedEvent(Id, projection.ProjectionSource));
         }
 
         #endregion

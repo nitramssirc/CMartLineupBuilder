@@ -12,13 +12,17 @@ namespace Domain.ValueTypes
 {
     public class ProjectionData : ValueObject
     {
+
+        #region Properties
+
+        public StatCategories StatCategory { get; private set; }
+        public decimal Value { get; private set; }
+
+        #endregion
+
         #region Constructors
 
-        private ProjectionData()
-        {
-        }
-
-        public ProjectionData(StatCategories statCategory, decimal value)
+        private ProjectionData(StatCategories statCategory, decimal value)
         {
             StatCategory = statCategory;
             Value = value;
@@ -26,10 +30,11 @@ namespace Domain.ValueTypes
 
         #endregion
 
-        #region Properties
-
-        public StatCategories StatCategory { get; private set; }
-        public decimal Value { get; private set; }
+        #region Factory Methods
+        public static ProjectionData Create(StatCategories statCategory, decimal value)
+        {
+            return new ProjectionData(statCategory, value);
+        }
 
         #endregion
 

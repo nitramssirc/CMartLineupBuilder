@@ -12,11 +12,17 @@ namespace Domain.ValueTypes
 {
     public class PlayerID : EntityID
     {
+        #region Properties
+
         public SlateID SlateID { get; set; }
         public string Name { get; private set; }
         public Team Team { get; private set; }
 
-        public PlayerID(
+        #endregion
+
+        #region Constructor
+
+        private PlayerID(
             SlateID slateID,
             string name, 
             Team team, 
@@ -27,10 +33,22 @@ namespace Domain.ValueTypes
             Team = team;
         }
 
-        public PlayerID(SlateID slateID, string name, Team team) : 
-            this(slateID, name, team, Guid.NewGuid())
+        #endregion
+
+        #region Factory Method
+
+
+        public static PlayerID CreateNew(
+            SlateID slateID,
+            string name,
+            Team team)
         {
+            return new PlayerID(slateID, name, team, Guid.NewGuid());
         }
+
+        #endregion
+
+        #region EntityID Overrides
 
         protected override IEnumerable<object> GetAdditionalIDComponents()
         {
@@ -38,5 +56,8 @@ namespace Domain.ValueTypes
             yield return Name;
             yield return Team;
         }
+
+        #endregion
+
     }
 }

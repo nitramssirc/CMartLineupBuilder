@@ -12,11 +12,16 @@ namespace Domain.Events.GameEvents
         public decimal HomePoints { get; }
         public decimal AwayPoints { get; }
 
-        public GameLineUpdatedEvent(Game game)
+        internal GameLineUpdatedEvent(Game game)
         {
             GameID = game.Id;
             HomePoints = game.HomePoints;
             AwayPoints = game.AwayPoints;
+        }
+
+        public override string ToString()
+        {
+            return $"GameLineUpdatedEvent: GameID={GameID}, HomePoints={HomePoints}, AwayPoints={AwayPoints}";
         }
     }
 }

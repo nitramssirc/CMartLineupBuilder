@@ -4,7 +4,7 @@
     {
         public Guid Id { get; }
 
-        internal EntityID(Guid id)
+        protected EntityID(Guid id)
         {
             Id = id;
         }

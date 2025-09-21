@@ -1,4 +1,7 @@
-﻿using Domain.Common.Events;
+﻿using Common.Enums;
+
+using Domain.Aggregates;
+using Domain.Common.Events;
 using Domain.ValueTypes;
 
 using System;
@@ -13,10 +16,21 @@ namespace Domain.Events.PlayerEvents
     {
         public PlayerID PlayerID { get; private set; }
 
-        public PlayerCreatedEvent(
-            PlayerID playerID)
+        public Team Team { get; private set; }
+
+        public string Name { get; private set; }
+
+        internal PlayerCreatedEvent(
+            Player player)
         {
-            PlayerID = playerID;
+            PlayerID = player.Id;
+            Team = player.Team;
+            Name = player.Name;
+        }
+
+        public override string ToString()
+        {
+            return $"PlayerCreatedEvent: PlayerID={PlayerID}, {Name} ({Team})";
         }
     }
 }

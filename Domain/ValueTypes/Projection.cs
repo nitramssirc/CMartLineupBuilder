@@ -17,12 +17,23 @@ namespace Domain.ValueTypes
 
         #region Constructors
 
-        public Projection(
+        private Projection(
             ProjectionSource projectionSource,
             IEnumerable<ProjectionData> data) : base()
         {
             ProjectionSource = projectionSource;
-            _data = new List<ProjectionData>(data);
+            _data = [.. data];
+        }
+
+        #endregion
+
+        #region Factory Methods
+
+        public static Projection Create(
+            ProjectionSource projectionSource,
+            IEnumerable<ProjectionData> data)
+        {
+            return new Projection(projectionSource, data);
         }
 
         #endregion

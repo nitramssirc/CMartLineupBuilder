@@ -1,4 +1,6 @@
-﻿using Domain.Common.Events;
+﻿using Common.Enums;
+
+using Domain.Common.Events;
 using Domain.ValueTypes;
 
 using System;
@@ -12,10 +14,19 @@ namespace Domain.Events.PlayerEvents
     public class PlayerProjectionsUpdatedEvent: IDomainEvent
     {
         public PlayerID PlayerID { get; private set; }
-        public PlayerProjectionsUpdatedEvent(
-            PlayerID playerID)
+        public ProjectionSource ProjectionSource { get; private set; }
+
+        internal PlayerProjectionsUpdatedEvent(
+            PlayerID playerID,
+            ProjectionSource projectionSource)
         {
             PlayerID = playerID;
+            ProjectionSource = projectionSource;
+        }
+
+        public override string ToString()
+        {
+            return $"PlayerProjectionsUpdatedEvent: PlayerID={PlayerID}, ProjectionSource={ProjectionSource}";
         }
     }
 }

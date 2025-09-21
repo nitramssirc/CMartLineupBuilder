@@ -25,9 +25,7 @@ namespace Domain.Aggregates
 
         #region Constructors
 
-        private Slate() : base(new SlateID()) { }
-
-        internal Slate(
+        private Slate(
             SlateID id,
             DateTime date,
             Sport sport,
@@ -53,7 +51,7 @@ namespace Domain.Aggregates
             DFSSite dfsSite,
             string name)
         {
-            var newSlate = new Slate(new SlateID(), date, sport, gameType, dfsSite, name);
+            var newSlate = new Slate(SlateID.CreateNew(), date, sport, gameType, dfsSite, name);
             newSlate.AddDomainEvent(new SlateCreatedEvent(newSlate));
             return newSlate;
         }

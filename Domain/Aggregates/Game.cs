@@ -52,7 +52,7 @@ namespace Domain.Aggregates
             Team awayTeam,
             TimeOnly startTime)
         {
-            var newGame = new Game(new GameID(homeTeam, awayTeam), slateID, startTime, 0, 0);
+            var newGame = new Game(GameID.CreateNew(homeTeam, awayTeam), slateID, startTime, 0, 0);
             newGame.AddDomainEvent(new GameCreatedEvent(newGame));
             return newGame;
         }

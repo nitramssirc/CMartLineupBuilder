@@ -8,6 +8,7 @@ namespace Common.Enums
 {
     public enum ProjectionSource
     {
-        RotoGrinders
+        RotoGrinders,
+        FootballGuys
     }
 }
