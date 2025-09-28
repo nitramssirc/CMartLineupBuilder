@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Aggregates
 {
-    public class Game : Entity<GameID>, IAggregateRoot
+    public class Game : Entity, IAggregateRoot
     {
         #region Properties
 
-        public SlateID SlateID { get; private set; }
-        public Team HomeTeam => Id.HomeTeam;
-        public Team AwayTeam => Id.AwayTeam;
+        public Guid SlateID { get; private set; }
+        public Team HomeTeam { get; private set; }
+        public Team AwayTeam { get; private set; }
         public TimeOnly StartTime { get; private set; }
         public decimal HomePoints { get; private set; }
         public decimal AwayPoints { get; private set; }
@@ -30,14 +30,18 @@ namespace Domain.Aggregates
         #region Constructor
 
         private Game(
-            GameID id,
-            SlateID slateID,
+            Guid gameID,
+            Guid slateID,
+            Team homeTeam,
+            Team awayTeam,
             TimeOnly startTime,
             decimal homePoints,
-            decimal awayPoints) : base(id)
+            decimal awayPoints) : base(gameID)
         {
             SlateID = slateID;
             StartTime = startTime;
+            HomeTeam = homeTeam;
+            AwayTeam = awayTeam;
             HomePoints = homePoints;
             AwayPoints = awayPoints;
         }
@@ -47,12 +51,12 @@ namespace Domain.Aggregates
         #region Factory Methods
 
         public static Game Create(
-            SlateID slateID,
+            Guid slateID,
             Team homeTeam,
             Team awayTeam,
             TimeOnly startTime)
         {
-            var newGame = new Game(GameID.CreateNew(homeTeam, awayTeam), slateID, startTime, 0, 0);
+            var newGame = new Game(Guid.NewGuid(), slateID, homeTeam, awayTeam,startTime, 0, 0);
             newGame.AddDomainEvent(new GameCreatedEvent(newGame));
             return newGame;
         }

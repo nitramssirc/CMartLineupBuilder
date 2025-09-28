@@ -18,7 +18,7 @@ namespace DomainTests.Events.SlateEvents
         public void ToString_Should_ReturnExpectedFormat()
         {
             // Arrange
-            var slateId = SlateID.CreateNew();
+            var slateId = Guid.NewGuid();
             var date = new DateTime(2025, 9, 21, 12, 0, 0);
             var sport = Sport.NFL;
             var gameType = GameType.Cash;

@@ -21,11 +21,11 @@ namespace DomainTests.Events.GameEvents
         public void ToString_Should_ReturnExpectedFormat()
         {
             // Arrange
-            var slateId = SlateID.CreateNew();
+            var slateId = Guid.NewGuid();
             var homeTeam = Team.DEN;
             var awayTeam = Team.KC;
             var startTime = new TimeOnly(19, 30);
-            var gameId = GameID.CreateNew(homeTeam, awayTeam);
+            var gameId = Guid.NewGuid();
             var game = Game.Create(slateId, homeTeam, awayTeam, startTime);
 
             var evt = new GameCreatedEvent(game);

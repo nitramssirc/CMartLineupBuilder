@@ -8,7 +8,7 @@ namespace Domain.Events.GameEvents
 {
     public class GameLineUpdatedEvent : IDomainEvent
     {
-        public GameID GameID { get; }
+        public Guid GameID { get; }
         public decimal HomePoints { get; }
         public decimal AwayPoints { get; }
 

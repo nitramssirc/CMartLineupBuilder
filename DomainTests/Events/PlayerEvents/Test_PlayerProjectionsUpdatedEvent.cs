@@ -17,8 +17,8 @@ namespace DomainTests.Events.PlayerEvents
         public void ToString_Should_ReturnExpectedFormat()
         {
             // Arrange
-            var slateId = SlateID.CreateNew();
-            var playerId = PlayerID.CreateNew(slateId, "Test Player", Team.ATL);
+            var slateId = Guid.NewGuid();
+            var playerId = Guid.NewGuid();
             var projectionSource = ProjectionSource.RotoGrinders;
             var evt = new PlayerProjectionsUpdatedEvent(playerId, projectionSource);
 

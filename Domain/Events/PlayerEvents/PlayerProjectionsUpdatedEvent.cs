@@ -13,11 +13,11 @@ namespace Domain.Events.PlayerEvents
 {
     public class PlayerProjectionsUpdatedEvent: IDomainEvent
     {
-        public PlayerID PlayerID { get; private set; }
+        public Guid PlayerID { get; private set; }
         public ProjectionSource ProjectionSource { get; private set; }
 
         internal PlayerProjectionsUpdatedEvent(
-            PlayerID playerID,
+            Guid playerID,
             ProjectionSource projectionSource)
         {
             PlayerID = playerID;

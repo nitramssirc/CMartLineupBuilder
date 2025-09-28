@@ -22,14 +22,14 @@ namespace DomainTests.Aggregates
         #region Create
 
         private Game SetupForCreate(
-            SlateID? slateID = null,
+            Guid? slateID = null,
             Team homeTeam = Team.DAL,
             Team awayTeam = Team.CHI,
             TimeOnly startTime = default)
         {
-            slateID ??= SlateID.CreateNew();
+            slateID ??= Guid.NewGuid();
 
-            return Game.Create(slateID, homeTeam, awayTeam, startTime);
+            return Game.Create(slateID.Value, homeTeam, awayTeam, startTime);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace DomainTests.Aggregates
         public void Create_Should_SetSlateIDToParam()
         {
             //Assert
-            var expectedSlateID = SlateID.CreateNew();
+            var expectedSlateID = Guid.NewGuid();
 
             //Act
             var game = SetupForCreate(slateID: expectedSlateID);

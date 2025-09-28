@@ -12,36 +12,41 @@ using System.Threading.Tasks;
 
 namespace Domain.Aggregates
 {
-    public class Player : Entity<PlayerID>, IAggregateRoot
+    public class Player : Entity, IAggregateRoot
     {
         #region Properties
 
-        public SlateID SlateID => Id.SlateID;
+        public Guid SlateID { get; private set; }
+
+        public string Name { get; private set; }
+
+        public Team Team { get; private set; }
+
+        public Guid GameID { get; private set; }
 
         public Salary Salary { get; private set; }
-
-        public GameID GameID { get; private set; }
 
         private readonly List<Projection> _projections = [];
         public IReadOnlyCollection<Projection> Projections => _projections;
 
-        public string Name => Id.Name;
-
-        public Team Team => Id.Team;
 
         #endregion
 
         #region Constructor
 
-        internal Player(
-            SlateID slateID,
+        private Player(
+            Guid playerID,
+            Guid slateID,
             string name,
             Team team,
             Salary salary,
-            GameID game) : base(PlayerID.CreateNew(slateID, name, team))
+            Guid game) : base(playerID)
         {
             Salary = salary;
             GameID = game;
+            SlateID = slateID;
+            Name = name;
+            Team = team;
         }
 
         #endregion
@@ -54,7 +59,7 @@ namespace Domain.Aggregates
             Salary salary,
             Game game)
         {
-            var player = new Player(game.SlateID, name, team, salary, game.Id);
+            var player = new Player(Guid.NewGuid(), game.SlateID, name, team, salary, game.Id);
             player.AddDomainEvent(new PlayerCreatedEvent(player));
 
             return player;
@@ -63,7 +68,7 @@ namespace Domain.Aggregates
         public void UpdateSalary(Salary newSalary)
         {
             Salary = newSalary;
-            AddDomainEvent(new PlayerSalaryUpdatedEvent(Id, Salary.SalaryAmount));
+            AddDomainEvent(new PlayerSalaryUpdatedEvent(Id, Name, Salary.SalaryAmount));
         }
 
         public void SetProjection(Projection projection)

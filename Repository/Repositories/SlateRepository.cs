@@ -20,49 +20,8 @@ using System.Threading.Tasks;
 namespace Repository.Repositories
 {
     public class SlateRepository(CMartDbContext context) : 
-        BaseRepository<Slate>(context),
-        ICommandRepository<Slate>,
-        IQueryRepository<Slate>
+        BaseRepository<Slate>(context)
     {
-        #region Dependencies
-
-        private readonly CMartDbContext _context = context;
-
-        #endregion
-
-        #region ICommandRespository Implementation
-
-        async Task ICommandRepository<Slate>.AddAsync(Slate model)
-        {
-            await _context.Slates.AddAsync(model);
-        }
-
-        async Task ICommandRepository<Slate>.SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
-
-        async Task<Slate?> ICommandRepository<Slate>.GetEntity(ISpecification<Slate> specification)
-        {
-            return await ApplySpecification(specification).FirstOrDefaultAsync();
-        }
-
-        #endregion
-
-        #region IQueryRepository Implementation
-
-        public async Task<Slate?> GetEntity(ISpecification<Slate> specification)
-        {
-            return await ApplySpecification(specification).AsNoTracking().FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<Slate>> GetEntities(ISpecification<Slate> specification)
-        {
-            return await ApplySpecification(specification).AsNoTracking().ToListAsync();
-        }
-
-        #endregion
-
-        
+                
     }
 }

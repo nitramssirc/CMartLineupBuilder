@@ -10,42 +10,39 @@ namespace Repository.Configurations
     {
         public void Configure(EntityTypeBuilder<Game> builder)
         {
-            // Configure the primary key
+            builder.ToTable("Game");
+
+            // Primary key
             builder.HasKey(g => g.Id);
             builder.Property(g => g.Id)
-                   .HasConversion(
-                       id => id.Id,
-                       value => new GameID(value))
-                   .IsRequired();
+                .IsRequired();
 
-            // Configure properties
+            // Foreign key to Slate (no cascade delete)
             builder.Property(g => g.SlateID)
-                    .HasConversion(
-                        id => id.Id,
-                        value => new SlateID(value))
-                    .IsRequired();
+                .IsRequired();
 
             builder.HasOne<Slate>()
-                .WithMany(s => s.Games)
+                .WithMany()
                 .HasForeignKey(g => g.SlateID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
+            // Other properties
             builder.Property(g => g.HomeTeam)
-                   .IsRequired();
+                .IsRequired();
 
             builder.Property(g => g.AwayTeam)
-                   .IsRequired();
+                .IsRequired();
 
             builder.Property(g => g.StartTime)
-                   .IsRequired();
+                .IsRequired();
 
             builder.Property(g => g.HomePoints)
-                   .IsRequired()
-                   .HasColumnType("decimal(18,2)");
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
 
             builder.Property(g => g.AwayPoints)
-                   .IsRequired()
-                   .HasColumnType("decimal(18,2)");
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
 
         }
     }

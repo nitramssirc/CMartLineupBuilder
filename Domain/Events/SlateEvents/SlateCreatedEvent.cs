@@ -17,7 +17,7 @@ namespace Domain.Events.SlateEvents
     /// </summary>
     public class SlateCreatedEvent : IDomainEvent
     {
-        public SlateID SlateID { get; private set; }
+        public Guid SlateID { get; private set; }
         public string Name { get; private set; }
 
         public DateTime Date { get; private set; }

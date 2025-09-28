@@ -7,7 +7,7 @@ using Domain.ValueTypes;
 
 namespace Domain.Aggregates
 {
-    public class Slate : Entity<SlateID>, IAggregateRoot
+    public class Slate : Entity, IAggregateRoot
     {
         #region Properties
 
@@ -26,7 +26,7 @@ namespace Domain.Aggregates
         #region Constructors
 
         private Slate(
-            SlateID id,
+            Guid id,
             DateTime date,
             Sport sport,
             GameType gameType,
@@ -51,7 +51,7 @@ namespace Domain.Aggregates
             DFSSite dfsSite,
             string name)
         {
-            var newSlate = new Slate(SlateID.CreateNew(), date, sport, gameType, dfsSite, name);
+            var newSlate = new Slate(Guid.NewGuid(), date, sport, gameType, dfsSite, name);
             newSlate.AddDomainEvent(new SlateCreatedEvent(newSlate));
             return newSlate;
         }

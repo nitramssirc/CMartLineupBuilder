@@ -19,8 +19,8 @@ namespace DomainTests.Events.GameEvents
             // Arrange
             var homeTeam = Team.ATL;
             var awayTeam = Team.BAL;
-            var gameId = GameID.CreateNew(homeTeam, awayTeam);
-            var slateId = SlateID.CreateNew();
+            var gameId = Guid.NewGuid();
+            var slateId = Guid.NewGuid();
             var startTime = new TimeOnly(13, 0);
             decimal homePoints = 21.5m;
             decimal awayPoints = 17.25m;

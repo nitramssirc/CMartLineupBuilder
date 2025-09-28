@@ -16,21 +16,25 @@ namespace Domain.Events.PlayerEvents
     /// </summary>
     public class PlayerSalaryUpdatedEvent : IDomainEvent
     {
-        public PlayerID PlayerID { get; private set; }
+        public Guid PlayerID { get; private set; }
+
+        public string PlayerName { get; set; }
 
         public int SalaryAmount { get; private set; }
 
         internal PlayerSalaryUpdatedEvent(
-            PlayerID playerID,
+            Guid playerID,
+            string playerName,
             int salaryAmount)
         {
             PlayerID = playerID;
+            PlayerName = playerName;
             SalaryAmount = salaryAmount;
         }
 
         public override string ToString()
         {
-            return $"PlayerSalaryUpdated: {PlayerID.Name} - {SalaryAmount}";
+            return $"PlayerSalaryUpdated: {PlayerName} - {SalaryAmount}";
         }
     }
 }

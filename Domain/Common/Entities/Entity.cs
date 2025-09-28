@@ -3,13 +3,13 @@ using Domain.Common.ValueTypes;
 
 namespace Domain.Common.Entities
 {
-    public abstract class Entity<TID> where TID : EntityID
+    public abstract class Entity
     {
-        public TID Id { get; private set; }
+        public Guid Id { get; private set; }
 
         private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
 
-        public Entity(TID id)
+        public Entity(Guid id)
         {
             Id = id;
         }

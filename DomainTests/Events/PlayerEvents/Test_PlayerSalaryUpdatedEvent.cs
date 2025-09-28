@@ -17,16 +17,17 @@ namespace DomainTests.Events.PlayerEvents
         public void ToString_Should_ReturnExpectedFormat()
         {
             // Arrange
-            var slateId = SlateID.CreateNew();
-            var playerId = PlayerID.CreateNew(slateId, "Test Player", Team.ATL);
+            var slateId = Guid.NewGuid();
+            var playerId = Guid.NewGuid();
+            var playerName = "John Doe";
             var salaryAmount = 7500;
-            var evt = new PlayerSalaryUpdatedEvent(playerId, salaryAmount);
+            var evt = new PlayerSalaryUpdatedEvent(playerId, playerName, salaryAmount);
 
             // Act
             var result = evt.ToString();
 
             // Assert
-            Assert.AreEqual($"PlayerSalaryUpdated: {playerId.Name} - {salaryAmount}", result);
+            Assert.AreEqual($"PlayerSalaryUpdated: {playerName} - {salaryAmount}", result);
         }
 
         #endregion

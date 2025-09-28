@@ -19,7 +19,7 @@ namespace DomainTests.Events.PlayerEvents
         public void ToString_Should_ReturnExpectedFormat()
         {
             // Arrange
-            var slateId = SlateID.CreateNew();
+            var slateId = Guid.NewGuid();
             var team = Common.Enums.Team.BUF;
             var playerName = "Josh Allen";
             var salary = Salary.Create([], 10000, "123");

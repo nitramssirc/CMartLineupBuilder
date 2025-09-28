@@ -11,14 +11,14 @@ namespace DomainTests.Aggregates
     {
         #region Setup
 
-        private static SlateID DefaultSlateId => SlateID.CreateNew();
+        private static Guid DefaultSlateId => Guid.NewGuid();
         private static string DefaultName => "Test Player";
         private static Team DefaultTeam => Team.ATL;
         private static Salary DefaultSalary => Salary.Create([PlayerPosition.PG], 5000, "123");
         private static TimeOnly DefaultStartTime => new TimeOnly(12, 0);
 
         private static Game CreateGame(
-            SlateID? slateId = null,
+            Guid? slateId = null,
             Team? homeTeam = null,
             Team? awayTeam = null,
             TimeOnly? startTime = null)
@@ -111,7 +111,7 @@ namespace DomainTests.Aggregates
         public void Create_Should_SetSlateID()
         {
             // Arrange
-            var slateId = SlateID.CreateNew();
+            var slateId = Guid.NewGuid();
             var game = CreateGame(slateId: slateId);
 
             // Act

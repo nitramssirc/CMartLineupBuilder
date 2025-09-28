@@ -14,17 +14,13 @@ namespace Repository.Configurations
 
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)
-                .HasConversion(
-                    id => id.Id, 
-                    value => new SlateID(value))
                 .IsRequired();
-
 
             builder.Property(s => s.Date)
                 .IsRequired();
 
             builder.Property(s => s.Sport)
-                .HasConversion<string>() 
+                .HasConversion<string>()
                 .IsRequired();
 
             builder.Property(s => s.GameType)
@@ -38,21 +34,6 @@ namespace Repository.Configurations
             builder.Property(s => s.Name)
                 .HasMaxLength(100)
                 .IsRequired();
-
-            builder.HasMany(s => s.Projections)
-                .WithOne()
-                .HasForeignKey(p => p.SlateID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(s => s.Salaries)
-                .WithOne()
-                .HasForeignKey(s => s.SlateID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(s => s.Games)
-                .WithOne()
-                .HasForeignKey(g => g.SlateID)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Domain.Events.PlayerEvents
 {
     public class PlayerCreatedEvent: IDomainEvent
     {
-        public PlayerID PlayerID { get; private set; }
+        public Guid PlayerID { get; private set; }
 
         public Team Team { get; private set; }
 
